@@ -1,41 +1,16 @@
-## Welcome to GitHub Pages
+## 数学のノート
 
-You can use the [editor on GitHub](https://github.com/unaoya/math_pdf/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+これまでに公開した数学のノートをいくつかまとめました。
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+[Gauss和とFourier変換](gaussfourier.pdf)
+有限群のFourier変換とGauss和の評価を用いて、ある種の合同方程式が解を持つ条件を与えています。
+関連した内容について[有限群のFourier変換とGauss和](http://unaoya-pi.hatenablog.com/entry/gauss)にも書きました。
 
-### Markdown
+[線形作用素の半群](semigroup.pdf)
+数学カフェ関数解析回の予習会で発表した際のノートです。
+線形作用素の半群について、黒田成俊「関数解析」を参考にまとめました。
+数列の特性方程式やLaplace変換などの基本的な例から始めて、Hille-吉田の定理および熱方程式について書いてあります。
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/unaoya/math_pdf/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
-
-[GaussFourier](gaussfourier.pdf)
-
-[semigroup](semigroup.pdf)
+[加群の拡大](extension.pdf)
+体k上の一変数多項式環k\[T]について、k\[T]加群のextensionと上三角行列の関係について書きました。
+また1次元k線形空間の拡大が、上三角行列を通して記述し、それがExt^1と一致することを確かめました。
