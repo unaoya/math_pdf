@@ -13,4 +13,10 @@
 
 [加群の拡大](extension.pdf)
 体k上の一変数多項式環k\[T]について、k\[T]加群のextensionと上三角行列の関係について書きました。
-また1次元k線形空間の拡大が、上三角行列を通して記述し、それがExt^1と一致することを確かめました。
+また1次元k線形空間の拡大を上三角行列を通して記述し、それがExt^1と一致することを確かめました。
+
+[作図と対称性](https://www.slideshare.net/NaoyaUmezaki/ss-80588003)
+
+[解の個数を数えよう](https://speakerdeck.com/unaoya/jie-falsege-shu-woshu-eyou)
+
+[数論幾何と分岐](https://speakerdeck.com/unaoya/shu-lun-ji-he-tofen-qi)
