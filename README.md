@@ -13,16 +13,17 @@
 
 ### 加群の拡大 [pdf](extension.pdf)
 体k上の一変数多項式環k\[T]について、k\[T]加群のextensionと上三角行列の関係について書きました。
-<<<<<<< HEAD
 また1次元k線形空間の拡大を上三角行列を通して記述し、それがExt^1と一致することを確かめました。
 
+### 圏について [page](category.md)
+圏論についての入門ノートをできるだけ予備知識を抑えて書いています。
+
+
+### 講演のスライド
 [作図と対称性](https://www.slideshare.net/NaoyaUmezaki/ss-80588003)
 
 [解の個数を数えよう](https://speakerdeck.com/unaoya/jie-falsege-shu-woshu-eyou)
 
 [数論幾何と分岐](https://speakerdeck.com/unaoya/shu-lun-ji-he-tofen-qi)
-=======
-また1次元k線形空間の拡大が、上三角行列を通して記述し、それがExt^1と一致することを確かめました。
 
-### 圏について [page](category.md)
->>>>>>> 20ba341cae47b1eb10c806f6ced43ecda478f587
+[Dirichlet L関数と三角関数](https://speakerdeck.com/unaoya/deirikurelguan-shu-tosan-jiao-guan-shu)
