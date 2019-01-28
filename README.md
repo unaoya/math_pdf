@@ -2,6 +2,14 @@
 
 これまでに公開した数学のノートをいくつかまとめました。
 
+### 結び目とエタールコホモロジー
+[佐野さん3年間お疲れさまセミナー](https://connpass.com/event/114523/)の準備のためのノートです。
+エタールコホモロジー、結び目の不変量、幾何学的表現論などについて勉強したことをまとめます。
+
+### 導来代数幾何入門
+[第3回関東すうがく徒のつどい](https://sites.google.com/view/kantotsudoi/ホーム?authuser=0)の準備のためのノートです。
+導来代数幾何について勉強したことをまとめます。
+
 ### Gauss和とFourier変換 [pdf](gaussfourier.pdf)
 有限群のFourier変換とGauss和の評価を用いて、ある種の合同方程式が解を持つ条件を与えています。
 関連した内容について[有限群のFourier変換とGauss和](http://unaoya-pi.hatenablog.com/entry/gauss)にも書きました。
