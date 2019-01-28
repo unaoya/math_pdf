@@ -2,11 +2,11 @@
 
 これまでに公開した数学のノートをいくつかまとめました。
 
-### 結び目とエタールコホモロジー
+### 結び目とエタールコホモロジー [pdf](https://github.com/unaoya/math_pdf/blob/master/knot_and_etale_cohomology.pdf)
 [佐野さん3年間お疲れさまセミナー](https://connpass.com/event/114523/)の準備のためのノートです。
 エタールコホモロジー、結び目の不変量、幾何学的表現論などについて勉強したことをまとめます。
 
-### 導来代数幾何入門
+### 導来代数幾何入門 [pdf](https://github.com/unaoya/math_pdf/blob/master/introDGA.pdf)
 [第3回関東すうがく徒のつどい](https://sites.google.com/view/kantotsudoi/ホーム?authuser=0)の準備のためのノートです。
 導来代数幾何について勉強したことをまとめます。
 
