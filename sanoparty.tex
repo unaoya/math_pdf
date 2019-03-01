@@ -1,0 +1,165 @@
+\documentclass[dvipdfmx]{beamer}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage{bxdpx-beamer}
+\title{結び目とエタールコホモロジー}
+\author{梅崎直也@unaoya}
+\date{\today}
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}
+\begin{enumerate}
+\item 幾何学的表現論
+\begin{enumerate}
+\item Springer対応
+\item Kazhdan-Lusztig多項式
+\end{enumerate}
+\item 結び目の不変量
+\begin{enumerate}
+\item Khovanovによる構成
+\item Stroppel
+\item Webster-Williamson
+\item Cautis-Kamnitzer?
+\end{enumerate}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+$W$をWeyl群、$S$を単純鏡映
+例$W=S_n, S=\{(i,i+1),i\}$
+
+$S_n$が$sl_n$のWeyl群になっているということを理解する。
+
+$W$の表現
+
+有限群$G$の表現
+$G$の共役類と$G$の既約表現は個数が等しい。
+
+$S_n$の共役類は$n$の分割に対応する。
+
+この対応を幾何的に構成する。
+$n$の分割は$GL_n$もしくは$SL_n$のJordan標準形に対応。
+\end{frame}
+
+\begin{frame}
+intersection cohomologyとperverse sheaf
+
+動機。特異点のある場合のPoincare双対など
+
+derived categoryとperverse $t$-structure
+
+semi-small mapとpush-forward
+
+decomposition theorem
+
+weight filtration
+
+perverse sheafとweight
+
+Weil予想、ゼータ関数のゼロ点とFrobenius固有値
+\end{frame}
+
+
+\begin{frame}
+Fourier変換、Springer対応
+
+$W$をGalois群に持つ被覆
+正則表現の分解
+intermediate extension
+Fourier変換
+するとSpringer fiberのコホモロジーが出てくる
+\end{frame}
+
+\begin{frame}
+convolution代数としての$\Z[W]$の構成。
+
+Lusztig
+Steinberg多様体の上の構成可能関数とその合成石で定まる代数が$\Z[W]$と同型。
+
+Fourier変換との関係は？
+\end{frame}
+
+\begin{frame}
+Kazhdan-Lusztig多項式
+$W$の群環とIwahori-Hecke代数
+$T_w$を基底にもち$\Z[q^{1/2}, q^{-1/2}]$上生成される環で、積は
+\begin{align*}
+T_yT_w=T_{yw}& l(yw)=l(y)+l(w)\\
+(T_s+1)(T_s-q)=0 & s\in S
+\end{align*}
+で乗法が定まる。$q \to 1$とすると
+
+Kazhdan-Lusztig基底とKazhdan-Lusztig多項式
+\begin{align*}
+C_w=q^{-l(w)/2}\sum_{y\leq q}P_{y,w}T_y
+\end{align*}
+とすると、これが基底になって、involution $D$で不変。
+
+Lie代数の表現の指標、Verma加群
+
+Kazhdan-Lusztig予想
+$w\in W$に対し、$w(\rho)-\rho$を最高weightに持つVerma module $M_w$と
+$L_w$を最高weight加群とする。
+この時、これらの指標の関係式がKazhdan-Lusztig多項式を用いて
+\begin{align*}
+ch(L_w)=\sum_{y\leq w}(-1)^{l(w)-l(y)}P_{y,w}(1)ch(M_w)
+\end{align*}
+と書ける。
+\end{frame}
+
+\begin{frame}{Kazhdan-Lusztig予想の証明}
+Beilinson-BernsteinとBrylinski-Kashiwaraによる。
+
+Bruhat分解$G=\coprod_{w\in W}BwB$とSchubert多様体$G/B=\coprod_{w\in W}X_w$
+
+Beilinson-Bernstein localization
+$\fg$の表現と旗多様体の$D$加群の対応
+$\lambda$を整ウェイトで任意の$i\in I$について$\lambda(h_i)\in\Z_{>0}$を満たすとする。
+この時$\Gamma(X,-):RH^0_l(D^\lambda_X) \to M(\fg)$は完全関手で
+$B_w(\lambda)\mapsto M(w\circ\lambda)^*, M_w(\lambda)\mapsto M(w\circ\lambda), L_w(\lambda)\mapsto(w\circ\lambda)$を満たす。
+
+Riemann-Hilbert対応
+正則ホロノミック$D$加群とperverse sheafの対応
+$Sol$が正則ホロノミック$D$加群をperverse sheafに移す。
+$B_w(\lambda)\mapsto \C_{X^w}[-l(w)], M_w(\lambda)\mapsto D(\C_{X^w}[-l(w)],L_w(\lambda)\mapsto {}^\pi\C_{X^w}$となる。
+
+Kazhdan-Lusztig多項式はSchubert多様体のintersectionコホモロジーを用いて
+\begin{align*}
+P_{y,w}(q)=\sum_iq^i\dim IH_{X_y}^{2i}(\overline{X}_w)
+\end{align*}
+と書ける（Kazhdan-Lusztig）
+
+（柏原谷崎のKazhdan-Lusztig予想をめぐってを参考）
+\end{frame}
+
+\begin{frame}{Schubert多様体のintersection cohomologyの記述}
+purityとdecomposition theoremを使う
+\end{frame}
+
+\begin{frame}{Soergel bimodule}
+Kazhdan-Lusztigとの関係
+
+categorification
+
+Khovanovのtriply graded
+\end{frame}
+
+\begin{frame}
+KhovanovのSpringer多様体。
+Grassmannianとの関係、geometric Satake
+\end{frame}
+
+\begin{frame}
+不変量の幾何的定義
+
+結び目の図式からある多様体とその上の層の複体を定義する。
+
+weight filtrationからspectre系列を作る。
+
+$E_2$-pageが二重複体で、さらにここにweightでもう一つ次数が入って、三重次数複体。
+\end{frame}
+\end{document}
