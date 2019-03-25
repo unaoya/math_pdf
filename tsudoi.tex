@@ -1,0 +1,261 @@
+\documentclass[dvipdfmx]{beamer}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage{bxdpx-beamer}
+\title{導来代数幾何入門}
+\author{梅崎直也@unaoya}
+\date{2019/3/29 第3回関東すうがく徒のつどい}
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}
+\begin{enumerate}
+\item 導入
+\item 代数幾何
+\item 導来代数幾何
+\item BenZvi-Francis-Nadler
+\item 応用
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{目標}
+\end{frame}
+
+\begin{frame}{代数幾何におけるファイバー積}
+
+スキーム論は一般の環に対して空間を構成する、またそれの貼り合わせ
+相対的な議論を扱える枠組み
+例、高校数学の線束、mod p、無限小変形
+テンソル積が大事
+
+$\spec A_1\otimes_BA_2\simeq\spec A_1\times_{\spec B}\spec A_2$
+\end{frame}
+
+\begin{frame}{derived stack}
+affine derived stackとその貼り合わせ（どの圏ではり合わせるか？）
+\end{frame}
+
+\begin{frame}{mapping stack}
+$\Sigma$が位相空間や単体的集合の時、internal hom $X^\Sigma=Map(\Sigma,X)$がderived stackとして定まる。
+\end{frame}
+
+\begin{frame}{classifying space}
+\end{frame}
+
+\begin{frame}{derived loop stack}
+$LX=X^{S^1}=Map(S^1,X)$はinternal homで定める。
+$LX \simeq X\times_{X\times X}X$である。
+
+$X$が位相空間から定まるconstant stackの場合、$LX$は通常のloop spaceから定まるconstant stack
+
+$X=BG$のとき$LX=LBG=G/G$
+
+$X$がsmooth scheme over char $0$ fieldの時は$T_X[-1]$
+\end{frame}
+
+\begin{frame}{$Mod_A$の定義}
+
+まず$Vect$を定義する。
+一般にabel圏から$\infty$圏を構成する方法がLurieのHAにある。
+これがmonoidal
+
+Gaitsgory
+$AssocAlg(Vect))^{op} \to DGCat_{cont}, A \mapsto A-Mod$が定まる。
+ここでVectは$\infty$-cat of chain complexes of $k$-vecctor spaces
+$DGCat_{cont}$は$1-Cat^{St, cocmpl}_{cont}$における$Vect$-moduleたちのなす$\infty$-cat
+Gaitsgory1.10.1
+HAでのアーベル圏$A$から$(\infty,1)$-cat $D^-(A)$を作り、
+これのright completionを作る。
+
+LurieのHAでの扱いは？
+
+$A$-modの圏から直接作るのと一致する？
+\end{frame}
+
+\begin{frame}{$QC(X)$の定義}
+$X=\spec A$がaffine derived schemeの時、$QC(X)=Mod_A$とする。
+
+一般のderived stackについては、$X$をaffine derived stackのcolimitで書き、
+同じ図式で$QC$のlimitを$\infty$-cat of $\infty$-catsでとる。
+
+$X$がqcでaffine diagonalを持てば、cosimplical diagramのtotalizationでかける。
+
+$O_X$-modのような作り方はできない？
+\end{frame}
+
+\begin{frame}{perfect stack}
+\begin{dfn}
+\begin{enumerate}
+\item $A$をderived commutative ringとする。
+$A$加群$M$がperfectとは、$Mod_A$のsmallest $\infty$ categoryでfinite colimitとretractでとじたものに属すること。
+\item derived stack $X$に対し、$Perf(X)$は$QC(X)$のfull $\infty$-subcategoryであって、
+任意のaffine $f:U \to X$への制限$f^*M$がperfect moduleであるものからなるもの。
+\item derived stack $X$がprefect stackとは$QC(X)\cong IndPerf(X)$であること。
+\item $f:X \to Y$がperfectとは、任意のaffine $U \to Y$について、$X \times_Y U$がperfectなこと。
+\end{enumerate}
+\end{dfn}
+
+compactとdualizableとperfectの関係。
+特に$X$がaffine diagonalを持つ時の$QC(X)$における同値性。
+\end{frame}
+
+\begin{frame}{base changeとprojection formula}
+Gaitsgoryにも注意がある？
+
+\begin{prop}[BFN, proposition 3.10]
+$f:X \to Y$をperfectとする。
+この時
+\begin{enumerate}
+\item $f_*:QC(X) \to QC(Y)$はsmall colimitと交換し、projection formulaを満たす
+\item 任意のderived stackの射$g:Y' \to Y$に対し、base chage map $g^*f_* \to f'^*g'_*$は同値
+\end{enumerate}
+\end{prop}
+\end{frame}
+
+\begin{frame}
+symmetric monoidal categoryとalgebraとmodule
+\end{frame}
+
+\begin{frame}
+\begin{prop}[BFN, Proposition 4.6]
+$X_1, X_2$ perfect, $\boxtimes:QC(X_1)^c\otimes QC(X_2)^c \cong QC(X_1\times X_2)^c$
+\end{prop}
+\begin{enumerate}
+\item $\otimes$とpullbackはdualizableを保ち、$X=X_1\times X_2$がperfectなことから、外部積がcompactを保つ
+\item $QC(X_1\times X_2)^c$が外部積で生成
+\item projection formula
+\end{enumerate}
+により証明。
+さらに
+\begin{enumerate}
+\item $Ind:st \to Pr^L$がsummetric monoidal
+\item $IndQC(X)^c\simeq QC(X)$
+\end{enumerate}
+から、$\boxtimes:QC(X_1)\otimes QC(X_2) \simeq QC(X_1\times X_2)$が成立。
+\end{frame}
+
+\begin{frame}
+\begin{thm}[BFNのTheorem 4.7]
+$X_1, X_2, Y$がperfectの時、$QC(X_1 \times_Y X_2) = QC(X_1) \otimes_{QC(Y)}QC(X_2)$
+\end{thm}
+
+$Y$が一般の時の証明の方針（どこに$Y$がperfectを使う？）
+\begin{enumerate}
+\item $QC(X_1\times_YX_2)=Mod_{T_{geom}}(QC(X_1\times X_2))$ by Barr-Beck
+\item $QC(X_1)\otimes_{QC(Y)}QC(X_2)=Mod_{T_{alg}}(QC(X_1\times X_2))$ by Barr-Beck
+\item $T_{alg}=T_{geom}$ by base change
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+self-duality
+$Fun$のやつ
+\end{frame}
+
+\begin{frame}
+上を一般化。
+4.1の話
+
+これをどう使うか
+\end{frame}
+
+\begin{frame}
+\begin{thm}[BFNのTheorem 4.14]
+$X, Y$ derived stack with affine diagonal、$f:X \to Y$をperfectとする。
+$g:X' \to Y$は任意のderived stackの射とする。
+この時、$QC (X \times_Y X') \simeq Fun_Y(QC(X),QC(X'))$は$\infty$圏の同値
+\end{thm}
+\begin{enumerate}
+\item 関手の構成$M\mapsto \tilde{f}_*(M\otimes\tilde{g}^*-)$とする。
+$\tilde{f}$がperfectなのでcolimitを保ち$QC$に移る。
+またprojection formulaにより$QC(Y)$線形になる。
+
+\item $X'$についてlocalなので（$\times, \lim, \colim, QC$の交換関係）、affineに帰着する。
+$QC(X\times_Y\spec A) \simeq Fun_Y(QC(X),Mod_A)$を示す。
+
+\item $Y=\spec B$の時。
+前の系4.8から$QC(X)$は$Mod_B$上self dualで、前の命題4.13から$QC$と$\otimes$の交換がわかるので
+$Fun_B(QC(X),Mod_A)\simeq Fun_B(Mod_B,QC(X)^\vee\otimes_BMod_A)\simeq QC(X)\otimes_BMod_A$
+$QC(X\times_B\spec A)\simeq QC(X)\otimes_BMod_A$
+と計算できる。
+
+\item $Y$が一般の時。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{応用}
+symmetric monoidal $\infty$-cats of qcsとs$\infty$-cats of linear endofunctors with monoidal str by compositionのcenterとtraceと$E_n$-analogueを計算する。
+\begin{enumerate}
+\item Hecke category
+\item TFT
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Hecke category}
+$X \to Y$に対して$D(X\times_YX)$
+特に$BB \to BG$に対して$X\times_YX=B\backslash G/Y$
+
+Hecke categoryはHecke algebraのcategorification
+\end{frame}
+
+\begin{frame}{affine Hecke category}
+cf. Bezrukavnikov
+
+$H^{aff}_G$を$St_G=\tilde{G}\times_G\tilde{G}$上の$G$同変準連接層のなす$\infty$-categoryとする。
+ここで$\tilde{G} \to G$はGrothendieck-Springer resolutionで$G$は簡約群。
+\end{frame}
+
+\begin{frame}
+$St_G=\tilde{G}\times_G\tilde{G}$とする。
+$Z(QC(X\times_YX)) \simeq QC(LY)$を$X=\tilde{G}/G \to Y=G/G=LBG$に適用することで
+$Z(H^{aff}_G)=Z(QC(St_G))\simeq Z(QC(X\times_YX))\simeq QC(LY)\simeq QC(LLBG)\simeq QC(Loc_G(T^2))$となる。
+\end{frame}
+
+\begin{frame}{finite Hecke algebra}
+cf. BN2でやった
+coherent $D$-moduleの圏？$D(B\backslash G/B)$のDrinfeld centerと$G$上の指標層の圏の同一視。
+さらに指標層のLanglands双対
+BN2のTheorem1.8
+$H_G$と$\tilde{H}_G$はsemi-rigidでcanonical pivotal, CY strを持つ。
+冪単指標層のなすdg圏$Ch_G$は$H_G$のmonoidal centerおよび$\tilde{H}$のmonoidal traceに標準的に同型。
+
+さらにKoszul双対から$\tilde{H}^{per}_G$と$H^{per}_{G^{\vee}}$が同値なことが言えて、
+これにより上の定理の系として、Langlands dualのtwo-periodic dg cat of unip ch shが同値なことが言える。
+\end{frame}
+
+\begin{frame}{TFT}
+\begin{dfn}
+\end{dfn}
+
+\begin{prop}
+perfect stack $X$に対し 2d TFT $\exists Z_X$ s.t. $Z_X(S^1)=QC(LX), Z_X(\Sigma)=\Gamma(X^\Sigma, O_{X^\Sigma})$
+\end{prop}
+証明すべきことは？
+
+Costelloのcategorified analogue。
+$X$に対する仮定なしに構成できる。
+\end{frame}
+
+\begin{frame}{Deligne-Kontsevich conjecture}
+monoidal stable categoryのDerinfeld centerはassociative (or $A_\infty$)-algのHochshild cohomologyのcategorical analogueである。
+Deligneの予想は、Hochshild cochain complexはGerstenhaber algebranの持ち上げである$E_2$-algebraの構造を持つこと。
+これのcyclic versionとして、Frobeinus algebraのHochshild cochainはframed $E_2$ (or ribbon) algebraの構造を持つ。
+さらにKontsevichはこの高次版として、$E_n$-algebraのHochshild cochainは$E_{n+1}$-algebraの構造を持つことを予想。
+
+CostelloとKontsevich-Soibelmanはalgebra $A$に対して$Z_A(S^1)=HC(A)$となるようなTFTから予想が従うことを説明した。
+
+これの圏論類似として、monoidal $\infty$-categoryのDrinfeld centerが$E_2$-categoryであること。
+\end{frame}
+
+\begin{frame}{参考文献}
+\begin{itemize}
+\item BFN:
+\item BN2:
+\end{itemize}
+\end{frame}
+
+\end{document}

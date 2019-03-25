@@ -4,7 +4,7 @@
 \usepackage{bxdpx-beamer}
 \title{結び目とエタールコホモロジー}
 \author{梅崎直也@unaoya}
-\date{\today}
+\date{佐野さん3年間お疲れ様セミナー}
 \begin{document}
 
 \begin{frame}
@@ -13,19 +13,264 @@
 
 \begin{frame}
 \begin{enumerate}
-\item 幾何学的表現論
-\begin{enumerate}
-\item Springer対応
-\item Kazhdan-Lusztig多項式
+\item Khovanov triply graded homology
+\item Kazhdan-Lusztig conjecture
+\item geometric interpretation of invariants by Webstar-Williamson
 \end{enumerate}
-\item 結び目の不変量
-\begin{enumerate}
-\item Khovanovによる構成
-\item Stroppel
-\item Webster-Williamson
-\item Cautis-Kamnitzer?
-\end{enumerate}
-\end{enumerate}
+\end{frame}
+
+\begin{frame}{昨日の話}
+
+trefoilとKhovanov homologyの図式
+
+\begin{align*}
+0 \to C^0 \to C^1 \to C^2 \to C^3 \to 0
+\end{align*}
+これが二重次数つき複体。
+これの次元をとることでJones多項式が得られる。
+
+三重次数つきの複体を作り、その次元をとることでHOMFLYPT多項式をえるものを作る。
+\end{frame}
+
+\begin{frame}{別の構成}
+trefoilからbraidの図をかく。
+$n=2$のbraidで$\sigma=\sigma_1^3$と表すことができる。
+
+$F(\sigma_1):0\to R\{2\} \to B_1 \to0$と$F(\sigma_1^{-1}):0 \to B_1\{-2\} \to R\{-2\}\to0$で定める。
+ここで、コホモロジー次数はそれぞれ$B_1, R\{-2\}$を$0$次にする。
+
+上では$R=\Q[y], R_1=\Q[y^2], B_1=R\otimes_{R_1}R$とし、
+$rb_1:R\{2\} \to B_1; 1 \mapsto y\otimes1+1\otimes y$で定める。
+また$br_1:B_1\{-2\} \to R\{-2\}; 1\otimes 1\to1$で定める。
+
+これらは次数つき $R$-bimoduleの射。
+
+さらに$F(\sigma)=F(\sigma_1)^{\otimes 3}$で定義。
+ここで複体のテンソル積は
+\end{frame}
+
+\begin{frame}{Braid群}
+m本のbraid群とは、紐の図をかく
+
+$\sigma_i$を$i$番目と$i+1$番目の入れ替えで$i$番目が下を通るようにする。
+
+これに対し、前と同様な複体を
+$R=\Q[x_1-x_2, \ldots, x_{m-1}-x_m], R_i=R^{(i, i+1)}, B_i=R\otimes_{R_i}R$とし、
+$rb_i, br_i$を定め。
+$F(\sigma_i)=o\to R\{2\} \to B_i \to0, F(\sigma_i^{-1}):0 \to B_i\{-2\} \to R\{-2\} \to 0$
+とする。コホモロジーの次数は前と同様。
+
+これを用いて$F(\sigma)$をテンソル積で定義する。
+これはup to homotopyでwell-defined
+\end{frame}
+
+\begin{frame}{HHH}
+$F(\sigma)$のHochshild homologyをとる。
+
+$R$-bimod $M$の$HH$とは$HH_i(R,M)=Tor_i^{R\otimes R}(R,M)$なるもの。
+これは$M \mapsto M_R=R\otimes_{R\otimes R}M=M/[R,M]$のderived functorである。
+
+$HHH(\sigma): \to HH(R,F^i(\sigma))\to HH(R,F^{i+1}(\sigma))\to$
+
+すると$HH$の次数、$F$の次数、$R$-bimodの次数と三つの次数がつき、
+これはKovanov-Rozanskyで定義したものと同じ
+\end{frame}
+
+\begin{frame}{Soergel bimodule}
+上に出てきた$R_i, B_i$は何か？
+Soergel bimoduleとは、categorification of Hecke algebraである。
+
+$\B_i=B_i\{-1\}$とすると、これは以下の関係式を満たす。
+\begin{align*}
+\B_i\otimes_R\B_i&=\B_i\{1\}\oplus\B_i\{-1\}\\
+(\B_i\otimes\B_{i1+}\otimes \B_i)\oplus\B_{i+1}&=(\B_{i+1}\otimes\B_i\otimes\B_{i+1})\oplus\B_i\\
+\B_i\otimes\B_j&=\B_j\otimes\B_i&i\neq j\pm1
+\end{align*}
+\end{frame}
+
+\begin{frame}{Kazhdan-Lusztig basis}
+$\B_i=C_i', \{1\}=q$とすると、
+\begin{align*}
+C_i'^2&=(q+q^{-1})C_i'\\
+C_i'C_{i+1}'C_i'+C_{i+1}'&=C_{i+1}'C_i'C_{i+1}'+C_i'\\
+C_i'C_j'&=C_j'C_i'&i\neq j\pm1
+\end{align*}
+
+これはHecke algebraのKazhdan-Lusztig basisというものを与えている。
+
+この解釈のもと、$\B_w$がindecomposableであり、
+このことから$F(\sigma)$を分解して自明なところを消去することで$F_{min}(\sigma)$を得る。
+これは計算がだいぶ楽になる。
+\end{frame}
+
+\begin{frame}{表現論について}
+$\fg$の表現について、Weyl群、最高ウェイト加群
+
+$\fg=sl_2$のとき。
+$h=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+e=\begin{pmatrix}0&1\\0&0\end{pmatrix},
+f=\begin{pmatrix}0&0\\1&0\end{pmatrix}$
+とする。
+交換関係は$h=[e,f], [h,e]=2e, [h,f]=-2f$である。
+$\fg$の表現を$h$の固有空間分解して調べる。
+
+$S_2$が$h \mapsto -h$で$\fg$（ほんとはCartanにのみ？）に作用する。
+
+$\fg=sl_3$のとき。
+$h_1=\begin{pmatrix}1&0&0\\0&-1&0\\0&0&0\end{pmatrix},
+h_2=\begin{pmatrix}0&0&0\\0&1&0\\0&0&-1\end{pmatrix}$
+とし、$e_1, e_2, f_1,f_2$も適切に定める。
+$\fg$の表現$V$があれば$h$について同時固有空間分解$V=\oplus_{\nu\in h^*}V_\nu$とできる。
+
+$W=S_3$である。
+\end{frame}
+
+\begin{frame}{Varma加群}
+weightとroot
+
+$h^\vee$の基底$\alpha_i$を$(\alpha_i,h_j)=a_{ij}$となるように定義。
+$Q^+$を$\alpha_1,\ldots,\alpha_n$で貼られるもの、
+$e_i,h_i,f_i$をそれぞれ次数$\alpha_i,0,-\alpha_i$とし、
+$\fg=\oplus_\beta\fg_\beta$とした時、$\beta$がrootとは$\fg_\beta\neq0$となること。
+
+positive root
+
+$\rho=\sum_{\alpha>0}\frac{\alpha}{2}$とし、
+$w\cdot0=w\rho-\rho$とする。
+
+$w$に対応するVerma加群とは、$w\cdot0$を最高ウェイトに持つ中で普遍性を持つもの。
+
+これが唯一の既約商を持つ。
+\end{frame}
+
+\begin{frame}{Hecke環}
+$W=S_n$とする。
+$H_n$を$T_w, w\in W$を基底に持つ$\Z[q^{1/2},q^{-1/2}]$代数で、以下の関係式を満たすもの。
+ここで$s_i=(i, i+1)$に対応する$T_{s_i}$を$T_i$と書いた。
+\begin{align*}
+(T_i-q^2)(T_i+1)&=0\\
+T_iT_{i+1}T_i&=T_{i+1}T_iT_{i+1}\\
+T_iT_j&=T_jT_i&i\neq j\pm1
+\end{align*}
+
+$W$の群環とIwahori-Hecke代数
+$T_w$を基底にもち$\Z[q^{1/2}, q^{-1/2}]$上生成される環で、積は
+\begin{align*}
+T_yT_w=T_{yw}& l(yw)=l(y)+l(w)\\
+(T_s+1)(T_s-q)=0 & s\in S
+\end{align*}
+で乗法が定まる。としても定義可能。
+
+これはinvolution $\iota:H_n \to H_n, q^{1/2} \mapsto q^{-1/2}, T_w\mapsto(T_{w^{-1}})^{-1}$
+を持つ。
+
+Braid群の群環の商であり、$q=1$とすると$W$の群環になる。
+また$G(\F_q)$の両側$B$不変$\C$値関数のなすconvolution代数と同型である。
+\end{frame}
+
+\begin{frame}{Kazhdan-Lusztig予想}
+Kazhdan-Lusztig基底とKazhdan-Lusztig多項式
+\begin{prop}
+次を満たす$\iota$不変な要素からなる基底$\{C'_w\}_{w\in W}$が存在する。
+
+\begin{align*}
+C'_w=q^{-l(w)/2}\sum_{y\leq q}P_{y,w}T_y
+P_{y,w}(q)\in\Z[q], P_{w,w}=1\\
+\deg P_{y,w}<l(w)-l(y)&y\neq w
+\end{align*}
+\end{prop}
+これは組み合わせ的に証明できる。
+
+
+Kazhdan-Lusztig予想
+$w\in W$に対し、$w(\rho)-\rho$を最高weightに持つVerma module $M_w$と
+$L_w$を最高weight加群とする（$M_w$の唯一の既約商）。
+この時、これらの指標の関係式がKazhdan-Lusztig多項式を用いて
+\begin{align*}
+ch(L_w)=\sum_{y\leq w}(-1)^{l(w)-l(y)}P_{y,w}(1)ch(M_w)
+\end{align*}
+と書ける。
+\end{frame}
+
+\begin{frame}{Kazhdan-Lusztig予想の証明}
+Beilinson-BernsteinとBrylinski-Kashiwaraによる。
+
+Bruhat分解$G=\coprod_{w\in W}BwB$とSchubert多様体$G/B=\coprod_{w\in W}X_w$
+
+Beilinson-Bernstein localization
+$\fg$の表現と旗多様体の(twisted) $D$加群の対応
+$\lambda$を整ウェイトで任意の$i\in I$について$\lambda(h_i)\in\Z_{>0}$を満たすとする。
+この時$\Gamma(X,-):RH^0_l(D^\lambda_X) \to M(\fg)$は完全関手で
+$B_w(\lambda)\mapsto M(w\circ\lambda)^*, M_w(\lambda)\mapsto M(w\circ\lambda), L_w(\lambda)\mapsto(w\circ\lambda)$を満たす。
+
+Riemann-Hilbert対応
+正則ホロノミック$D$加群とperverse sheafの対応
+$Sol$が正則ホロノミック$D$加群をperverse sheafに移す。
+$B_w(\lambda)\mapsto \C_{X^w}[-l(w)], M_w(\lambda)\mapsto D(\C_{X^w}[-l(w)],L_w(\lambda)\mapsto {}^\pi\C_{X^w}$となる。
+
+Kazhdan-Lusztig多項式はSchubert多様体のintersectionコホモロジーを用いて
+\begin{align*}
+P_{y,w}(q)=\sum_iq^i\dim IH_{X_y}^{2i}(\overline{X}_w)
+\end{align*}
+と書ける（Kazhdan-Lusztig）
+
+（柏原谷崎のKazhdan-Lusztig予想をめぐってを参考）
+\end{frame}
+
+\begin{frame}{intersection cohomologyとperverse sheaf}
+
+動機。特異点のある場合のPoincare双対など
+
+derived categoryとperverse $t$-structure
+（この$t$-structureについてコホモロジーを取るとdualityを満たす？）
+
+semi-small mapとpush-forward
+
+decomposition theorem
+
+weight filtration
+
+perverse sheafとweight
+
+Weil予想、ゼータ関数のゼロ点とFrobenius固有値
+\end{frame}
+
+\begin{frame}{perverse sheaf}
+$D^b(X,\overline{\Q}_\ell)$の$t$-structureを次で定める。
+\begin{align*}
+{}^pD^{\leq 0}(X)=\{\dim supp(H^{-i}B)\leq i\}\\
+{}^pD^{\geq 0}(X)=\{\dim supp(H^{-i}DB)\leq i\}\\
+Perv(X)={}^pD^{\leq0}(X)\cap{}^pD^{\geq0}(X)
+\end{align*}
+と定義する。
+\end{frame}
+
+
+\begin{frame}{Schubert多様体のintersection cohomology}
+purityとdecomposition theoremを使う。
+
+$X=G/B, Y(w)=BwB/B\simeq \A^{l(w)}\subset X(w)=\overline{Y(w)}$とする。
+$X(w)$は$v\leq w$なる$Y(w)$でstratified。
+
+$j_w:Y(w) \to X(w)$をBruhat cellとして
+$IC_w=j_{w,!*}\overline{\Q}_\ell$とする。
+
+この辺はKiehl-Weissauerを参照
+\begin{align*}
+h(j_{w,!}(\Lambda_{O_w})[l(w)])&=T_w\\
+f(j_{w,*}(IC_{O_w}))&=C'_w
+\end{align*}
+BBDG, trace formula, dualityなど
+\end{frame}
+
+\begin{frame}
+不変量の幾何的定義
+
+結び目の図式からある多様体とその上の層の複体を定義する。
+
+weight filtrationからspectre系列を作る。
+
+$E_2$-pageが二重複体で、さらにここにweightでもう一つ次数が入って、三重次数複体。
 \end{frame}
 
 \begin{frame}
@@ -44,25 +289,6 @@ $S_n$の共役類は$n$の分割に対応する。
 この対応を幾何的に構成する。
 $n$の分割は$GL_n$もしくは$SL_n$のJordan標準形に対応。
 \end{frame}
-
-\begin{frame}
-intersection cohomologyとperverse sheaf
-
-動機。特異点のある場合のPoincare双対など
-
-derived categoryとperverse $t$-structure
-
-semi-small mapとpush-forward
-
-decomposition theorem
-
-weight filtration
-
-perverse sheafとweight
-
-Weil予想、ゼータ関数のゼロ点とFrobenius固有値
-\end{frame}
-
 
 \begin{frame}
 Fourier変換、Springer対応
@@ -84,82 +310,7 @@ Fourier変換との関係は？
 \end{frame}
 
 \begin{frame}
-Kazhdan-Lusztig多項式
-$W$の群環とIwahori-Hecke代数
-$T_w$を基底にもち$\Z[q^{1/2}, q^{-1/2}]$上生成される環で、積は
-\begin{align*}
-T_yT_w=T_{yw}& l(yw)=l(y)+l(w)\\
-(T_s+1)(T_s-q)=0 & s\in S
-\end{align*}
-で乗法が定まる。$q \to 1$とすると
-
-Kazhdan-Lusztig基底とKazhdan-Lusztig多項式
-\begin{align*}
-C_w=q^{-l(w)/2}\sum_{y\leq q}P_{y,w}T_y
-\end{align*}
-とすると、これが基底になって、involution $D$で不変。
-
-Lie代数の表現の指標、Verma加群
-
-Kazhdan-Lusztig予想
-$w\in W$に対し、$w(\rho)-\rho$を最高weightに持つVerma module $M_w$と
-$L_w$を最高weight加群とする。
-この時、これらの指標の関係式がKazhdan-Lusztig多項式を用いて
-\begin{align*}
-ch(L_w)=\sum_{y\leq w}(-1)^{l(w)-l(y)}P_{y,w}(1)ch(M_w)
-\end{align*}
-と書ける。
-\end{frame}
-
-\begin{frame}{Kazhdan-Lusztig予想の証明}
-Beilinson-BernsteinとBrylinski-Kashiwaraによる。
-
-Bruhat分解$G=\coprod_{w\in W}BwB$とSchubert多様体$G/B=\coprod_{w\in W}X_w$
-
-Beilinson-Bernstein localization
-$\fg$の表現と旗多様体の$D$加群の対応
-$\lambda$を整ウェイトで任意の$i\in I$について$\lambda(h_i)\in\Z_{>0}$を満たすとする。
-この時$\Gamma(X,-):RH^0_l(D^\lambda_X) \to M(\fg)$は完全関手で
-$B_w(\lambda)\mapsto M(w\circ\lambda)^*, M_w(\lambda)\mapsto M(w\circ\lambda), L_w(\lambda)\mapsto(w\circ\lambda)$を満たす。
-
-Riemann-Hilbert対応
-正則ホロノミック$D$加群とperverse sheafの対応
-$Sol$が正則ホロノミック$D$加群をperverse sheafに移す。
-$B_w(\lambda)\mapsto \C_{X^w}[-l(w)], M_w(\lambda)\mapsto D(\C_{X^w}[-l(w)],L_w(\lambda)\mapsto {}^\pi\C_{X^w}$となる。
-
-Kazhdan-Lusztig多項式はSchubert多様体のintersectionコホモロジーを用いて
-\begin{align*}
-P_{y,w}(q)=\sum_iq^i\dim IH_{X_y}^{2i}(\overline{X}_w)
-\end{align*}
-と書ける（Kazhdan-Lusztig）
-
-（柏原谷崎のKazhdan-Lusztig予想をめぐってを参考）
-\end{frame}
-
-\begin{frame}{Schubert多様体のintersection cohomologyの記述}
-purityとdecomposition theoremを使う
-\end{frame}
-
-\begin{frame}{Soergel bimodule}
-Kazhdan-Lusztigとの関係
-
-categorification
-
-Khovanovのtriply graded
-\end{frame}
-
-\begin{frame}
 KhovanovのSpringer多様体。
 Grassmannianとの関係、geometric Satake
-\end{frame}
-
-\begin{frame}
-不変量の幾何的定義
-
-結び目の図式からある多様体とその上の層の複体を定義する。
-
-weight filtrationからspectre系列を作る。
-
-$E_2$-pageが二重複体で、さらにここにweightでもう一つ次数が入って、三重次数複体。
 \end{frame}
 \end{document}
