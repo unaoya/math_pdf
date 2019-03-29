@@ -1,7 +1,30 @@
 \documentclass[dvipdfmx]{beamer}
+\usetheme{metropolis}
+%\usecolortheme{beaver} 
+
 \input{../tex/theorems}
 \input{../tex/symbols}
 \usepackage{bxdpx-beamer}
+\usepackage{tikz-cd}
+\usepackage[all]{xy}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+
+%https://tex.stackexchange.com/questions/178800/creating-sections-each-with-title-pages-in-beamers-slides
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\QC}{\mathrm{QC}}
+\newcommand{\spec}{\mathrm{Spec}}
+\newcommand{\Mod}{\mathrm{Mod}}
+
 \title{導来代数幾何入門}
 \author{梅崎直也@unaoya}
 \date{2019/3/29 第3回関東すうがく徒のつどい}
@@ -12,37 +35,355 @@
 \end{frame}
 
 \begin{frame}
-\begin{enumerate}
-\item 導入
-\item 代数幾何
-\item 導来代数幾何
-\item BenZvi-Francis-Nadler
-\item 応用
-\end{enumerate}
+\tableofcontents
+\end{frame} 
+
+\begin{frame}{注意}
+この講演の内容は、いくつかの解説と論文のイントロの非常に粗い位相での貼り合わせです。
+参考にしたものは最後に参考文献として一覧にしてあります。
+
+講演者は証明や正確な定義をフォローしていません。
+
+スライドは公開しています。（twitter @unaoya）
 \end{frame}
 
-\begin{frame}{目標}
+\begin{frame}{今日の内容}
+全体像を文章で説明する。
+
+スキームにおけるホモトピー。
+導来関手
+スタック
+
+圏化。
+ホモロジーではなく、圏を不変量として構成する。
+\end{frame}
+
+\section{代数幾何とホモトピー}
+
+\begin{frame}{この節の目標}
+代数幾何においてホモトピーを考えたくなる状況をいくつか説明する。
+\end{frame}
+
+\begin{frame}{動機の一つ}
+そもそもループ空間とは何か？
+どう役に立つか？（表現論に応用がある？ループ群？（これは点集合になるので、相対化したい？））
+
+代数幾何においてループ空間を作る。
+（代数幾何におけるループ空間的現象の例？、dRとかHKRとか？）
+
+ホモトピー論におけるループ空間
+$Map(S^1,X)=Map(B\Z,X)$
+$S^1\simeq B\Z\simeq \ast\amalg^h_{\ast\amalg^h\ast}\ast$とできる。
+
+$B\Z$はスタックとしては定義できる。
+mapping stackを考えると？自明なものになってしまう（$\ast \to B\Z$が疎モジュライなため？）
+
+derived mapping stackを考える。
+つまり$T \mapsto Map(T\times M,X)$ではなく$T\mapsto Map(T\times^hM,X)$を考える。
+
+$\times$と$\times^h$の違いは何か？
+\end{frame}
+
+\begin{frame}
+なぜ代数幾何か？
+幾何学的表現論では分解定理とよいコホモロジー理論をつかう？
+
+導入
+ホモトピーの代数的な扱い
+ドルドカン
+
+
+次数付き代数を単に代数と思うのとではテンソル積がずれる？忘却関手
+ホモトピー極限と普通の極限の違いに対応？
+
+s1のループ空間上のS1不変関数と微分形式？
+
+schemeにおけるhom対象。
+projectiveならHilbert scheme
+affineなとき。ind scheme?$\A^1$の例を考える。
+\end{frame}
+
+
+\begin{frame}{homotopy limit and homotopy colimit}
+通常の極限や余極限はホモトピーと相性が悪い。
+
+\begin{multicols}{2}
+\[
+\begin{CD}
+\ast@<<<\ast\\
+@AAA@AAA\\
+\ast@<<<\ast\amalg\ast
+\end{CD}
+\]
+
+\[
+\begin{CD}
+S^1@<<<[0,1]\\
+@AAA@AAA\\
+[0,1]@<<<\ast\amalg\ast
+\end{CD}
+\]
+\end{multicols}
+
+
+\begin{multicols}{2}
+\[
+\begin{CD}
+\ast@>>>\ast\\
+@VVV@VVV\\
+\ast@>>>S^1
+\end{CD}
+\]
+
+\[
+\begin{CD}
+\Z@>>>\ast\\
+@VVV@VVV\\
+\R@>>>S^1
+\end{CD}
+\]
+\end{multicols}
+
+これを克服するためにホモトピー極限とホモトピー余極限という概念を定義する必要がある。
 \end{frame}
 
 \begin{frame}{代数幾何におけるファイバー積}
+$k$を可換環とし$Alg_k$を可換な$k$代数の圏とする。
 
-スキーム論は一般の環に対して空間を構成する、またそれの貼り合わせ
-相対的な議論を扱える枠組み
-例、高校数学の線束、mod p、無限小変形
-テンソル積が大事
+$k$代数$A$に対して空間$\spec A \to \spec k$を構成する。
+これは$B \mapsto Hom_{k}(A,B)$により関手$Alg_k \to Sets$を与える。
+これの貼り合わせが一般のスキーム$X$である。
+これは相対的な議論$X\to S$を扱える枠組みを与える。
+\begin{multicols}{2}
+\[
+\begin{CD}
+X_p@>>>X\\
+@VVV@VVV\\
+\spec\F_p@>>>\spec\Z
+\end{CD}
+\]
 
-$\spec A_1\otimes_BA_2\simeq\spec A_1\times_{\spec B}\spec A_2$
+\[
+\begin{CD}
+X_0@>>>X\\
+@VVV@VVV\\
+\spec k@>>>\spec k[t]/t^2
+\end{CD}
+\]
+\end{multicols}
+
+スキームのファイバー積に対応する操作が代数のテンソル積。
+\begin{align*}
+\spec(A_1\otimes_BA_2)\simeq \spec A_1\times_{\spec B}\spec A_2
+\end{align*}
+\end{frame}
+
+\begin{frame}{交点理論}
+加群の複体におけるホモトピーとその極限、余極限についても同様の問題がある。
+
+$k\otimes_{k[x]}k\simeq k$だが$k\otimes_{k[x]}(k[x][-1]\oplus k[x])\simeq k[-1]\oplus k$となる。
+\[
+\begin{CD}
+0@>>>k[x]@>>>k[x]@>>>0\\
+@.@VVV@VVV@.\\
+0@>>>0@>>>k@>>>0
+\end{CD}
+\]
+つまり、$Tor^1_{k[x]}(k,k)=k$である。
+これは$\otimes^L$を用いると、
+$k\otimes^l_{k[x]}k\simeq k[\epsilon_{-1}]=k\oplus k[-1]$とup to homotopyで定まる
+
+$A\otimes_BC$だと重複度が出てこない。
+$Tor$を計算する。
+面倒。
+$A\otimes^L_BC$を幾何的な対象として直接扱ってしまえばいいのでは？
+$\spec A\otimes^L_BC$が$A$と$B$の交点であるとしてしまう。
+
+しかし$A\otimes^L_BC$はup to homotopyでしか決まらない！！
+\end{frame}
+
+\begin{frame}{変形理論}
+ケーラー微分の定義やザリスキ接空間の定義を思い出す
+
+$X$に対し、
+\[
+\begin{CD}
+\gamma^*V@>>>V\\
+@VVV@VVV\\
+S^1@>\gamma>>X
+\end{CD}
+\]
+と定義すると$LX=\spec Sym_{O_X}(L_X[1])$となる。
+$\Omega^1_{A/k}=I/I^1, I=\ker(A\otimes_kA \to A)$であったことを思い出す。
+
+この$L_X$はcotangent complexと呼ばれるもので、$X$の変形を
+
+$A$がsmooth $k$-algebraなら$L_A\simeq \Omega^1_{A/k}$であり、$\pi_0(L_A)=\Omega^1_{\pi_0A}$となる。
+\end{frame}
+
+\begin{frame}{stackとhigher stack}
+代数幾何におけるstackとhigher stack
+
+集合に値を持つ層を考える。
+例。$A$に対し$A^\times$を対応させるもの。
+これは$\G_m$で表現される。
+
+stackはGrpdに値を持つ層。
+例$G$-torsorの分類空間$BG$。up to isoで分類。
+SetはGrpdに離散的なものとして埋め込める。
+
+GrpdのnerveをとることでsSetが定まる。
+これに広げることでより広いmoduli問題を考えることができる。
+up to euivalenceで分類したい。
+higher stackはsSetに値を持つ層（貼り合わせ条件はホモトピー込みで考える）
+
+貼り合わせ条件が被覆$U_\bullet\to S$に対し、$Set$に値を持つ場合
+\begin{align*}
+F(U\times_SU) \to F(U) \to F(S)
+\end{align*}
+\begin{align*}
+F(U\times_SU\times_SU)\to F(U\times_SU) \to F(U) \to F(S)
+\end{align*}
+\begin{align*}
+\cdots F(U\times_XU\times_SU) \to F(U\times_SU) \to F(U) \to F(S)
+\end{align*}
+\end{frame}
+
+\begin{frame}{ループ空間とChern指標}
+
+$LBG=Map(S^1,BG)=G/G$となる。
+$S^1$上の$G$-torsorを考えると、貼り合わせが$e$をどこにはり合わせるかで決まる。
+\[
+\begin{CD}
+e@>>>g\\
+@VVV@VVV\\
+h@>>>hg'=gh
+\end{CD}
+\]
+
+$V/X$と$\gamma:S^1\to X$に対し、
+\[
+\begin{CD}
+\gamma^*V@>>>V\\
+@VVV@VVV\\
+S^1@>\gamma>>X
+\end{CD}
+\]
+のモノドロミーのtraceを対応させることで、$Ch(V)\in O(LX)^{S^1}$が定まる。
+これが$Ch:K(X) \to O(LX)^{S^1}=H^{ev}_{DR}(X)$を与える。
+
+特に$X=BG$とすると、$LX=LBG=[G/G]$であり、$V$は$G$の表現、$K(X)=R(X), O(LX)^{S^1}=\C(G/G)$つまり類関数で、
+$Ch$は表現のtrace
+
+ベクトル束にコホモロジー類を対応させる。
+これのcategorificationを考える。
+\end{frame}
+
+\begin{frame}[fragile]{この節のまとめ}
+
+右側をhigherにした。
+
+\[\begin{tikzcd}[column sep=small]
+Alg_k \ar[dr, "\displaystyle{p_G}"'] \ar[rr, "\displaystyle{p}"]& &  Sets \\
+& Aut(Y|X) Y \ar[ur, "\displaystyle{\widetilde{p}_G}"'] &
+\end{tikzcd}\]
+\end{frame}
+
+\section{derived stack}
+
+\begin{frame}[fragile]{この節の目標}
+
+\[\begin{tikzcd}[column sep=small]
+Alg_k \ar[dr, "\displaystyle{p_G}"'] \ar[rr, "\displaystyle{p}"]& &  Sets \\
+& Aut(Y|X) Y \ar[ur, "\displaystyle{\widetilde{p}_G}"'] &
+\end{tikzcd}\]
+
+右側をssetにするとmoduli problemをより広いものを扱うことができる。
+例えば導来圏の対象を分類する、導来圏を分類するなどup to equivで分類したい場合などに必要。
+
+左側をderiveすると「正しく」極限をとることができ、「正しい」空間を定義できる。
+cf. hidden smoothness
+
+両側にホモトピーが定まっていて、それについて整合的な関手を考える。
+\end{frame}
+
+\begin{frame}{derived topology}
+(higher) stackは$Alg_k \to sSet$で層になるものだった。
+これを拡張して$dAlg_k \to sSet$で層になるものとしてderived stackを定義する。
+
+層を定義するためには位相が必要。
+derived topologyはmodel category $(M,W)$上の位相で、$Ho(M)$の位相を誘導するもの。
+（Toen-Vaquieのmodel topoiやLurieのhigher topoi?）
+
+\begin{dfn}
+$dAlg_k^{op}$にderived \'etale topologyを以下で定める。
+$\{A \to B_i\}_i$が\'etale coveringとは、
+$\{\pi_0(A) \to \pi_0(B)\}$が通常の可換環として\'etale coveringであり、$\pi_nA \otimes_{\pi_0A}\pi_0B_i \to \pi_nB_i$が同型。
+\end{dfn}
+
+これはinfinitesimal liftingで特徴付けることもできる。
 \end{frame}
 
 \begin{frame}{derived stack}
-affine derived stackとその貼り合わせ（どの圏ではり合わせるか？）
+層は前層であって、次の貼り合わせ条件を満たすもの。
+
+presheafをlocalizationしてsheafを作るのと同じで、prestackをlocalizationしてstackを作る。
+derived prestackのなす圏を$dSPr=Fun(dAlg_k \to sSet)$とする。
+$W$を$f:F \to G$で$\pi_i(F,x)\simeq \pi_i(G,f(x)) $なるもので定める？
+これを用いて$dSt=Ho(dSPr)=W^{-1}dSPr$と定める。
+
+これを具体的に書けば次のようなものになる。
+\begin{dfn}
+derived stackとは関手$F:dAlg_k \to sSet$であって、weak equivalenceを保ち、次のdescent条件を満たす。
+
+任意のetale h-hypercovering $B_\bullet \to A$に対して$F(A) \to holim F(B_\bullet)$が$Ho(sSet)$における同値
+\end{dfn}
 \end{frame}
 
-\begin{frame}{mapping stack}
+\begin{frame}{derived affine stack}
+$\R \spec:dAlg_k \to dSt_k$が定まり忠実充満。（derived Yoneda）
+これは$A \mapsto (B \mapsto Map(A,B))$で定める。
+
+またinternal homやholim, hocolimが定まる。
+
+例えば
+\begin{align*}
+\R \spec B \times^h_{\R \spec A}\R \spec C \simeq \R \spec(B \otimes^L_AB)\\
+Map(F,G):H\mapsto Map(F\times^hH,G)
+\end{align*}
+となる。
+
+一般のderived stackは表現可能関手つまりaffine derived stackのcolimitでかける。
+アトラス$\R \spec A \to F$を持ち、適当な条件を満たすもの。
+
+定義域を制限することで$t_0:dSt \to St$が定まり、afiineを貼り合わせることで$i:St \to dSt$が定まる。
+$t_0(\R \spec A)=\spec \pi_0(A)$となる。
+また$it_0X \to X$は閉埋め込みで、$X$と$t_0(X)$のsmall etale siteは一致する。
+
+しかし$i$はhomotopy limitやinternal homを保たない。
+derived tangentやderived fibered productは真にderivedな情報を含む。
+例。交点積
+なぜcdgaを考えるか？
+derived productやdeformation theory?
+
+\end{frame}
+
+\begin{frame}{derived mapping stack}
+$Map_{dSt_k}(F,G):H \mapsto Hom_{dSt_k}(F\times^hH, G)$と定める。
+これが$dSt_k$におけるinternal homである。
+
 $\Sigma$が位相空間や単体的集合の時、internal hom $X^\Sigma=Map(\Sigma,X)$がderived stackとして定まる。
-\end{frame}
+ここで$\Sigma$はconstant stack。
 
-\begin{frame}{classifying space}
+このとき$i:St_k \to dSt_k$は$Map$と交換しない、
+つまり$iMap(F,G)\simeq \R Map(iF, iG)$となるとは限らない。
+
+一方で$t_0:dSt_k \to St_k$とは交換する。
+つまり$t_0\R Map(F,G) \simeq Map(t_0F, T_0G)$となる。
+特に$F, G$が$St(k)$から来るとき、$t_0\R Map(iF, iG)\simeq Map(F,G)$である。（$t_0iF\simeq F$であることに注意）
+つまりderived mapping stackはmapping stackを太らせたもの。
+
+mapping spaceがずれる例として、次のloop stackの例を見る。
 \end{frame}
 
 \begin{frame}{derived loop stack}
@@ -51,9 +392,51 @@ $LX \simeq X\times_{X\times X}X$である。
 
 $X$が位相空間から定まるconstant stackの場合、$LX$は通常のloop spaceから定まるconstant stack
 
+stackとしての$Map(B\Z, X)$は$X$そのもの？
+derived stackとしての$Map(B\Z, X)=X\times^h_{X\times^hX}X$となる。
+$\ast \times_{\A^1}\ast\simeq k[\epsilon_{-1}]$の計算
+
 $X=BG$のとき$LX=LBG=G/G$
 
 $X$がsmooth scheme over char $0$ fieldの時は$T_X[-1]$
+\end{frame}
+
+\begin{frame}{cotangent complex}
+schemeのcotangent complex, $\Omega^1$との関係、変形理論
+
+derived ring $D_i=\R \spec k[\epsilon]=\R \spec (k\oplus k[i])$とする。
+degree 0と-iにある。
+
+このとき$Ext^i_k(L_{X,x},k)\simeq\R Hom_*(D_i,(X,x))$となる。
+$Ext^i$はderived stackにおいては表現可能。
+
+derived tangent stackを$TX=Map(\spec k[\epsilon], X)$とする。
+
+$Y$がschemeなら$TiY\simeq \R \spec_Y(Sym_{O_Y}L_Y)$となる。
+
+$Vect_n(X)$は非自明なderived extensionを持つ。
+$\R Vect_n(X)$とする。
+\end{frame}
+
+\begin{frame}{この節のまとめ}
+
+derived affine stack $\R \spec A$とその貼り合わせでderived stackが得られる。
+
+loop stackを定義した。
+\end{frame}
+
+\section{$\QC(X)$と積分変換}
+
+\begin{frame}{この節の目標}
+積分変換の圏が準連接層の圏と同値になることをみる。
+
+積分変換は圏の作用とみなせる。
+
+また積分変換の合成は合成積
+\end{frame}
+
+\begin{frame}
+symmetric monoidal categoryとalgebraとmodule
 \end{frame}
 
 \begin{frame}{$Mod_A$の定義}
@@ -75,14 +458,16 @@ LurieのHAでの扱いは？
 $A$-modの圏から直接作るのと一致する？
 \end{frame}
 
-\begin{frame}{$QC(X)$の定義}
-$X=\spec A$がaffine derived schemeの時、$QC(X)=Mod_A$とする。
+\begin{frame}{$\QC(X)$の定義}
+$X=\spec A$がaffine derived schemeの時、$\QC(X)=Mod_A$とする。
 
 一般のderived stackについては、$X$をaffine derived stackのcolimitで書き、
-同じ図式で$QC$のlimitを$\infty$-cat of $\infty$-catsでとる。
+同じ図式で$\QC$のlimitを$\infty$-cat of $\infty$-catsでとる。
 
 $X$がqcでaffine diagonalを持てば、cosimplical diagramのtotalizationでかける。
+$\Delta:X \to X\times X$が各affine $U \to X$に引き戻してaffineであり、
 
+$U \to X$から$U_\bullet X$を作り、
 $O_X$-modのような作り方はできない？
 \end{frame}
 
@@ -91,67 +476,108 @@ $O_X$-modのような作り方はできない？
 \begin{enumerate}
 \item $A$をderived commutative ringとする。
 $A$加群$M$がperfectとは、$Mod_A$のsmallest $\infty$ categoryでfinite colimitとretractでとじたものに属すること。
-\item derived stack $X$に対し、$Perf(X)$は$QC(X)$のfull $\infty$-subcategoryであって、
+\item derived stack $X$に対し、$Perf(X)$は$\QC(X)$のfull $\infty$-subcategoryであって、
 任意のaffine $f:U \to X$への制限$f^*M$がperfect moduleであるものからなるもの。
-\item derived stack $X$がprefect stackとは$QC(X)\cong IndPerf(X)$であること。
+\item derived stack $X$がprefect stackとは$\QC(X)\cong IndPerf(X)$であること。
 \item $f:X \to Y$がperfectとは、任意のaffine $U \to Y$について、$X \times_Y U$がperfectなこと。
 \end{enumerate}
 \end{dfn}
+\end{frame}
 
+\begin{frame}{有限性条件}
 compactとdualizableとperfectの関係。
-特に$X$がaffine diagonalを持つ時の$QC(X)$における同値性。
+$Vect$における例。
+
+self-dualとは。
+stable symmetric monoidal categoryで
+$1 \to M\otimes M^\vee \to 1$で$M \to M \otimes M^\vee \otimes M \to M$が$\id_M$となるもの。
+
+$Vect/k$における有限次元ベクトル空間。
+$V^\vee = \Hom(V,k)$とする。
+$1\to V\otimes V^\vee$を対角行列、$V\otimes V^\vee \to 1$をtraceとすると、
+上の条件を満たす。
+
+特に$X$がaffine diagonalを持つ時の$\QC(X)$における同値性。
 \end{frame}
 
 \begin{frame}{base changeとprojection formula}
-Gaitsgoryにも注意がある？
 
 \begin{prop}[BFN, proposition 3.10]
 $f:X \to Y$をperfectとする。
 この時
 \begin{enumerate}
-\item $f_*:QC(X) \to QC(Y)$はsmall colimitと交換し、projection formulaを満たす
-\item 任意のderived stackの射$g:Y' \to Y$に対し、base chage map $g^*f_* \to f'^*g'_*$は同値
+\item $f_*:\QC(X) \to \QC(Y)$はsmall colimitと交換し、projection formulaを満たす
+\item 任意のderived stackの射$g:Y' \to Y$に対し、base chage map $g^*f_* \to f'_*g'^*$は同値
+\begin{multicols}{2}
+\[
+\begin{CD}
+X'@>g'>>X\\
+@Vf'VV@VfVV\\
+Y'@>g>>Y
+\end{CD}
+\]
+
+\[
+\begin{CD}
+\QC(X')@<g'^*<<\QC(X)\\
+@Vf'_*VV@Vf_*VV\\
+\QC(Y')@<g^*<<\QC(Y)
+\end{CD}
+\]
+\end{multicols}
 \end{enumerate}
 \end{prop}
 \end{frame}
 
 \begin{frame}
-symmetric monoidal categoryとalgebraとmodule
-\end{frame}
-
-\begin{frame}
 \begin{prop}[BFN, Proposition 4.6]
-$X_1, X_2$ perfect, $\boxtimes:QC(X_1)^c\otimes QC(X_2)^c \cong QC(X_1\times X_2)^c$
+$X_1, X_2$ perfect, $\boxtimes:\QC(X_1)^c\otimes \QC(X_2)^c \cong \QC(X_1\times X_2)^c$
 \end{prop}
 \begin{enumerate}
 \item $\otimes$とpullbackはdualizableを保ち、$X=X_1\times X_2$がperfectなことから、外部積がcompactを保つ
-\item $QC(X_1\times X_2)^c$が外部積で生成
+\item $\QC(X_1\times X_2)^c$が外部積で生成
 \item projection formula
 \end{enumerate}
 により証明。
 さらに
 \begin{enumerate}
 \item $Ind:st \to Pr^L$がsummetric monoidal
-\item $IndQC(X)^c\simeq QC(X)$
+\item $Ind\QC(X)^c\simeq \QC(X)$
 \end{enumerate}
-から、$\boxtimes:QC(X_1)\otimes QC(X_2) \simeq QC(X_1\times X_2)$が成立。
+から、$\boxtimes:\QC(X_1)\otimes \QC(X_2) \simeq \QC(X_1\times X_2)$が成立。
 \end{frame}
 
 \begin{frame}
 \begin{thm}[BFNのTheorem 4.7]
-$X_1, X_2, Y$がperfectの時、$QC(X_1 \times_Y X_2) = QC(X_1) \otimes_{QC(Y)}QC(X_2)$
+$X_1, X_2, Y$がperfectの時、$\QC(X_1 \times_Y X_2) = \QC(X_1) \otimes_{\QC(Y)}\QC(X_2)$
 \end{thm}
 
 $Y$が一般の時の証明の方針（どこに$Y$がperfectを使う？）
+$X_1\times_YX_2 \to X_1\times Y^\bullet\times X_2$から$\QC(X_1\times_YX_2) \gets \QC(X_1\times Y^\bullet X_2)$を作る。
+すでに証明したことから$\QC(X_1)\otimes \QC(Y)^\bullet\otimes \QC(X_2)$となり、
+これのgeometric realizationで$\QC(X_1)\otimes_{\QC(Y)}\QC(X_2)$が計算できる。
 \begin{enumerate}
-\item $QC(X_1\times_YX_2)=Mod_{T_{geom}}(QC(X_1\times X_2))$ by Barr-Beck
-\item $QC(X_1)\otimes_{QC(Y)}QC(X_2)=Mod_{T_{alg}}(QC(X_1\times X_2))$ by Barr-Beck
+\item $\QC(X_1\times_YX_2)=Mod_{T_{geom}}(\QC(X_1\times X_2))$ by Barr-Beck
+\item $\QC(X_1)\otimes_{\QC(Y)}\QC(X_2)=Mod_{T_{alg}}(\QC(X_1\times X_2))$ by Barr-Beck
 \item $T_{alg}=T_{geom}$ by base change
 \end{enumerate}
 \end{frame}
 
-\begin{frame}
-self-duality
+\begin{frame}{self-duality}
+\begin{cor}[BFN, Corollary 4.8]
+$\pi:X \to Y$ map of perfect stacksとする。
+$\QC(X)$はself dual $\QC(Y)$-modである。
+つまり$Fun_{QC(Y)}(QC(X),QC(X')) \simeq QC(X)\otimes_{QC(Y)}QC(X')$となる。
+\end{cor}
+
+
+
+証明
+\begin{align*}
+X \to X\times_YX \to X\\
+X \gets X\times_YX \to X\times_YX\times_YX
+\end{align*}
+
 $Fun$のやつ
 \end{frame}
 
@@ -166,24 +592,49 @@ $Fun$のやつ
 \begin{thm}[BFNのTheorem 4.14]
 $X, Y$ derived stack with affine diagonal、$f:X \to Y$をperfectとする。
 $g:X' \to Y$は任意のderived stackの射とする。
-この時、$QC (X \times_Y X') \simeq Fun_Y(QC(X),QC(X'))$は$\infty$圏の同値
+この時、$\QC (X \times_Y X') \simeq Fun_Y(\QC(X),\QC(X'))$は$\infty$圏の同値
 \end{thm}
 \begin{enumerate}
 \item 関手の構成$M\mapsto \tilde{f}_*(M\otimes\tilde{g}^*-)$とする。
-$\tilde{f}$がperfectなのでcolimitを保ち$QC$に移る。
-またprojection formulaにより$QC(Y)$線形になる。
+$\tilde{f}$がperfectなのでcolimitを保ち$\QC$に移る。
+またprojection formulaにより$\QC(Y)$線形になる。
 
-\item $X'$についてlocalなので（$\times, \lim, \colim, QC$の交換関係）、affineに帰着する。
-$QC(X\times_Y\spec A) \simeq Fun_Y(QC(X),Mod_A)$を示す。
+\item $X'$についてlocalなので（$\times, \lim, \colim, \QC$の交換関係）、affineに帰着する。
+$\QC(X\times_Y\spec A) \simeq Fun_Y(\QC(X),Mod_A)$を示す。
 
 \item $Y=\spec B$の時。
-前の系4.8から$QC(X)$は$Mod_B$上self dualで、前の命題4.13から$QC$と$\otimes$の交換がわかるので
-$Fun_B(QC(X),Mod_A)\simeq Fun_B(Mod_B,QC(X)^\vee\otimes_BMod_A)\simeq QC(X)\otimes_BMod_A$
-$QC(X\times_B\spec A)\simeq QC(X)\otimes_BMod_A$
+前の系4.8から$\QC(X)$は$Mod_B$上self dualで、前の命題4.13から$\QC$と$\otimes$の交換がわかるので
+$Fun_B(\QC(X),Mod_A)\simeq Fun_B(Mod_B,\QC(X)^\vee\otimes_BMod_A)\simeq \QC(X)\otimes_BMod_A$
+$\QC(X\times_B\spec A)\simeq \QC(X)\otimes_BMod_A$
 と計算できる。
 
 \item $Y$が一般の時。
 \end{enumerate}
+\end{frame}
+
+\begin{frame}{この節のまとめ}
+\begin{enumerate}
+\item derived affine scheme $X=\R \spec A$に対し$\QC(X)=Mod_A$を$\infty$圏として定義した。
+（最初からdg $A$-modの$N_{dg}$をとるのとは違う？）
+
+\item 一般のderived scheme $X$に対し$\QC(X)$を$X=colim_i\R \spec A_i$のとき$Mod_{A_i}$の貼り合わせで定義した。
+これは加群（stable symmetric monoidal category）
+
+\item perfectというクラスを定義した。
+有限性の条件
+
+\item 積分変換のなす圏がファイバー積の$\QC$と同値であることを示した。
+$X$が$Y$上perfectなとき
+\begin{align*}
+\QC(X\times_YX') \simeq Fun_Y(\QC(X), \QC(X')); K \mapsto (F \mapsto (f_*(g^*F\otimes K)))
+\end{align*}
+\end{enumerate}
+\end{frame}
+
+\section{表現論とTFTへの応用}
+
+\begin{frame}{この節の目標}
+前節の内容を表現論やTFTへ応用する
 \end{frame}
 
 \begin{frame}{応用}
@@ -211,8 +662,8 @@ $H^{aff}_G$を$St_G=\tilde{G}\times_G\tilde{G}$上の$G$同変準連接層のな
 
 \begin{frame}
 $St_G=\tilde{G}\times_G\tilde{G}$とする。
-$Z(QC(X\times_YX)) \simeq QC(LY)$を$X=\tilde{G}/G \to Y=G/G=LBG$に適用することで
-$Z(H^{aff}_G)=Z(QC(St_G))\simeq Z(QC(X\times_YX))\simeq QC(LY)\simeq QC(LLBG)\simeq QC(Loc_G(T^2))$となる。
+$Z(\QC(X\times_YX)) \simeq \QC(LY)$を$X=\tilde{G}/G \to Y=G/G=LBG$に適用することで
+$Z(H^{aff}_G)=Z(\QC(St_G))\simeq Z(\QC(X\times_YX))\simeq \QC(LY)\simeq \QC(LLBG)\simeq \QC(Loc_G(T^2))$となる。
 \end{frame}
 
 \begin{frame}{finite Hecke algebra}
@@ -232,7 +683,7 @@ $H_G$と$\tilde{H}_G$はsemi-rigidでcanonical pivotal, CY strを持つ。
 \end{dfn}
 
 \begin{prop}
-perfect stack $X$に対し 2d TFT $\exists Z_X$ s.t. $Z_X(S^1)=QC(LX), Z_X(\Sigma)=\Gamma(X^\Sigma, O_{X^\Sigma})$
+perfect stack $X$に対し 2d TFT $\exists Z_X$ s.t. $Z_X(S^1)=\QC(LX), Z_X(\Sigma)=\Gamma(X^\Sigma, O_{X^\Sigma})$
 \end{prop}
 証明すべきことは？
 
