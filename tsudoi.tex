@@ -34,75 +34,46 @@
 \maketitle
 \end{frame}
 
-\begin{frame}
-\tableofcontents
-\end{frame} 
-
-\begin{frame}{注意}
+\begin{frame}{はじめに}
 この講演の内容は、いくつかの解説と論文のイントロの非常に粗い位相での貼り合わせです。
 参考にしたものは最後に参考文献として一覧にしてあります。
 
-講演者は証明や正確な定義をフォローしていません。
+講演者は証明や正確な定義をフォローしていません。\\
+（次回作に期待）
 
-スライドは公開しています。（twitter @unaoya）
+スライドは公開しています。
+（twitter @unaoya）
 \end{frame}
 
+\begin{frame}{目次}
+\tableofcontents
+\end{frame} 
+
 \begin{frame}{今日の内容}
-全体像を文章で説明する。
+代数幾何における空間に対して、適切な極限や余極限の操作を与える枠組みが欲しい。
+通常のスキームは$Alg_k \to Set$という関手で適切な条件を満たすものである。
+これを拡張して、導来スキームを関手$dAlg_k \to sSet$であって適切な条件を持つものとして定める。
 
-スキームにおけるホモトピー。
-導来関手
-スタック
+これらはホモトピーを取り入れた構造を持つ圏であり、
+ホモトピーを考慮した適切な極限操作を定義することができる。
 
-圏化。
-ホモロジーではなく、圏を不変量として構成する。
+応用上の動機として、例えばup to equivalenceで物事を分類するような問題を考えたい。
+例えば導来圏の対象で適切な条件を持つものを分類する。
 \end{frame}
 
 \section{代数幾何とホモトピー}
 
 \begin{frame}{この節の目標}
-代数幾何においてホモトピーを考えたくなる状況をいくつか説明する。
+代数幾何においてホモトピーを考えたくなる状況。
+
+\begin{enumerate}
+\item 関手が完全でないとき、導来関手を考える。複体のホモトピーを用いて定義する。
+\item スキームの交点を考えると、重複度が現れる。「重複度付きの空間」を直接扱いたい。
+\item up to equivalenceなモジュライ理論を考える。例えば導来圏の対象を分類するなど。
+\item ループ空間を考える。$S^1$から$X$への射を分類する空間を構成したい。
+\end{enumerate}
+
 \end{frame}
-
-\begin{frame}{動機の一つ}
-そもそもループ空間とは何か？
-どう役に立つか？（表現論に応用がある？ループ群？（これは点集合になるので、相対化したい？））
-
-代数幾何においてループ空間を作る。
-（代数幾何におけるループ空間的現象の例？、dRとかHKRとか？）
-
-ホモトピー論におけるループ空間
-$Map(S^1,X)=Map(B\Z,X)$
-$S^1\simeq B\Z\simeq \ast\amalg^h_{\ast\amalg^h\ast}\ast$とできる。
-
-$B\Z$はスタックとしては定義できる。
-mapping stackを考えると？自明なものになってしまう（$\ast \to B\Z$が疎モジュライなため？）
-
-derived mapping stackを考える。
-つまり$T \mapsto Map(T\times M,X)$ではなく$T\mapsto Map(T\times^hM,X)$を考える。
-
-$\times$と$\times^h$の違いは何か？
-\end{frame}
-
-\begin{frame}
-なぜ代数幾何か？
-幾何学的表現論では分解定理とよいコホモロジー理論をつかう？
-
-導入
-ホモトピーの代数的な扱い
-ドルドカン
-
-
-次数付き代数を単に代数と思うのとではテンソル積がずれる？忘却関手
-ホモトピー極限と普通の極限の違いに対応？
-
-s1のループ空間上のS1不変関数と微分形式？
-
-schemeにおけるhom対象。
-projectiveならHilbert scheme
-affineなとき。ind scheme?$\A^1$の例を考える。
-\end{frame}
-
 
 \begin{frame}{homotopy limit and homotopy colimit}
 通常の極限や余極限はホモトピーと相性が悪い。
@@ -144,7 +115,7 @@ S^1@<<<[0,1]\\
 \]
 \end{multicols}
 
-これを克服するためにホモトピー極限とホモトピー余極限という概念を定義する必要がある。
+これを克服するためにホモトピー極限とホモトピー余極限という概念を定義する。
 \end{frame}
 
 \begin{frame}{代数幾何におけるファイバー積}
@@ -153,7 +124,7 @@ $k$を可換環とし$Alg_k$を可換な$k$代数の圏とする。
 $k$代数$A$に対して空間$\spec A \to \spec k$を構成する。
 これは$B \mapsto Hom_{k}(A,B)$により関手$Alg_k \to Sets$を与える。
 これの貼り合わせが一般のスキーム$X$である。
-これは相対的な議論$X\to S$を扱える枠組みを与える。
+これは相対的な議論$X\to S$を扱うための枠組みを与える。
 \begin{multicols}{2}
 \[
 \begin{CD}
@@ -179,87 +150,124 @@ X_0@>>>X\\
 \end{frame}
 
 \begin{frame}{交点理論}
-加群の複体におけるホモトピーとその極限、余極限についても同様の問題がある。
+加群の複体のホモトピーとその極限、余極限も同様の問題。
 
 $k\otimes_{k[x]}k\simeq k$だが$k\otimes_{k[x]}(k[x][-1]\oplus k[x])\simeq k[-1]\oplus k$となる。
 \[
 \begin{CD}
-0@>>>k[x]@>>>k[x]@>>>0\\
+0@>>>k[x]@>{1\mapsto x}>>k[x]@>>>0\\
 @.@VVV@VVV@.\\
 0@>>>0@>>>k@>>>0
 \end{CD}
 \]
-つまり、$Tor^1_{k[x]}(k,k)=k$である。
-これは$\otimes^L$を用いると、
-$k\otimes^l_{k[x]}k\simeq k[\epsilon_{-1}]=k\oplus k[-1]$とup to homotopyで定まる
-
-$A\otimes_BC$だと重複度が出てこない。
-$Tor$を計算する。
-面倒。
-$A\otimes^L_BC$を幾何的な対象として直接扱ってしまえばいいのでは？
-$\spec A\otimes^L_BC$が$A$と$B$の交点であるとしてしまう。
-
-しかし$A\otimes^L_BC$はup to homotopyでしか決まらない！！
+$Tor^1_{k[x]}(k,k)=k$であり、$k\otimes^L_{k[x]}k\simeq k[\epsilon_{-1}]=k\oplus k[-1]$とup to homotopyで定まる。
+\[
+\begin{CD}
+\spec B\otimes_AC@>>>\spec B\\
+@VVV@VVV\\
+\spec C@>>>\spec A
+\end{CD}
+\]
+ではなく、直接$\spec A\otimes^L_BC$を幾何的な対象としたい。
+ただし$A\otimes^L_BC$はup to homotopyでしか決まらないことに注意。
 \end{frame}
 
 \begin{frame}{変形理論}
-ケーラー微分の定義やザリスキ接空間の定義を思い出す
-
-$X$に対し、
+$A$の微分加群は$\Omega^1_{A/k}=I/I^1, I=\ker(A\otimes_kA \to A)$であり、
+$X$の接空間は$Hom_k(\spec k[t]/t^2, X)$であった。
+ホモトピー極限を用いて、$X$に対し、
 \[
 \begin{CD}
-\gamma^*V@>>>V\\
-@VVV@VVV\\
-S^1@>\gamma>>X
+LX@>>>X\\
+@VVV@V\Delta VV\\
+X@>\Delta >>X\otimes X
 \end{CD}
 \]
 と定義すると$LX=\spec Sym_{O_X}(L_X[1])$となる。
-$\Omega^1_{A/k}=I/I^1, I=\ker(A\otimes_kA \to A)$であったことを思い出す。
 
-この$L_X$はcotangent complexと呼ばれるもので、$X$の変形を
+この$L_X$はcotangent complexと呼ばれるもので、$X$の変形をコントロールする複体。
 
 $A$がsmooth $k$-algebraなら$L_A\simeq \Omega^1_{A/k}$であり、$\pi_0(L_A)=\Omega^1_{\pi_0A}$となる。
 \end{frame}
 
-\begin{frame}{stackとhigher stack}
-代数幾何におけるstackとhigher stack
+\begin{frame}[fragile]{stack}
+スキーム$X$は集合に値を持つ層$Alg_k \to Set$を定める。
+例えば$A$に対し可逆元全体の集合$A^\times$を対応させるものは$\G_m=\spec k[x,x^{-1}]$で表現される。
 
-集合に値を持つ層を考える。
-例。$A$に対し$A^\times$を対応させるもの。
-これは$\G_m$で表現される。
+このとき層$F$の貼り合わせ条件は、$S$の被覆$U_\bullet \to S$に対して次が完全であること。
+\[
+\begin{tikzcd}
+   F(S) \arrow[r]
+    & F(U) \arrow[r, shift left]
+        \arrow[r, shift right]
+& F(U\times_SU)
+\end{tikzcd}
+\]
 
-stackはGrpdに値を持つ層。
-例$G$-torsorの分類空間$BG$。up to isoで分類。
+例えば$G$-torsor全体を分類する空間$BG$を考える。
+つまり関手$BG(S)=\{$S$\text{上の}$G$\text{-torsor全体}\}$を考える。
+同型類を適切に処理するために、SetではなくGrpd（全ての射が同型である圏のなす圏）に値を持つ層を考える。
+このようなものをstackという。
+
+stack $F$の貼り合わせ条件はコサイクル条件を考えて
+\begin{tikzcd}
+   F(S) \arrow[r]
+    & F(U) \arrow[r, shift left]
+        \arrow[r, shift right]
+& F(U\times_SU) \arrow[r]
+\arrow[r, shift left=2] \arrow[r, shift right=2]
+        & F(U\times_SU\times_SU) 
+\end{tikzcd}
+
 SetはGrpdに離散的なものとして埋め込める。
+\end{frame}
 
-GrpdのnerveをとることでsSetが定まる。
+\begin{frame}[fragile]{higher stack}
+GrpdのnerveをとることでsSet（単体的集合のなす圏）が定まる。
+単体的集合は、おおよそ点や線分、三角形、四面体などを適切に貼り合わせたものとしてイメージしておく。
+
 これに広げることでより広いmoduli問題を考えることができる。
-up to euivalenceで分類したい。
-higher stackはsSetに値を持つ層（貼り合わせ条件はホモトピー込みで考える）
+特にup to euivalenceで分類したい場合がある。
+例えば$S$上の適切な条件を満たす層の複体を分類したい場合など。
 
-貼り合わせ条件が被覆$U_\bullet\to S$に対し、$Set$に値を持つ場合
-\begin{align*}
-F(U\times_SU) \to F(U) \to F(S)
-\end{align*}
-\begin{align*}
-F(U\times_SU\times_SU)\to F(U\times_SU) \to F(U) \to F(S)
-\end{align*}
-\begin{align*}
-\cdots F(U\times_XU\times_SU) \to F(U\times_SU) \to F(U) \to F(S)
-\end{align*}
+このような問題を考えるためにhigher stackをsSetに値を持つ層として定める。
+貼り合わせ条件は高次のコサイクル条件を考えなければいけない。
+
+\begin{tikzcd}
+  F(S) \arrow[r]
+    & F(U) \arrow[r, shift left]
+        \arrow[r, shift right]
+& F(U\times_SU) \arrow[r]
+\arrow[r, shift left=2] \arrow[r, shift right=2]
+& F(U\times_SU\times_SU) \arrow[r, shift left=3]
+\arrow[r, shift left=1] \arrow[r, shift right=1] \arrow[r, shift right=3]
+        & \cdots
+\end{tikzcd}
+
+\end{frame}
+
+
+\begin{frame}{ループ空間}
+空間$X$に対して$S^1$から$X$への連続写像全体を適切に位相空間と思ったものがループ空間$LX$である。
+
+ホモトピー論におけるループ空間
+$Map(S^1,X)=Map(B\Z,X)$
+$S^1\simeq B\Z\simeq \ast\amalg^h_{\ast\amalg^h\ast}\ast$とできる。
+
+代数幾何においてループ空間を作る。
+$B\Z$はスタックとしては定義できるがmapping stackは自明なものになってしまう。
+
+derived mapping stackを考える。
+つまり$T \mapsto Map(T\times M,X)$ではなく$T\mapsto Map(T\times^hM,X)$を考える。
+
+ループ空間は$X \times^h_{X\times X}X$として定めることができる。
 \end{frame}
 
 \begin{frame}{ループ空間とChern指標}
-
 $LBG=Map(S^1,BG)=G/G$となる。
-$S^1$上の$G$-torsorを考えると、貼り合わせが$e$をどこにはり合わせるかで決まる。
-\[
-\begin{CD}
-e@>>>g\\
-@VVV@VVV\\
-h@>>>hg'=gh
-\end{CD}
-\]
+これは$S^1$上の$G$-torsorを考えると、貼り合わせが$e$をどこにはり合わせるかで決まること、
+$G$-torsorの同型が$G$同変であることとtorsorの作用を考えると、同型を与えるのが$e\mapsto h$としたとき、
+$hg'=gh$となる。
 
 $V/X$と$\gamma:S^1\to X$に対し、
 \[
@@ -272,21 +280,24 @@ S^1@>\gamma>>X
 のモノドロミーのtraceを対応させることで、$Ch(V)\in O(LX)^{S^1}$が定まる。
 これが$Ch:K(X) \to O(LX)^{S^1}=H^{ev}_{DR}(X)$を与える。
 
-特に$X=BG$とすると、$LX=LBG=[G/G]$であり、$V$は$G$の表現、$K(X)=R(X), O(LX)^{S^1}=\C(G/G)$つまり類関数で、
-$Ch$は表現のtrace
-
-ベクトル束にコホモロジー類を対応させる。
-これのcategorificationを考える。
+特に$X=BG$とすると、$LX=LBG=[G/G]$であり、$V$は$G$の表現、$O(LX)^{S^1}=\C(G/G)$は類関数で、
+$Ch$は表現のtraceである。
 \end{frame}
 
 \begin{frame}[fragile]{この節のまとめ}
 
-右側をhigherにした。
-
 \[\begin{tikzcd}[column sep=small]
-Alg_k \ar[dr, "\displaystyle{p_G}"'] \ar[rr, "\displaystyle{p}"]& &  Sets \\
-& Aut(Y|X) Y \ar[ur, "\displaystyle{\widetilde{p}_G}"'] &
+Alg_k \ar[rr, "\rm{scheme}"] \ar[rrd, "\rm{stack}"] \ar[rrdd, left, "\rm{higher stack}"']& & Sets \ar[d]\\
+& & Grpd \ar[d]\\
+& & sSets 
 \end{tikzcd}\]
+
+ループ空間を正しく定義するためには、空間のホモトピー極限が必要である。
+このもとで
+\begin{align*}
+LX=Map(S^1,X)=X\times^h_{X\times X}X
+\end{align*}
+と定義できるはず。
 \end{frame}
 
 \section{derived stack}
@@ -294,27 +305,27 @@ Alg_k \ar[dr, "\displaystyle{p_G}"'] \ar[rr, "\displaystyle{p}"]& &  Sets \\
 \begin{frame}[fragile]{この節の目標}
 
 \[\begin{tikzcd}[column sep=small]
-Alg_k \ar[dr, "\displaystyle{p_G}"'] \ar[rr, "\displaystyle{p}"]& &  Sets \\
-& Aut(Y|X) Y \ar[ur, "\displaystyle{\widetilde{p}_G}"'] &
+Alg_k \ar[dd] \ar[rr, "\rm{Sch}"] \ar[rrd, "\rm{St}"] \ar[rrdd, left, "\rm{hSt}"']& & Sets \ar[d]\\
+& & Grpd \ar[d]\\
+dAlg_k \ar[rr, "\rm{dSt}"']& & sSets 
 \end{tikzcd}\]
 
 右側をssetにするとmoduli problemをより広いものを扱うことができる。
 例えば導来圏の対象を分類する、導来圏を分類するなどup to equivで分類したい場合などに必要。
 
 左側をderiveすると「正しく」極限をとることができ、「正しい」空間を定義できる。
-cf. hidden smoothness
 
-両側にホモトピーが定まっていて、それについて整合的な関手を考える。
+両側にホモトピーが定まっていて、それについて整合的な関手。
 \end{frame}
 
 \begin{frame}{derived topology}
 (higher) stackは$Alg_k \to sSet$で層になるものだった。
 これを拡張して$dAlg_k \to sSet$で層になるものとしてderived stackを定義する。
 
-層を定義するためには位相が必要。
-derived topologyはmodel category $(M,W)$上の位相で、$Ho(M)$の位相を誘導するもの。
-（Toen-Vaquieのmodel topoiやLurieのhigher topoi?）
+$dAlg_k$は例えば可換dg $k$代数の圏。
+$dg$代数とは$\oplus_iA_i$で次数$-1$の射$d$であって$d^2=0$なるもの。
 
+層を定義するためには位相が必要。
 \begin{dfn}
 $dAlg_k^{op}$にderived \'etale topologyを以下で定める。
 $\{A \to B_i\}_i$が\'etale coveringとは、
@@ -324,19 +335,22 @@ $\{\pi_0(A) \to \pi_0(B)\}$が通常の可換環として\'etale coveringであ�
 これはinfinitesimal liftingで特徴付けることもできる。
 \end{frame}
 
-\begin{frame}{derived stack}
-層は前層であって、次の貼り合わせ条件を満たすもの。
+\begin{frame}[fragile]{derived stack}
+層は前層であって、貼り合わせ条件を満たすもの。
 
-presheafをlocalizationしてsheafを作るのと同じで、prestackをlocalizationしてstackを作る。
-derived prestackのなす圏を$dSPr=Fun(dAlg_k \to sSet)$とする。
-$W$を$f:F \to G$で$\pi_i(F,x)\simeq \pi_i(G,f(x)) $なるもので定める？
-これを用いて$dSt=Ho(dSPr)=W^{-1}dSPr$と定める。
-
-これを具体的に書けば次のようなものになる。
 \begin{dfn}
 derived stackとは関手$F:dAlg_k \to sSet$であって、weak equivalenceを保ち、次のdescent条件を満たす。
 
 任意のetale h-hypercovering $B_\bullet \to A$に対して$F(A) \to holim F(B_\bullet)$が$Ho(sSet)$における同値
+
+\begin{tikzcd}
+  F(A) \arrow[r]
+    & holim (F(B) \arrow[r, shift left]
+        \arrow[r, shift right]
+& F(B\otimes^L _AB) \arrow[r]
+\arrow[r, shift left=2] \arrow[r, shift right=2]
+ &\cdots)
+\end{tikzcd}
 \end{dfn}
 \end{frame}
 
@@ -344,28 +358,18 @@ derived stackとは関手$F:dAlg_k \to sSet$であって、weak equivalenceを�
 $\R \spec:dAlg_k \to dSt_k$が定まり忠実充満。（derived Yoneda）
 これは$A \mapsto (B \mapsto Map(A,B))$で定める。
 
-またinternal homやholim, hocolimが定まる。
-
-例えば
 \begin{align*}
 \R \spec B \times^h_{\R \spec A}\R \spec C \simeq \R \spec(B \otimes^L_AB)\\
 Map(F,G):H\mapsto Map(F\times^hH,G)
 \end{align*}
-となる。
+などとして、internal homやholimが定まる。
 
-一般のderived stackは表現可能関手つまりaffine derived stackのcolimitでかける。
-アトラス$\R \spec A \to F$を持ち、適当な条件を満たすもの。
+一般のderived stackはaffine derived stackのcolimitでかける。
 
 定義域を制限することで$t_0:dSt \to St$が定まり、afiineを貼り合わせることで$i:St \to dSt$が定まる。
 $t_0(\R \spec A)=\spec \pi_0(A)$となる。
 また$it_0X \to X$は閉埋め込みで、$X$と$t_0(X)$のsmall etale siteは一致する。
-
-しかし$i$はhomotopy limitやinternal homを保たない。
-derived tangentやderived fibered productは真にderivedな情報を含む。
-例。交点積
-なぜcdgaを考えるか？
-derived productやdeformation theory?
-
+しかし$i$はholimやMapを保たず、derived tangentやderived fibered productは真にderivedな情報を含む。
 \end{frame}
 
 \begin{frame}{derived mapping stack}
@@ -388,11 +392,11 @@ mapping spaceがずれる例として、次のloop stackの例を見る。
 
 \begin{frame}{derived loop stack}
 $LX=X^{S^1}=Map(S^1,X)$はinternal homで定める。
-$LX \simeq X\times_{X\times X}X$である。
+$LX \simeq X\times^h_{X\times X}X$である。
 
 $X$が位相空間から定まるconstant stackの場合、$LX$は通常のloop spaceから定まるconstant stack
 
-stackとしての$Map(B\Z, X)$は$X$そのもの？
+stackとしての$Map(B\Z, X)$は$X$そのものになるが、
 derived stackとしての$Map(B\Z, X)=X\times^h_{X\times^hX}X$となる。
 $\ast \times_{\A^1}\ast\simeq k[\epsilon_{-1}]$の計算
 
@@ -419,56 +423,47 @@ $\R Vect_n(X)$とする。
 \end{frame}
 
 \begin{frame}{この節のまとめ}
+derived affine stack $\R \spec A$とその貼り合わせでderived stack $X$が得られる。
+これは関手$X:dAlg_k \to sSet$であって、ホモトピーを保ち、貼り合わせ条件を満たすもの。
 
-derived affine stack $\R \spec A$とその貼り合わせでderived stackが得られる。
-
-loop stackを定義した。
+この枠組みにおいて、
+\begin{enumerate}
+\item ループ空間$LX$
+\item cotangent complex $L_X$
+\item 交点積$X \times^h_X$
+\end{enumerate}
+が正しく定義できる。
 \end{frame}
 
 \section{$\QC(X)$と積分変換}
 
 \begin{frame}{この節の目標}
-積分変換の圏が準連接層の圏と同値になることをみる。
+まずderived stack $X$上の層の圏$QC(X)$を定義する。
+またある種の有限性条件を満たすものとしてperfect stack $X$を定義する。
 
-積分変換は圏の作用とみなせる。
+この下で積分変換の圏が準連接層の圏と同値になることをみる。
+$X \to Y, X' \to Y$に対して
+\begin{align*}
+\QC(X\times_YX') &\simeq Fun_Y(\QC(X), \QC(X'))\\
+K &\mapsto (F \mapsto (f_*(g^*F\otimes K)))
+\end{align*}
 
-また積分変換の合成は合成積
-\end{frame}
-
-\begin{frame}
-symmetric monoidal categoryとalgebraとmodule
-\end{frame}
-
-\begin{frame}{$Mod_A$の定義}
-
-まず$Vect$を定義する。
-一般にabel圏から$\infty$圏を構成する方法がLurieのHAにある。
-これがmonoidal
-
-Gaitsgory
-$AssocAlg(Vect))^{op} \to DGCat_{cont}, A \mapsto A-Mod$が定まる。
-ここでVectは$\infty$-cat of chain complexes of $k$-vecctor spaces
-$DGCat_{cont}$は$1-Cat^{St, cocmpl}_{cont}$における$Vect$-moduleたちのなす$\infty$-cat
-Gaitsgory1.10.1
-HAでのアーベル圏$A$から$(\infty,1)$-cat $D^-(A)$を作り、
-これのright completionを作る。
-
-LurieのHAでの扱いは？
-
-$A$-modの圏から直接作るのと一致する？
+積分変換は$X\times Y$上の核関数$K(x, y)$を用いて$Y$上の関数$f(y)$から$x$上の関数を定める。
+\begin{align*}
+K(x,y) \mapsto (f(y) \mapsto (x \mapsto \int_Yf(y)k(x,y)dy))
+\end{align*}
 \end{frame}
 
 \begin{frame}{$\QC(X)$の定義}
+一般にアーベル圏 $A$からその複体のなすdg圏$Ch(A)$を作り、
+さらにそこから$\infty$圏$N_{dg}(Ch(A))$を定めることができる。
+これを$Mod_A$とする。
 $X=\spec A$がaffine derived schemeの時、$\QC(X)=Mod_A$とする。
 
 一般のderived stackについては、$X$をaffine derived stackのcolimitで書き、
 同じ図式で$\QC$のlimitを$\infty$-cat of $\infty$-catsでとる。
 
-$X$がqcでaffine diagonalを持てば、cosimplical diagramのtotalizationでかける。
-$\Delta:X \to X\times X$が各affine $U \to X$に引き戻してaffineであり、
-
-$U \to X$から$U_\bullet X$を作り、
-$O_X$-modのような作り方はできない？
+$X$がqcでaffine diagonal $\Delta:X \to X\times X$を持てば、cosimplical diagramのtotalizationでかける。
 \end{frame}
 
 \begin{frame}{perfect stack}
@@ -486,18 +481,20 @@ $A$加群$M$がperfectとは、$Mod_A$のsmallest $\infty$ categoryでfinite col
 
 \begin{frame}{有限性条件}
 compactとdualizableとperfectの関係。
-$Vect$における例。
+stable $\infty$-category $C$の対象$M$について
 
-self-dualとは。
-stable symmetric monoidal categoryで
-$1 \to M\otimes M^\vee \to 1$で$M \to M \otimes M^\vee \otimes M \to M$が$\id_M$となるもの。
+\begin{enumerate}
+\item compactとは$Hom_C(M,-)$がcoproductと交換すること。
+\item dualizabuleとはある$M^\vee$と$u:1\to M\otimes M^\vee, \tau:M\otimes M^\vee \to 1$が存在して、
+$M \to M \otimes M^\vee \otimes M \to M$が$\id_M$となるもの。
+\end{enumerate}
 
 $Vect/k$における有限次元ベクトル空間。
 $V^\vee = \Hom(V,k)$とする。
 $1\to V\otimes V^\vee$を対角行列、$V\otimes V^\vee \to 1$をtraceとすると、
 上の条件を満たす。
 
-特に$X$がaffine diagonalを持つ時の$\QC(X)$における同値性。
+特に$X$がaffine diagonalを持ちperfectなとき、$\QC(X)$においてdualizableとcompactとperfectは同値。
 \end{frame}
 
 \begin{frame}{base changeとprojection formula}
@@ -529,7 +526,7 @@ Y'@>g>>Y
 \end{prop}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{$\otimes$と$\times$}
 \begin{prop}[BFN, Proposition 4.6]
 $X_1, X_2$ perfect, $\boxtimes:\QC(X_1)^c\otimes \QC(X_2)^c \cong \QC(X_1\times X_2)^c$
 \end{prop}
@@ -547,7 +544,7 @@ $X_1, X_2$ perfect, $\boxtimes:\QC(X_1)^c\otimes \QC(X_2)^c \cong \QC(X_1\times 
 から、$\boxtimes:\QC(X_1)\otimes \QC(X_2) \simeq \QC(X_1\times X_2)$が成立。
 \end{frame}
 
-\begin{frame}
+\begin{frame}{$\otimes$と$\times$}
 \begin{thm}[BFNのTheorem 4.7]
 $X_1, X_2, Y$がperfectの時、$\QC(X_1 \times_Y X_2) = \QC(X_1) \otimes_{\QC(Y)}\QC(X_2)$
 \end{thm}
@@ -570,29 +567,13 @@ $\QC(X)$はself dual $\QC(Y)$-modである。
 つまり$Fun_{QC(Y)}(QC(X),QC(X')) \simeq QC(X)\otimes_{QC(Y)}QC(X')$となる。
 \end{cor}
 
-
-
-証明
-\begin{align*}
-X \to X\times_YX \to X\\
-X \gets X\times_YX \to X\times_YX\times_YX
-\end{align*}
-
-$Fun$のやつ
 \end{frame}
 
-\begin{frame}
-上を一般化。
-4.1の話
 
-これをどう使うか
-\end{frame}
-
-\begin{frame}
+\begin{frame}{積分変換}
 \begin{thm}[BFNのTheorem 4.14]
-$X, Y$ derived stack with affine diagonal、$f:X \to Y$をperfectとする。
-$g:X' \to Y$は任意のderived stackの射とする。
-この時、$\QC (X \times_Y X') \simeq Fun_Y(\QC(X),\QC(X'))$は$\infty$圏の同値
+$X, Y$ dst with affine diagonal、$f:X \to Y$をperfect、$g:X' \to Y$は任意。
+この時$\QC (X \times_Y X') \simeq Fun_Y(\QC(X),\QC(X'))$は同値。
 \end{thm}
 \begin{enumerate}
 \item 関手の構成$M\mapsto \tilde{f}_*(M\otimes\tilde{g}^*-)$とする。
@@ -615,10 +596,9 @@ $\QC(X\times_B\spec A)\simeq \QC(X)\otimes_BMod_A$
 \begin{frame}{この節のまとめ}
 \begin{enumerate}
 \item derived affine scheme $X=\R \spec A$に対し$\QC(X)=Mod_A$を$\infty$圏として定義した。
-（最初からdg $A$-modの$N_{dg}$をとるのとは違う？）
 
 \item 一般のderived scheme $X$に対し$\QC(X)$を$X=colim_i\R \spec A_i$のとき$Mod_{A_i}$の貼り合わせで定義した。
-これは加群（stable symmetric monoidal category）
+これは加群である。（stable symmetric monoidal category）
 
 \item perfectというクラスを定義した。
 有限性の条件
@@ -626,71 +606,63 @@ $\QC(X\times_B\spec A)\simeq \QC(X)\otimes_BMod_A$
 \item 積分変換のなす圏がファイバー積の$\QC$と同値であることを示した。
 $X$が$Y$上perfectなとき
 \begin{align*}
-\QC(X\times_YX') \simeq Fun_Y(\QC(X), \QC(X')); K \mapsto (F \mapsto (f_*(g^*F\otimes K)))
+\QC(X\times_YX') &\simeq Fun_Y(\QC(X), \QC(X'))\\
+K &\mapsto (F \mapsto (f_*(g^*F\otimes K)))
 \end{align*}
 \end{enumerate}
 \end{frame}
 
 \section{表現論とTFTへの応用}
-
-\begin{frame}{この節の目標}
-前節の内容を表現論やTFTへ応用する
-\end{frame}
-
 \begin{frame}{応用}
-symmetric monoidal $\infty$-cats of qcsとs$\infty$-cats of linear endofunctors with monoidal str by compositionのcenterとtraceと$E_n$-analogueを計算する。
 \begin{enumerate}
 \item Hecke category
-\item TFT
+\item 位相的場の理論
 \end{enumerate}
-
-\end{frame}
-
-\begin{frame}{Hecke category}
-$X \to Y$に対して$D(X\times_YX)$
-特に$BB \to BG$に対して$X\times_YX=B\backslash G/Y$
-
-Hecke categoryはHecke algebraのcategorification
 \end{frame}
 
 \begin{frame}{affine Hecke category}
-cf. Bezrukavnikov
-
+$G$は簡約群。
 $H^{aff}_G$を$St_G=\tilde{G}\times_G\tilde{G}$上の$G$同変準連接層のなす$\infty$-categoryとする。
-ここで$\tilde{G} \to G$はGrothendieck-Springer resolutionで$G$は簡約群。
-\end{frame}
+ここで$\tilde{G} \to G$はGrothendieck-Springer resolutionで$\tilde{G}=\{(g,B), g\in B, B\text{はBorel}\}$とする。
 
-\begin{frame}
 $St_G=\tilde{G}\times_G\tilde{G}$とする。
 $Z(\QC(X\times_YX)) \simeq \QC(LY)$を$X=\tilde{G}/G \to Y=G/G=LBG$に適用することで
 $Z(H^{aff}_G)=Z(\QC(St_G))\simeq Z(\QC(X\times_YX))\simeq \QC(LY)\simeq \QC(LLBG)\simeq \QC(Loc_G(T^2))$となる。
 \end{frame}
 
 \begin{frame}{finite Hecke algebra}
-cf. BN2でやった
-coherent $D$-moduleの圏？$D(B\backslash G/B)$のDrinfeld centerと$G$上の指標層の圏の同一視。
-さらに指標層のLanglands双対
-BN2のTheorem1.8
-$H_G$と$\tilde{H}_G$はsemi-rigidでcanonical pivotal, CY strを持つ。
-冪単指標層のなすdg圏$Ch_G$は$H_G$のmonoidal centerおよび$\tilde{H}$のmonoidal traceに標準的に同型。
+$X \to Y$に対して$D(X\times_YX)$を考える。
+特に$BB \to BG$に対して$X\times_YX=B\backslash G/B$となる。
 
-さらにKoszul双対から$\tilde{H}^{per}_G$と$H^{per}_{G^{\vee}}$が同値なことが言えて、
-これにより上の定理の系として、Langlands dualのtwo-periodic dg cat of unip ch shが同値なことが言える。
+Hecke categoryはHecke algebraのcategorification
+
+またLoop spaceとしての解釈から$D(B\backslash G/B)\simeq Coh_{[(B\times B)/G]}(St^u/G)^{S^1}{loc}$として
+affine Hecke catgooryとfinite Hecke categoryを結びつけることができる。
+
+coherent $D$-moduleの圏$D(B\backslash G/B)$のDrinfeld centerと$G$上の指標層の圏の同一視。
+さらに指標層のLanglands双対がある。
 \end{frame}
 
 \begin{frame}{TFT}
-\begin{dfn}
-\end{dfn}
+extended TFTとは$(\infty,2)$-catの間のsymmetric monoidal functor $Z:2Cob \to 2Alg$のこと。
+$2Cob$は点を$0$対象、点の間の$1$次元bordismが$1$対象、$1$次元bordismの間の$2$次元bordismが$2$対象。
+$2Alg$は代数が$0$対象、bimoduleが$1$対象、その間の射が$2$対象。
 
 \begin{prop}
-perfect stack $X$に対し 2d TFT $\exists Z_X$ s.t. $Z_X(S^1)=\QC(LX), Z_X(\Sigma)=\Gamma(X^\Sigma, O_{X^\Sigma})$
+perfect stack $X$に対しextended 2d TFT $\exists Z_X$が
+$Z_X(S^1)=\QC(LX), Z_X(\Sigma)=\Gamma(X^\Sigma, O_{X^\Sigma})$として定まる。
 \end{prop}
-証明すべきことは？
 
-Costelloのcategorified analogue。
-$X$に対する仮定なしに構成できる。
+\begin{align*}
+Z_X((S^1)^{\amalg m})=QC((LX)^{\times m})\simeq QC(LX)^{\otimes m} = Z_X(S^1)^{\otimes m}
+\end{align*}
+となり、symmetric monoidalになる。
+
+特に$X=BG$の場合が数理物理的にも興味を持たれる。
 \end{frame}
 
+
+\begin{comment}
 \begin{frame}{Deligne-Kontsevich conjecture}
 monoidal stable categoryのDerinfeld centerはassociative (or $A_\infty$)-algのHochshild cohomologyのcategorical analogueである。
 Deligneの予想は、Hochshild cochain complexはGerstenhaber algebranの持ち上げである$E_2$-algebraの構造を持つこと。
@@ -701,11 +673,19 @@ CostelloとKontsevich-Soibelmanはalgebra $A$に対して$Z_A(S^1)=HC(A)$とな�
 
 これの圏論類似として、monoidal $\infty$-categoryのDrinfeld centerが$E_2$-categoryであること。
 \end{frame}
+\end{comment}
 
 \begin{frame}{参考文献}
 \begin{itemize}
-\item BFN:
-\item BN2:
+\item D. Ben-Zvi, J. Francis and D. Nadler, Integral transforms and Drinfeld centers in derived algebraic geometry.
+\item D. Ben-Zvi and D. Nadler, Loop Spaces and Connections.
+\item D. Ben-Zvi and D. Nadler, The character theory of a complex group.
+\item D. Ben-Zvi and D. Nadler, Loop Spaces and Langlands Parameters.
+\item D. Ben-Zvi and D. Nadler, Loop Spaces and Representations.
+\item B. To\"en, Higher and Derived Stacks: a global overview.
+\item B. To\"en and G. Vezzosi, A note on Chern character, loop spaces and derived algebraic geometry.
+\item D. Gaitsgory and N. Rozenblyum, A study in derived algebraic geometry
+\item J. Lurier, Higher Algebra.
 \end{itemize}
 \end{frame}
 
