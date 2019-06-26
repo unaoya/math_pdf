@@ -1,0 +1,591 @@
+\documentclass{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+%\input{../tex/theorems}
+%\input{../tex/symbols}
+
+\newtheorem{dfn}{定義}
+\newtheorem{eg}{例}
+\newtheorem{thm}{定理}
+\newtheorem{lem}{補題}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{|#1|}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\slim}{\mathrm{s}\lim}
+
+\usepackage[dvipdfmx]{graphicx}
+\title{数学カフェ予習会}
+\author{@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+線形作用素の半群について。参考文献は共立出版の黒田成俊著、関数解析。
+
+\section{導入}
+$X$をBanach空間とし$A$を$X$上の線形作用素、$u(t)$を実数$t$を変数にもち$X$に値をとる関数とし、
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+という$X$上の微分方程式を考える。
+この解の$t\to \infty$の漸近挙動を$A$のスペクトルにより理解する。
+
+\begin{eg}
+$X=\R$とすると線形作用素$A$はスカラー$a$倍である。
+\[
+\frac{du}{dt}=au
+\]
+を考える。
+初期値$u(0)=u_0$とした時、これの解は$u(t)=u_0e^{at}$である。
+$t\to\infty$での挙動は$a>0$なら発散、$a<0$なら$0$に収束する。
+\end{eg}
+
+この微分方程式をLaplace変換により解くことを考える。
+\begin{dfn}[Laplace変換]
+$f(t)$の{\rm Laplace}変換$L(f)(s)$は
+\[
+L(f)(s)=\int^\infty_0e^{-st}f(t)dt
+\]
+\end{dfn}
+
+\begin{dfn}[Laplace逆変換]
+$F(s)$の{\rm Laplace}逆変換は
+\[
+L^{-1}(F)(t)=\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}F(s)e^{st}ds
+\]
+である。
+\end{dfn}
+
+部分積分の公式を使うと
+\[
+L(\frac{du}{dt})=sL(u)-u(0)
+\]
+と計算できる。
+これを用いて
+\[
+\frac{d}{dt}u(t)=au(t)
+\]
+の両辺をLaplace変換すると
+\[
+zL(u) -u(0)=aL(u)
+\]
+であり
+\[
+L(u)=\frac{u(0)}{z-a}
+\]
+である。
+これをLaplace逆変換すると、
+\[
+u(t)=\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}e^{\lambda t}(\lambda-a)^{-1}u(0)d\lambda
+\]
+と書くことができる。
+ここで$c>a$とする。
+
+積分路を変形し、Cauchyの積分公式を使うと
+\[
+\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}e^{\lambda t}(\lambda-a)^{-1}u(0)d\lambda=e^{at}u(0)
+\]
+と計算することができる。
+このようにして与えられた微分方程式の初期値$u(0)$に対する解は
+\[
+u(t)=e^{at}u(0)
+\]
+と求めることができる。
+
+一般の$X$と$A$に対しても上の微分方程式の解を、
+\[
+u(t)=\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}e^{\lambda t}(\lambda-A)^{-1}u(0)d\lambda=e^{At}u(0)
+\]
+と構成することを考える。
+しかしこの積分や、作用素の無限級数$e^{At}$などが適切に定義できるか、あるいはこれが解になるかなどは一般には明らかではない。
+以下では、いくつかの場合にこの方針で微分方程式の解が構成し、
+その上で$A$のスペクトルを用いて解$u(t)$の$t\to\infty$での様子が理解できることを確認する。
+
+\section{数列のラプラス変換}
+ここでは上の問題の類似として時間$t$が離散的であるものを考える。
+関数$u(t)$の代わりに数列$u_n$を考え、$\frac{d}{dt}u(t)$の代わりに数列の項をずらす、つまり
+\[
+u_{n+1}=Au_n
+\]
+という漸化式を考える。
+数列$u$に対してその項をずらす作用素を$D$とする。
+つまり$u=(u_0,u_1,u_2,\ldots)$に対しては$Du=(u_1,u_2,u_3,\ldots)$となる。
+これを用いると上の漸化式は
+\[
+Du=Au
+\]
+と書くことができる。
+
+例えば
+\[
+a_{n+2}=ca_{n+1}+da_n
+\]
+という漸化式をみたす数列だと$u_n=\begin{pmatrix}a_{n+1}\\a_n\end{pmatrix}$と置くことで、
+$A=\begin{pmatrix}c&d\\1&0\end{pmatrix}$とすれば上の形に変形できる。
+
+\begin{dfn}[$z$変換]
+数列$u=(u_n)$に対してその$z$変換$Z(u)$とは次のように定まる$z$を変数にもつべき級数。
+\[
+Z(u)(z)=\sum_{k=0}^\infty u_kz^{-k}
+\]
+\end{dfn}
+これは値が収束する範囲においては$z$を変数にもつ関数とみなすことができる。
+
+\begin{dfn}[逆$z$変換]
+関数$f(z)$の逆$z$変換とは以下のように定まる数列$f_n$のこと。
+\[
+f_n=\frac{1}{2\pi i}\int_CX(z)z^{n-1}dz
+\]
+$z$を変数にもつべき級数。ここで$C$は適当な半径をもつ複素平面内の円周。
+\end{dfn}
+
+数列$u=(u_n)$を$z$変換し、逆$z$変換すると元に戻る。
+つまり
+\[
+u_n=\frac{1}{2\pi i}\int_CZ(u)(z)z^{n-1}dz
+\]
+がすべての非負整数$n$で成り立つ。
+
+$Du$の$Z$変換を計算すると
+\[
+Z(Du)(z)=\sum_{k=0}^\infty(Du)_kz^{-k}=\sum^\infty_{k=0}u_{k+1}z^{-k}=z\sum^\infty_{k=0}u_{k+1}z^{-(k+1)}=z(Z(u)-u_0)
+\]
+となる。
+これを用いて上の漸化式の両辺を$Z$変換すると
+\[
+z(Z(u)-u_0)=Z(Du)(z)=Z(Au)=AZ(u)
+\]
+となり、
+\[
+Z(u)=(zI-A)^{-1}zu_0
+\]
+となることがわかる。
+これを逆変換すれば
+\[
+u_n=\frac{1}{2\pi i}\int_CZ(u)(z)z^{n-1}dz=\frac{1}{2\pi i}\int_C(zI-A)^{-1}zu_0dz
+\]
+となる。
+
+$A$が対角化されているとすると、Cauchyの積分公式
+\[
+\frac{1}{2\pi i}\int_C\frac{f(z)}{z-\lambda}dz=f(\lambda)
+\]
+を$C$を$A$の固有値全てを内部に含む複素平面上の円周について用いると
+\[
+u_n=A^nu_0
+\]
+と解くことができる。
+一般には
+$P^{-1}AP=B$が対角行列とすると、$v_n=P^{-1}u_n$とすれば$v_{n+1}=Bv_n$であり、$v_n=B^nv_0$であるから
+\[
+u_n=PB^nP^{-1}u_0=A^nu_0
+\]
+となる。
+
+$n\to\infty$での解の様子は$A$の固有値$\lambda$が$Re \lambda<0$であれば$u_n\to0$となる。
+一般には$\lambda$の正負や初期値によって変わる。
+
+\section{有限次元の微分方程式}
+元の微分方程式に戻り、$X$が有限次元のBanach空間$\R^n$で$A$を$n$次正方行列の場合に考えよう。
+微分方程式
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の解の$t\to\infty$での様子を$A$のスペクトルを用いて記述する。
+
+\begin{eg}二階の線形微分方程式
+\[
+\frac{d^2}{dt^2}f(t)=a\frac{d}{dt}f(t)+bf(t)
+\]
+であれば$u(t)=\begin{pmatrix}f'(t)\\f(t)\end{pmatrix}$とし$A=\begin{pmatrix}a&b\\1&0\end{pmatrix}$とすると
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の形にできる。
+\end{eg}
+
+最初の例と同様にLaplace変換を用いてこの微分方程式を解く。
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の両辺をLaplace変換すると
+\[
+sL(u)(s)-u(0)=AL(u)(s)
+\]
+となり、
+\[
+L(u)(s)=(sI-A)^{-1}u(0)
+\]
+となる。
+
+逆Laplace変換すると
+\[
+u(t)=\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}(sI-A)^{-1}u(0)ds
+\]
+であり、
+積分路を変形し、Cauchyの積分公式を使うと
+\[
+\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}e^{\lambda t}(\lambda-A)^{-1}u(0)d\lambda=e^{At}u(0)
+\]
+と計算することができる。
+ここで$A$が有限次元の行列なので$\exp(tA)$は$t$について広義一様収束することに注意しよう。
+このようにして与えられた微分方程式の初期値$u(0)$に対する解は
+\[
+u(t)=e^{At}u(0)
+\]
+と求めることができる。
+
+$t\to\infty$での解の様子は$A$の全ての固有値$\lambda$の実部が$0$より小さければ、
+$t\to\infty$で$\exp(tA)$の固有値が$\exp(t\lambda)\to0$となり$u(t)\to0$となることがわかる。
+
+\section{半群}
+Banach空間$X$上の作用素$A$に対して$T(t)=\exp tA$と定義する。
+これは$A$が有界作用素であれば$X$上の有界作用素として定義でき、その作用素ノルムは$\exp(t\norm{A})$となる。
+さらに一様収束することから$u(t)=T(t)u(0)$としたものが
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の解となることがわかる。
+
+このように、上の微分方程式の解を構成するために必要な、$\exp(tA)$と同様の性質をみたす$X$上の作用素を抽象的に定義しておく。
+\begin{dfn}[半群]
+Banach空間$X$上の有界作用素の族$\{T(t)\}_{t\geq0}$が$(C_0)$半群であるとは次をみたすこと。
+\begin{enumerate}
+\item $T(t+s)=T(t)T(s)$
+\item $T(0)=I$
+\item $T(t)$は$t\in[0,\infty)$について強連続
+\end{enumerate}
+ここでBanach空間$X$上の作用素の族$T(t)$が$[0,\infty)$で強連続とは、任意の$u\in X$に対して$t'\to t$のとき
+\[
+\norm{T(t')u-T(t)u}\to 0
+\]
+をみたすこと。
+このとき$\sup_{t\in[0,1]}T(t)$は有限である。
+\end{dfn}
+
+\begin{dfn}[生成作用素]
+$(C_0)$半群$\{T(t)\}$に対して$D\subset X$を$\lim_{h\to+0}h^{-1}(T(h)u-u)$が存在する$u\in X$全てからなる部分集合とする。
+これに対して$X$上の作用素$A$が$\{T(t)\}$の生成作用素であるとは$u\in D$に対して
+\[
+Au=\lim_{h\to+0}\frac{T(h)u-u}{h}
+\]
+が成り立つこと。
+\end{dfn}
+\begin{eg}
+有界作用素$A$に対して
+\[
+T(t)=\exp(tA)=\sum^\infty_{k=0}\frac{(tA)^k}{k!}
+\]
+は$(C_0)$半群であり、その生成作用素は$A$である。
+\end{eg}
+
+\begin{thm}
+$(C_0)$半群$\{T(t)\}$に対し、ある実数$\omega$と$M\geq1$が存在し、
+\[
+\norm{T(t)}\leq Me^{\omega t}
+\]
+となる。
+\end{thm}
+\begin{proof}
+$t$の整数部分を$a$、小数部分を$b$としたとき、
+半群の性質から$\norm{T(t)}=\norm{T(a)}\norm{T(b)}$となる。
+$T(t)$が強連続なので$\sum_{t\in[0,1]}\norm{T(t)}=M_1<\infty$であることから証明できる。
+\end{proof}
+
+\section{熱方程式}
+非有界作用素の例として熱方程式を考えよう。
+$X=L^2(\R)$とし、 $A=D^2$とする。
+ここで$D$は$L^2$の意味での微分で、$Du=F^{-1}(i\xi)Fu$として定める。
+$u=u(x)$が微分可能な関数であれば$Du=\frac{d}{dx}u(x)$である。
+考える微分方程式は
+\[
+\frac{d}{dt}u(t,x)=\frac{d^2}{dx^2}u(t,x)
+\]
+と書かれるものである。
+
+まずは$A$のスペクトルとレゾルベント$R(\zeta;A)=(\zeta I-A)^{-1}$を計算する。
+\[
+(\zeta I-A)u=F^{-1}((\zeta+\xi^2)Fu)
+\]
+であることから、
+\[
+R(\zeta;A)=(\zeta I-A)^{-1}=F^{-1}T_{(\zeta+\xi^2)^{-1}}F
+\]
+となる。
+ここで$T_{(\zeta+\xi^2)^{-1}}$は掛け算作用素。
+$(\zeta+\xi^2)^{-1}$が有界になるための$\zeta$の条件は$\zeta\not\in\R$であるか$\zeta>0$であること。
+したがって$\zeta<0$がスペクトル。
+
+この$A$は非有界作用素であり、$\exp(tA)$が定義できない。
+しかし、形式的に
+\[
+\exp(tT_{-\xi^2})=\sum_{k=0}^\infty\frac{(tT_{-\xi^2})^k}{k!}=T_{\exp(-t\xi^2)}
+\]
+と計算してみる。
+$\exp(-t\xi^2)$は有界な関数なので、これは有界作用素である。
+$T(t)=F^{-1}T_{\exp(-t\xi^2)}F$と定義すると、
+$\exp(-t\xi^2)$のFourier逆変換
+\[
+G_t=\frac{1}{\sqrt{4\pi t}}e^{-x^2/4t}
+\]
+を使った畳み込みの形で書くと
+\[
+T(t)u=G_t*u
+\]
+であり、$\norm{T(t)}\leq1$であり有界作用素となる。
+
+この$T(t)$が$(C_0)$半群を定めることを確かめよう。
+$\exp(-t\xi^2)\exp(-s\xi^2)=\exp(-(t+s)\xi^2)$であり、掛け算のFourier変換がFourier変換の畳み込みになることから
+$G_s*G_t*u=G_{s+t}*u$すなわち
+\[
+T(t+s)=T(t)T(s)
+\]
+となる。
+
+これの生成作用素が上で定めた$A$であることを証明しよう。
+このために$A$を有界作用素$A_n$で近似し、$T(t)$を$A_n$生成する半群$T_n(t)$で近似する。
+
+\[
+f_n(x)=\frac{\sqrt{2\pi}}{2\sqrt{n}}e^{-\sqrt{n}\abs{x}}
+\]
+のFourier変換は
+\[
+\frac{1}{2\sqrt{n}}\int^\infty_{-\infty}e^{-\sqrt{n}\abs{x}}e^{-i\xi x}dx=\frac{1}{(n+\xi^2)}
+\]
+となるので
+\[
+R(\zeta;A)u=F^{-1}(\frac{1}{\zeta+\xi^2})*u=f_n*u
+\]
+となる。
+
+$J_n=nR(n;A)$とし、$n\to \infty$での極限を計算する。
+\[
+J_nu=R(n;A)nu=R(n;A)(nu-Au+Au)=u+R(n;A)Au
+\]
+であり、$n\to\infty$で
+\[
+R(n;A)Au=f_n*u\to0
+\]
+より$n\to\infty$で$J_n\to I$となる。
+
+$A_n=AJ_n$とする。
+$A_n=-n+n^2R(n;A)$であることから$FR(n;A)u=\dfrac{1}{n+\xi^2}Fu$であることを使うと、
+\[
+FA_nu=-nFu+n^2\frac{1}{n+\xi^2}Fu=\frac{-n\xi^2}{n+\xi^2}Fu
+\]
+となる。
+$\dfrac{-n\xi^2}{n+\xi^2}$は有界関数であり、このことから$A_n$は有界であることがわかる。
+
+$A_n$が生成する半群$T_n(t)=\exp(tA_n)$は
+\[
+F((\exp tA_n)u)\exp(\frac{-n\xi^2}{n+\xi^2})Fu
+\]
+となる。これの$n\to\infty$での極限をとると、
+\[
+\lim_{n\to\infty}F(T_n(t)u)=\exp(-\xi^2)Fu
+\]
+となり、Fourier逆変換すると
+\[
+\lim_{n\to\infty}T_n(t)u=F^{-1}(\exp(-\xi^2))*u
+\]
+となる。
+よって$F^{-1}\exp(-\xi^2)=G_t$となるので$T_n(t)\to T(t)$であることがわかる。
+各$n$について$A_n$が$T_n(t)$の生成作用素であるから、その極限をとって$A$は$T(t)$の生成作用素であることがわかる。
+
+\section{Hille-Yoshidaの定理}
+ここではより一般に$A$が半群の生成作用素となる条件を調べる。
+上で行った有界作用素による近似を一般的に行うことができるための条件を求めよう。
+
+このために、一般のBanach空間に値を持つ関数の微積分をする必要がある。
+だいたい普通の微積分と同じようにできると思ってもよい。
+\begin{thm}
+$X, Y$をBanach空間とし$u(t)$を$X$に値をとる強連続な関数、$\int_I\norm{u(t)}dt<\infty$と仮定する。
+このとき、
+\[
+\int_ITu(t)dt
+\]
+が存在し、
+\[
+T(\int_Iu(t)dt)=\int_ITu(t)dt
+\]
+をみたす。
+\end{thm}
+
+有界作用素$A$に対しては
+\[
+\int^\infty_0e^{-A\lambda t}e^{tA}udt=(\lambda-A)^{-1}u
+\]
+が成立していたが、これが成立するための条件が以下の定理。
+
+\begin{thm}
+$(C_0)$半群$\{T(t)\}_{t\geq0}$の生成作用素$A$は閉作用素で$D(A)\subset X$は稠密。
+上の定理で取れる$M$と$\omega$に対して、
+レゾルベント$\rho(A)\supset\{\lambda\in\C\vert Re\lambda>\omega\}$であり、
+$Re\lambda>\omega$なる$\lambda$に対して下の積分が存在し、等式が成立する。
+\[
+\int^\infty_0e^{-\lambda t}T(t)udt=R(\lambda;A)u
+\]
+さらにそのような$\lambda$に対して
+\[
+\norm{R(\lambda;A)^m}\leq\frac{M}{(Re\lambda-\omega)^m}
+\]
+が成り立つ。
+\end{thm}
+\begin{proof}
+$e^{-\lambda t}T(t)u$は$t$について強連続なので積分可能で、前の定理より
+\[
+\abs{\int^\infty_0e^{-\lambda t}T(t)udt}\leq M\abs{\int^\infty_0e^{-\lambda t}e^{\omega t}udt}
+\]
+となるので$Re\lambda>\omega$で積分は有限の値を持つ。
+
+この積分を
+\[
+R(\lambda)u=\int^\infty_0e^{-\lambda t}T(t)udt
+\]
+と書くことにする。
+これが$R(\lambda;A)$と一致することを確かめる。
+
+$AR(\lambda)u$を計算する。
+$h>0$に対して
+\begin{align*}
+h^{-1}(T(h)-I)R(\lambda)u
+&=h^{-1}\int^\infty_0e^{-\lambda t}(T(t+h)-T(t))udt\\
+&=\int^\infty_0e^{-\lambda t}T(t+h)udt-\int^\infty_0e^{-\lambda t}T(t)udt\\
+&=\int^\infty_he^{-\lambda(t'-h)}T(t')udt-\int^\infty_0e^{-\lambda t}T(t)udt\\
+&=\int^\infty_0e^{-\lambda(t'-h)}T(t')udt-\int^h_0e^{-\lambda(t'-h)}T(t')udt-\int^\infty_0e^{-\lambda t}T(t)udt\\
+&=\int^\infty_0(e^{-\lambda(t-h)}-e^{-\lambda t})T(t)udt-\int^h_0e^{-\lambda(t-h)}T(t)udt
+\end{align*}
+ここで$h\to +0$とすると、
+\[
+\lambda R(\lambda)u-u
+\]
+となる。
+よって$AR(\lambda)u=\lambda R(\lambda)u-u$であり、$(\lambda I-A)R(\lambda)=I$となる。
+
+逆も同様に計算でき、これにより
+\[
+R(\lambda)u=\int^\infty_0e^{-\lambda t}T(t)udt=R(\lambda;A)u
+\]
+が証明できる。
+
+次に$\lim_{\lambda\to\infty}\lambda R(\lambda)u=u$を示す。
+これを用いると$D(A)$が$X$で稠密なことがわかる。
+$\int^\infty_0\lambda e^{-\lambda t}dt=1$であり、$T(t)\to I$であるから与えられた$\epsilon$に対して適当に$\eta$をとって
+\[
+\int^\eta_0\lambda e^{-\lambda t}\norm{u-T(t)u}dt
+\]
+となるようでき、
+\[
+\int^\infty_\eta\lambda e^{-\lambda t}\norm{u-T(t)u}dt
+\]
+は$\norm{T(t)}$の評価から適当に評価できる。
+これを用いて
+\[
+\norm{u-\lambda R(\lambda)u}\leq\int^\infty_0\lambda e^{-\lambda t}\norm{u-T(t)u}dt
+\]
+を評価すればよい。
+
+\[
+R(\lambda;A)u=\int^\infty_0e^{-\lambda t}T(t)udt
+\]
+の両辺を$\lambda$で繰り返し微分することで
+\[
+R(\lambda;A)^m=\frac{1}{m!}\int^\infty_0t^me^{-\lambda t}T(t)udt
+\]
+となる。
+これを部分積分を用いて計算すると示せる。
+\end{proof}
+
+\begin{thm}
+$X$をBanach空間とし$A$をその上の線形作用素とする。
+$A$が$(C_0)$半群$\{T(t)\}_{t\geq0}$を生成する条件は
+\begin{enumerate}
+\item $A$は閉作用素で$D(A)\subset X$は稠密
+\item ある実数$\omega$と$M\geq1$が存在して$(\omega,\infty)\subset\rho(A)$であり、
+任意の正の整数$m$と$\lambda>\omega$に対して
+\[
+\norm{R(\lambda;A)^m}\leq\frac{M}{(\lambda-\omega)^m}
+\]
+をみたす。
+\end{enumerate}
+
+この時、$\{T(t)\}$は一意的であり、$\norm{T(t)}\leq Me^{\omega t}$をみたす。
+さらに$u\in D(A)$ならば$T(t)u\in D(A)$であり、$T(t)u$は強微分可能で
+\[
+\frac{d}{dt}T(t)u=T(t)Au=AT(t)u
+\]
+\end{thm}
+
+\begin{proof}
+以下では常に$n>\omega$とする。
+
+$J_n=nR(n;A)$としたとき、$\slim_{n\to\infty}J_n=I$を示す。
+\[
+J_nu=n(nI-A)^{-1}=(nI-A+A)(nI-A)^{-1}=n(I+R(n;A)Au)
+\]
+であり、$\norm{R(n;A)Au}\leq\frac{M}{n-\omega}\norm{Au}\to0$である。
+
+次に$A_n=AJ_n$と定義すると、
+\[
+A_n=nA(nI-A)^{-1}=n(nI-(nI-A))(nI-A)^{-1}=n^2R(n;A)-n=n(J_n-I)
+\]
+であり、とくに$A_n$は有界作用素。
+
+$T_n(t)=\exp(tA_n)$とおく。
+$A$に関する仮定から$\norm{T_n(t)}\leq Me^{n\omega t/n-\omega}$となる。
+これは$n>\omega>0$であれば$t$について単調増加。
+$n>0, \omega<0$であれば$t$について単調減少。
+
+$T_n(t)u$が広義一様収束することを確かめる。
+有界作用素の生成する半群の性質から$\dfrac{d}{dt}T_n(t)=T_n(t)A_n$である。
+したがって、
+\begin{align*}
+T_n(t)-T_m(t)&=[T_m(t-s)T_n(s)]^{s=t}_{s=0}\\
+&=\int^t_0\frac{d}{ds}\{T_m(t-s)T_n(s)\}ds\\
+&=\int^t_0T_m(t-s)T_n(s)A_n-T_m(t-s)T_n(s)A_mdx\\
+&=\int^t_0T_m(t-s)T_n(s)(A_n-A_m)ds
+\end{align*}
+三つめの等式では作用素が交換することを使った。
+これのノルムを評価すると、
+\begin{align*}
+\norm{(T_n(t)-T_m(t))u}=\left\|\int^t_0T_m(t-s)T_n(s)(A_n-A_m)uds\right\|
+\end{align*}
+$\omega<0$であれば$t,n>0$に対して$e^{n\omega t/n-\omega}<1$である。
+$\omega>0$であれば$t>0$と十分大きな$n$に対して$e^{n\omega t/n-\omega}<e^{2\omega t}$である。
+\begin{align*}
+\left\|\int^t_0T_m(t-s)T_n(s)(A_n-A_m)uds\right\|\leq M^2e^{4\omega_+t}t\norm{(A_n-A_m)u}
+\end{align*}
+となる。
+$u\in D(A)$に対しては$n,m\to\infty$で$\norm{A_n-A_m}\to\infty$なので、上の式は$0$に収束する。
+これは$t$について広義一様収束。
+$T_n(t)u$は$T(t)u$に$t\in[0,\infty)$で広義一様収束する。
+
+この極限を$T(t)$と定義する。
+$\{T(t)\}$は$(C_0)$半群で$\norm{T(t)}\leq Me^{\omega t}$をみたし、収束先の一意性から$T(t+s)=T(t)T(s)$となる。
+$T_n(t)u$は強連続でその広義一様収束先なので$T(t)u$も強連続である。
+さらに$T(0)=I$なので$T(t)$は$(C_0)$半群である。
+
+$\{T(t)\}_{t\geq0}$の生成作用素が$A$であることを示す。
+\[
+\frac{d}{dt}T_n(t)u=T_n(t)A_nu
+\]
+の両辺を$0$から$h>0$まで積分すると
+\[
+\int^h_0\frac{d}{dt}T_n(t)udt=T_n(h)-u=\int^h_0T_n(t)A_nudt
+\]
+である。
+ここで$T_n(t)A_nu\to T(t)Au$が$n\to\infty$で広義一様収束であるので積分と極限の交換ができて、上の式の$n\to\infty$の極限をとると、
+\[
+T(h)u-u=\int^h_0T(t)Audt
+\]
+となる。
+さらに$h^{-1}$を両辺にかけて$h\to+0$とすると、
+\[
+\lim_{h\to+0}h^{-1}(T(h)-I)u=\lim_{h\to+0}\frac{1}{h}\int^h_0T(t)Audt=T(0)Au=Au
+\]
+となるので$T(t)$の生成作用素が$A$であることがわかる。
+
+\end{proof}
+\end{document}

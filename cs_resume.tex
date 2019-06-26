@@ -1,0 +1,65 @@
+\documentclass[uplatex]{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz-cd}
+\input{../tex/theorems}
+\input{../tex/symbols}
+
+\title{Chowla-Selbergの公式}
+\author{梅崎直也@unaoya}
+\date{\today}
+\begin{document}
+
+\maketitle
+\begin{thm}[Chowla-Selbergの公式]
+\begin{align*}
+\prod_{a\in Cl(k)}\Delta(a)\Delta(a^{-1})=\left(\frac{2\pi}{d}\right)^{12h}\prod_{a\in(\Z/d\Z)^\times}\Gamma\left(\frac{a}{d}\right)^{6w\epsilon(a)}
+\end{align*}
+\end{thm}
+
+\begin{itemize}
+\item $k=\Q(\sqrt{-d})$は虚二次体で$o_k$をその整数環
+\item $Cl(k)$はイデアル類群で$h=\abs{Cl(k)}, w=\abs{o_k^\times}$
+\item $\epsilon$は二次体$k$に対応するDirichlet指標（平方剰余記号）
+\item $\Delta$はweight 12のcusp form
+\end{itemize}
+
+\begin{thm}[Gross]
+\begin{align*}
+\sqrt{\pi}\prod_{a\in(\Z/d\Z)^\times}\Gamma\left(\frac{a}{d}\right)^{w\epsilon(a)/4h}
+\end{align*}
+と$k$のorderで虚数乗法を持つ楕円曲線$E$の正則$1$形式の周期は$\mod $代数的数倍で一致
+\end{thm}
+
+\begin{thm}
+微分形式を積分することでコホモロジーの同型が得られる。
+\begin{align*}
+H^i_{dR}(X/k) \otimes \C &\to H^i(X(\C), \C)\\
+\omega &\mapsto (\gamma\mapsto\int_\gamma\omega)
+\end{align*}
+
+相対的な比較定理
+\begin{align*}
+\mathcal{H}^n_{dR}(A/S) \to R^n\pi_*\C \otimes_{\C}O_S
+\end{align*}
+\end{thm}
+
+\begin{thm}
+以下は同値
+\begin{enumerate}
+\item $\omega_s$は$\pi_1(S,s)$不変な$H^n(A_s,\C)$の元
+\item $\omega$は$R^n\pi_*\C$の大域切断
+\item 正則ベクトル束$\omega\in\mathcal{H}^n_{dR}(A(\C)/S(\C))$の$s\in S$に対して$\omega_s$の周期格子が一定
+\item 代数的ベクトル束$\omega\in\mathcal{H}^n_{dR}(A/S)$の$s\in S$に対して$\omega_s$の周期格子が一定
+\end{enumerate}
+\end{thm}
+
+モジュラー曲線の構成。上半平面$h$を考え、
+$\pi:h\times \C/L \to h$を$L=\{(\tau, x), x \in \Z \oplus \tau\Z \subset \C\}$で定める。
+さらに$SL_2(\Z)$（もしくはより一般のレベル）でわる。
+これはファイバーにも作用$r_{T^{-1}}:(Y/L)_{T(n)} \to (Y/L)_n$をもつ。
+
+虚二次体に対応する点を$h$の部分集合と思い、$SL_2(\Z)$が作用。
+これに楕円曲線を引き戻して割る。（離散集合になる）
+\end{document}

@@ -1,0 +1,271 @@
+\documentclass[dvipdfmx]{beamer}
+\usetheme{metropolis}
+%\usecolortheme{beaver} 
+
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage{bxdpx-beamer}
+\usepackage{tikz-cd}
+\usepackage[all]{xy}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+
+%https://tex.stackexchange.com/questions/178800/creating-sections-each-with-title-pages-in-beamers-slides
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\newcommand{\QC}{\mathrm{QC}}
+\newcommand{\spec}{\mathrm{Spec}}
+\newcommand{\Mod}{\mathrm{Mod}}
+
+\title{直交多項式と表現論}
+\author{梅崎直也@unaoya}
+\date{2019/5/11~数理空間$\tau\acute{o}\pi o\zeta$（トポス）新歓イベント}
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}{三角関数の倍角公式}
+\begin{align*}
+\sin2\theta&=2\sin\theta\cos\theta\\
+\sin3\theta&=\sin2\theta\cos\theta+\cos2\theta\sin\theta\\
+&=2\sin\theta\cos^2\theta+(2\cos^2\theta-1)\sin\theta\\
+&=\sin\theta(4\cos^2\theta-1)\\
+\sin4\theta&=\sin3\theta\cos\theta+\cos3\theta\sin\theta\\
+&=\sin\theta(4\cos^2\theta-1)\cos\theta+(4\cos^3\theta-3\cos\theta)\sin\theta\\
+&=\sin\theta(8\cos^3\theta-4\cos\theta)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Chebyshev多項式}
+\begin{align*}
+\sin\theta&=\sin\theta\times1&U_0(x)&=1\\
+\sin2\theta&=\sin\theta\times2\cos\theta&U_1(x)&=2x\\
+\sin3\theta&=\sin\theta\times(4\cos^2\theta-1)&U_2(x)&=4x^2-1\\
+\sin4\theta&=\sin\theta\times(8\cos^3\theta-4\cos\theta)&U_3(x)&=8x^3-4x
+\end{align*}
+
+とすると
+\begin{align*}
+\sin(n+1)\theta=\sin\theta\times U_n(\cos\theta)
+\end{align*}
+となる。この$U_n(x)$を第2種Chebyshev多項式という。
+\end{frame}
+
+\begin{frame}{漸化式}
+
+加法定理から
+\begin{align*}
+\sin(n+1)\theta=\cos\theta\sin n\theta+\cos n\theta\sin\theta\\
+\sin(n-1)\theta=\cos\theta\sin n\theta-\cos n\theta\sin\theta\\
+\sin(n+1)\theta+\sin(n-1)\theta=2\sin n\theta\cos\theta
+\end{align*}
+
+ここで$\sin(n+1)\theta=\sin\theta\times U_n(\cos\theta)$を思い出す。
+両辺を$\sin\theta$で割って$x=\cos\theta$とすると、
+\begin{align*}
+U_{n+1}(x)+U_{n-1}(x)=2xU_n(x)
+\end{align*}
+が成り立つ。
+\end{frame}
+
+
+\begin{frame}{母関数}
+漸化式$U_{n}(x)-2xU_{n-1}(x)+U_{n-2}(x)=0, U_0(x)=1, U_1(x)=2x$を使って
+\begin{align*}
+\sum^\infty_{n=0}U_n(x)t^n=U_0(x)+U_1(x)t+U_2(x)t^2+U_3(x)t^3+\cdots
+\end{align*}
+を変形する。$t$倍すると$a_nt^n$は$a_nt^{n+1}$となるから、$t^n$の係数は$a_{n-1}$になることに注意すると、
+\begin{align*}
+-2xt\sum^\infty_{n=0}U_n(x)t^n&=-2xU_0(x)t-2xU_1(x)t^2-2xU_2(x)t^3-2xU_3(x)t^4-\cdots\\
+t^2\sum^\infty_{n=0}U_n(x)t^n&=U_0(x)t^2+U_1(x)t^3+U_2(x)t^4+U_3(x)t^5+\cdots
+\end{align*}
+\begin{align*}
+(1-2tx+t^2)\sum^\infty_{n=0}U_n(x)=1
+\end{align*}
+\end{frame}
+
+\begin{frame}{母関数}
+\begin{align*}
+\frac{1}{1-2tx+t^2}&=U_0(x)+U_1(x)t+U_2(x)t^2+U_3(x)t^3+\cdots
+\end{align*}
+
+逆に左辺を展開することで
+\begin{align*}
+&1+(2tx-t^2)+(2tx-t^2)^2+(2tx-t^2)^3+\cdots\\
+&=1+2tx-t^2+4t^2x^2-4t^3x+t^4+8t^3x^3-12t^4x^2+\cdots\\
+&=1+(2x)t+(-1+4x^2)t^2+(-4x+8x^3)t^3+\cdots\\
+&=U_0(x)+U_1(x)t+U_2(x)t^2+U_3(x)t^3+\cdots
+\end{align*}
+と定義することもできる。
+\end{frame}
+
+
+\begin{frame}{昇降演算子}
+$\dfrac{1}{1-2tx+t^2}$を$t, x$でそれぞれ微分すると、
+\begin{align*}
+\frac{2x-2t}{(1-2tx+t^2)^2}=\frac{2(x-t)}{(1-2tx+t^2)^2},~\frac{2t}{(1-2tx+t^2)^2}
+\end{align*}
+となる。
+\begin{align*}
+t(x-t)\frac{2(x-t)}{(1-2tx+t^2)^2}&=2t\frac{(x-t)^2}{(1-2tx+t^2)^2}=2t\frac{x^2-2xt+t^2}{(1-2tx+t^2)^2}\\
+(1-x^2)\frac{2t}{(1-2tx+t^2)^2}&=2t\frac{1-x^2}{(1-2tx+t^2)^2}
+\end{align*}
+\begin{align*}
+(t(x-t)\frac{d}{dt}+(1-x^2)\frac{d}{dx})\frac{1}{1-2tx+t^2}&=2t\frac{1-2xt+t^2}{(1-2tx+t^2)^2}\\
+&=2t\frac{1}{1-2tx+t^2}
+\end{align*}
+となる。
+\end{frame}
+
+\begin{frame}{昇降演算子}
+つまり
+\begin{align*}
+(t(x-t)\frac{d}{dt}+(1-x^2)\frac{d}{dx}-2t)\frac{1}{1-2tx+t^2}=0
+\end{align*}
+が成り立つ。
+\begin{align*}
+\frac{1}{1-2tx+t^2}&=U_0(x)+U_1(x)t+U_2(x)t^2+U_3(x)t^3+\cdots\\
+\end{align*}
+の右辺にも同じ計算をする。
+$a_nt^n$を$t$倍と$t$での微分によって$t^n$の係数が$a_{n-1}, (n+1)a_{n+1}$となることに注意すると、
+\begin{align*}
+nxU_n(x)-(n-1)U_{n-1}(x)+(1-x^2)\frac{d}{dx}U_n(x)-2U_{n-1}(x)=0\\
+\{(1-x^2)\frac{d}{dx}+nx\}U_n(x)=(n+1)U_{n-1}
+\end{align*}
+\end{frame}
+
+\begin{frame}{昇降演算子}
+\begin{align*}
+\{(1-x^2)\frac{d}{dx}+nx\}U_n(x)&=(n+1)U_{n-1}(x)\\
+(n+1)2xU_n(x)&=(n+1)U_{n+1}(x)+(n+1)U_{n-1}(x)
+\end{align*}
+両辺引くと
+\begin{align*}
+\{(1-x^2)\frac{d}{dx}-(n+2)x\}U_n(x)&=-(n+1)U_{n+1}(x)\\
+\end{align*}
+
+この二つが昇降演算子と呼ばれる。
+\begin{align*}
+\{(1-x^2)\frac{d}{dx}+nx\}U_n(x)&=(n+1)U_{n-1}\\
+\{(1-x^2)\frac{d}{dx}-(n+2)x\}U_n(x)&=-(n+1)U_{n+1}(x)\\
+\end{align*}
+\end{frame}
+
+\begin{frame}{微分方程式}
+昇降演算子を続けて作用させると、
+\begin{align*}
+\{(1-x^2)\frac{d}{dx}-(n+1)x\}\{(1-x^2)\frac{d}{dx}+nx\}U_n(x)=-n(n+1)U_{n-1}\\
+(\{(1-x^2)\frac{d}{dx}-(n+1)x\}\{(1-x^2)\frac{d}{dx}+nx\}+n(n+1)\})U_n(x)=0\\
+\end{align*}
+左辺を計算すると、
+\begin{align*}
+&\{(1-x^2)^2\frac{d^2}{dx^2}+(1-x^2)(-2x)\frac{d}{dx}-(n+1)x(1-x^2)\frac{d}{dx}\\
+&+nx(1-x^2)\frac{d}{dx}+n(1-x^2)-n(n+1)x^2+n(n+1)\}U_n(x)=0
+\end{align*}
+\begin{align*}
+(1-x^2)\frac{d^2}{dx}U_n(x)-3x\frac{d}{dx}U_n(x)+n(n+2)U_n(x)=0
+\end{align*}
+がえられる。
+\end{frame}
+
+\begin{frame}{微分方程式}
+\begin{align*}
+&\frac{d^2}{d\theta^2}(\sin\theta U_n(\cos\theta))\\
+&=\sin\theta(-U_n(\cos\theta)-3\cos\theta\frac{d}{dx}U_n(\cos\theta)+(1-\cos^2\theta)\frac{d^2}{dx^2}U_n(\cos\theta))
+\end{align*}
+となるので、
+\begin{align*}
+(1-x^2)\frac{d^2}{dx}U_n(x)-3x\frac{d}{dx}U_n(x)+n(n+2)U_n(x)=0
+\end{align*}
+と合わせると、
+\begin{align*}
+\frac{d^2}{d\theta^2}\sin\theta U_n(\cos\theta)=-(n+1)^2\sin\theta U_n(\cos\theta)
+\end{align*}
+これは両端が固定された波の方程式（無限の高さの井戸型ポテンシャル）
+\end{frame}
+
+\begin{frame}{直交関係}
+\begin{align*}
+\int_0^\pi\sin (n+1)\theta\sin (m+1)\theta d\theta=\begin{cases}\pi&(n=m)\\0&(n\neq m)\end{cases}
+\end{align*}
+左辺を
+\begin{align*}
+\int_0^\pi\frac{\sin (n+1)\theta}{\sin\theta}\frac{\sin (m+1)\theta}{\sin\theta}\sin\theta \sin\theta d\theta
+\end{align*}
+と変形してから$x=\cos\theta$と置換積分すると
+\begin{align*}
+\int^1_{-1}U_n(x)U_m(x)\sqrt{1-x^2}dx=\begin{cases}\pi&(n=m)\\0&(n\neq m)\end{cases}
+\end{align*}
+これを使うと関数をChebyshev多項式で展開でき、数値計算などに応用される。
+\end{frame}
+
+\begin{frame}{$SU(2)$の表現}
+$SU(2)=\left\{\begin{pmatrix}a&b\\-\bar{b}&\bar{a}\end{pmatrix},\abs{a}^2+\abs{b}^2=1, a,b\in\C\right\}$の$2$変数多項式への作用を
+$\begin{pmatrix}a&b\\-\bar{b}&\bar{a}\end{pmatrix}f(x,y)=f(\bar{a}x-by,\bar{b}x+ay)$で定める。
+$\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}f(x,y)=f(e^{-i\theta}x,e^{i\theta}y)$を計算すると
+\begin{align*}
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}x=e^{-i\theta}x,
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}y=e^{i\theta}y,\\
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}x^2=e^{-2i\theta}x^2,
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}xy=xy,\\
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}y^2=e^{2i\theta}y^2
+\end{align*}
+\end{frame}
+
+\begin{frame}{表現の指標}
+\begin{align*}
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}x^3=e^{-3i\theta}x^3,
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}x^2y=e^{-i\theta}x^2y,\\
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}xy^2=e^{i\theta}xy^2,
+\begin{pmatrix}e^{i\theta}&0\\0&e^{-i\theta}\end{pmatrix}y^3=e^{3i\theta}y^3
+\end{align*}
+同じ次数の部分について係数だけ足す。
+等比数列の和の公式とEulerの公式で計算すると
+\begin{align*}
+e^{-i\theta}+e^{i\theta}=\frac{e^{-2i\theta}-e^{2i\theta}}{e^{-i\theta}-e^{i\theta}}=\frac{\sin2\theta}{\sin\theta}\\
+e^{-2i\theta}+1+e^{2i\theta}=\frac{e^{-3i\theta}-e^{3i\theta}}{e^{-i\theta}-e^{i\theta}}=\frac{\sin3\theta}{\sin\theta}\\
+e^{-3i\theta}+e^{-i\theta}+e^{i\theta}+e^{3i\theta}=\frac{e^{-4i\theta}-e^{4i\theta}}{e^{-i\theta}-e^{i\theta}}=\frac{\sin4\theta}{\sin\theta}\\
+\end{align*}
+\end{frame}
+
+\begin{frame}{指標の直交性}
+群の表現の指標には直交性がある。
+例えば$n\neq m$なら
+\begin{align*}
+\sin(n+m)\frac{2\pi}{N}+\sin2(n+m)\frac{2\pi}{N}+\cdots+\sin(N-1)(n+m)\frac{2\pi}{N}=0
+\end{align*}
+が成り立つということ。
+
+同じように$n\neq m$のとき、
+\begin{align*}
+\int_0^\pi\frac{\sin (n+1)\theta}{\sin\theta}\frac{\sin (m+1)\theta}{\sin\theta}\sin\theta \sin\theta d\theta&=0\\
+\int_{-1}^0U_n(x)U_m(x)\sqrt{1-x^2}dx&=0
+\end{align*}
+が成り立つ。
+\end{frame}
+
+\begin{frame}{直交多項式}
+上で見たような直交関係、漸化式、微分方程式などの性質を満たす多項式の系列がいくつかある。
+
+例えば量子力学に出てくるものとして
+\begin{itemize}
+\item Hermite多項式は調和振動子
+\item Legendre多項式は角運動量の量子化
+\item Laguerre多項式は水素原子の動径方程式
+\end{itemize}
+がある。
+
+直交多項式の性質を表現論で理解できる（と思っているのでこれから勉強する）。
+\end{frame}
+
+\end{document}

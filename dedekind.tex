@@ -1,0 +1,172 @@
+\documentclass{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz-cd}
+\input{../tex/theorems}
+\input{../tex/symbols}
+
+\title{Dedekind zeta}
+\author{@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+参考文献
+小野孝
+Weil
+
+\section{代数体}
+代数体$k$とは有理数体$\Q$の有限次拡大のことをいう。
+
+例。
+二次体、円分体
+$d$を平方数でない整数とする。
+$\sqrt{d}$は$x^2-d=0$を満たし、$\sqrt{d}\notin\Q$である。
+$k=\Q(\sqrt{d})$は$\Q$上二次拡大であり、代数体である。
+
+$n$を正の整数とし、$\zeta_n$を$1$の原始$n$乗根、つまり$n$乗して初めて$1$になる数とする。
+これは$x^n-1=0$の根で、したがって$\Q(\zeta_n)/\Q$は高々$n$次拡大である。
+
+$k$の整数環を
+$k$の元であって$\Z$上整であるもの、つまり$\Q$上の最小多項式の係数が$\Z$であるもの。
+
+\section{類数}
+$k$を代数体とする。
+
+\begin{dfn}
+$k$の分数イデアルとは、$k$の部分$O_k$加群で有限性生であり、$\otimes_{O_k}k$すると$k$に一致するものをいう。
+\end{dfn}
+
+\begin{eg}
+$k=\Q$の場合、
+
+$k$が二次体の場合、
+
+$k$が円分体の場合、
+\end{eg}
+
+\begin{dfn}
+分数イデアルの積を、と定義する。
+\end{dfn}
+
+これは可換。
+生成元で書けば、
+
+逆元の存在。
+双対を用いた表示
+
+分数イデアル全体は群になる。
+これを$I(k)$と書く。
+
+$k$の主イデアルとは、$k$の元$x$が生成するイデアル$O_kx \subset k$のことをいう。
+
+主イデアル全体$P(k)$は分数イデアル全体の部分群
+
+\begin{dfn}
+この商群$I(k)/P(k)$を$k$のイデアル類群という。
+\end{dfn}
+
+これは有限群になる。
+
+$k$の類数とは$k$のイデアル類群の大きさ。
+
+\section{基本単数}
+
+\begin{dfn}[Definition 7, p.94]
+$n^{-1}\delta, l(\epsilon_1),\ldots,l(\epsilon_r)$を行ベクトルに持つ行列を$L$とし、$R=\abs{\det(L)}$を$k$のregulatorと呼ぶ。
+\end{dfn}
+
+\begin{prop}[Proposition 9, p.95]
+$\gamma=\prod_v\gamma_v$で有限素点では$\gamma_v(O_v^\times)=1$で、実では$d\gamma_v(x)=\abs{x}^{-1}dx$で、複素では$d\gamma_v(x)=(x\bar{x})^{-1}\abs{dx\wedge d\bar{x}}$で定まる$\A_k^\times$のHaar測度とする。
+
+$m>1 \in \R$にたいし、$C(m) \subset \A_k^\times / k^\times$における$1\leq \abs{z}\leq m$の像とする。
+
+\begin{align*}
+\gamma(C(m)) = \log(m)2^{r_1}(2\pi)^{r_2}hR/e
+\end{align*}
+となる。
+\end{prop}
+\section{類数公式}
+Dedekind zetaの$s=1$での留数の計算
+
+\subsection{BNT}
+Weilの本に沿った証明。
+
+\begin{thm}[Theoerm 3, p.129]
+$k$を代数体とし、$r_1$を実素点の個数、$r_2$を複素素点の個数とする。
+\begin{align*}
+Z_k(s)=G_1(s)^{r_1}G_2(s)^{r_2}\zeta_k(s)
+\end{align*}
+とすると、これは$x=0, 1$で一位の極を持つ有理型関数で、関数等式
+\begin{align*}
+Z_k(s)=\abs{D}^{1/2-s}Z_k(1-s)
+\end{align*}
+をみたす。
+ここで$D$は$k$のdiscriminantである。
+$s=1$での留数は
+\begin{align*}
+\abs{D}^{-1/2}2^{r_1}(2\pi)^{r_2}hR/e
+\end{align*}
+である。
+ここで$h$は$k$の類数、$R$はregulatorで$e$は$k$における$1$の冪根の個数。
+\end{thm}
+
+$\Phi'$を$\Phi$のFourier変換とし、$a$を$\chi$のdifferential ideleとすると、
+\begin{align*}
+\Phi'(y)=\abs{a}^{1/2}_{\A}\Phi(ay)
+\end{align*}
+となる。
+
+特に$\omega_s(s)=\abs{x}^s_{\A}$とすると、
+\begin{align}
+Z(\omega_s, \Phi')=\abs{a}^{1/2-s}_{\A}Z(\omega_s,\Phi)
+\end{align}
+
+\begin{align}
+Z(\omega_s,\Phi)=c_k^{-1}\prod_{w\in P_\infty}G_w(s)\prod_{v\notin P_\infty}(1-q_v^{-s})^{-1}
+\end{align}
+
+\begin{prop}[Proposition 12, p.128]
+$k$を代数体とし、$\mu, \gamma$を$\A_k^\times$の適切な測度とした時、$\gamma=c_k\mu$となる。
+
+$\gamma=\prod_v\gamma_v$で有限素点では$\gamma_v(O_v^\times)=1$で、実では$d\gamma_v(x)=\abs{x}^{-1}dx$で、複素では$d\gamma_v(x)=(x\bar{x})^{-1}\abs{dx\wedge d\bar{x}}$で定める。
+\end{prop}
+
+次はいわゆるdiffernt-discriminant formulaである。
+\begin{prop}[Proposition 6, p.113]
+$k$を代数体とし、$a$をdifferential ideleとすると、$\abs{a}_{\A}=\abs{D}^{-1}$である。ここで$D$は$k$のdiscriminantである。
+\end{prop}
+
+\begin{lem}[Lemma 6, p.121]
+$F_1:N \to [0,1]$を可測関数とする。
+$[t_0,t_1] \subset \R_+^\times$であって、$n<t_0$について$F_1(n)=1$であり、$n>t_1$について$F_1(n)=0$とする。
+このとき
+\begin{align*}
+\lambda(s)=\int_Nn^sF_1(n)d\nu(n)
+\end{align*}
+は$Re(s)>0$で絶対収束し、$s\in\C$に解析接続され$s=0$での留数は
+\end{lem}
+
+\begin{thm}[Theorem 2, p.121]
+$\Phi$を$\A_k$のstandard functionとする。
+\begin{align*}
+\omega \mapsto Z(\omega, \Phi)=\int_{\A_k^\times}\Phi(j(z))\omega(z)d\mu(z)
+\end{align*}
+は$\Omega(G_k)$上の有理型関数に解析接続され、関数等式
+\begin{align*}
+Z(\omega,\Phi)=Z(\omega_1\omega^{-1},\Phi')
+\end{align*}
+を満たし、$\omega_0, \omega_1$で留数$-\rho\Phi(0), \rho\Phi'(0)$をそれぞれ持つ。
+\end{thm}
+\begin{proof}
+$\R^\times_+$上の関数$F_0, F_1$を次をみたすようにとる。
+\begin{enumerate}
+\item $F_0\geq0, F_1\geq0, F_0+F_1=1$
+\item ある$[t_0,t_1] \subset \R^\times_+$が存在して、$F_0(t)=0, 0<t<t_0, F_1(t)=0, t>t_1$をみたす
+\end{enumerate}
+\end{proof}
+
+\subsection{Tauberian theorem}
+数論序説はこっち？
+
+\end{document}

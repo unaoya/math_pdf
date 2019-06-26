@@ -1,4 +1,6 @@
 \documentclass[dvipdfmx]{beamer}
+\usetheme{metropolis}
+
 \input{../tex/theorems}
 \input{../tex/symbols}
 \usepackage{bxdpx-beamer}
@@ -217,6 +219,43 @@ P_{y,w}(q)=\sum_iq^i\dim IH_{X_y}^{2i}(\overline{X}_w)
 （柏原谷崎のKazhdan-Lusztig予想をめぐってを参考）
 \end{frame}
 
+\begin{frame}
+証明の方針
+
+$j_x:O_w\to X$として
+\begin{align*}
+h(j_{w,!}(\Lambda_{O_w})[l(w)])=T_w\\
+h(j_{w,*}(IC_{\bar{O}_w})=C_w'\\
+\end{align*}
+である。
+
+BBDGやtrace formula, dualityを使う。
+
+ここで設定として$IC_w=j_{!*}\overline{\Q}_\ell, j_w:Y(w)\to X(w)$とし、
+$X=G/B, Y(w)=BwB/B \sim \A^{l(w)}$と、$X(w)=\overline{Y(w)}$とする。
+$X(w)$は$v\leq w$なる$v$についての$Y(v)$でstratified。
+\end{frame}
+
+\begin{frame}{perverse sheafとは}
+$D^b(X,\overline{\Q}_\ell)$の$t$-structureをつぎのように定める。
+${}^pD^{\leq0}(X)$を$\dim supp(\mathcal{H}^{-i}B)\leq i$であるもの
+${}^pD^{\geq0}(X)$を$\dim supp(\mathcal{H}^{-i}DB)\leq i$であるもの
+とし、
+$Perv(X)={}^pD^{\leq0}(X)\cap{}^pD^{\geq0}(X)$とさだめる。
+
+$j:U \to X$をopen immとしたとき、$j_{!*}:Perv(U) \to Perv(X)$が定まり、
+$Dj_{!*}B=J_{!*}DB$を満たす。
+（これはcohomologyがdualityをみたすということ？＿）
+
+Gabberの定理
+$B_0$を$\tau$-mixed perverse sheafとした時、
+$w(B_0)\leq w$であることは、すべての$Y_0\subset X_0$既約$d$次元としたとき、
+あるopen dense $U_0\subset Y_0$が存在して、$w(\mathcal{H}^{-d}B_0\vert_{U_0})\leq w-d$をみたす。
+
+これの系として
+$w(B_0)\leq w$であることと、$w({}^pH^v(B_0))\leq w+v$と同値
+\end{frame}
+
 \begin{frame}{intersection cohomologyとperverse sheaf}
 
 動機。特異点のある場合のPoincare双対など
@@ -245,6 +284,58 @@ Perv(X)={}^pD^{\leq0}(X)\cap{}^pD^{\geq0}(X)
 と定義する。
 \end{frame}
 
+\begin{frame}{\'etale cohomologyとWeil予想}
+Riemann zeta
+\begin{align*}
+\zeta(s)=\sum\frac{1}{n^s}=\prod\frac{1}{1-p^{-s}}
+\end{align*}
+
+合同zetaは$X/\F_q$に対して、
+\begin{align*}
+Z(X,t)=\exp(\sum_m\frac{N_m}{m}t^m)
+N_m=\abs{X(\F_{q^m})}
+\log(Z)=N_1t+\frac{t^2}{2}N_2+\cdots
+\prod_{x\in\abs{X_0}}\det(1-t^{d(x)}F_x;\mathcal{G}_0
+\end{align*}
+とする。
+これは次の有理性を満たす（Grothendieck, trace formula）
+\begin{align*}
+Z(X,t)=\prod_{i=0}^{\dim X}\det(1-tFrob_q\vert H^i_c(X,\Q_\ell))^{(-1)^{i+1}}
+\end{align*}
+
+リーマン予想の類似。
+$t=q^{-s}$とした時のゼロ点。
+Frobeniusの$H^i_c(X,\Q_\ell)$の固有値が$\dfrac{i}{2}$となる。
+\end{frame}
+
+\begin{frame}{weight}
+Deligneの定理。
+\begin{thm}[Deligne]
+$f_0:X_0\to Y_0$と$\F_0/X_0$に対し、
+\begin{enumerate}
+\item $\F_0$が$\tau$-pure of weight $\beta$なら$R^if_{0!}\F_0$の$\tau$-weightはある$n$に対し$\beta+i-n$となる。
+\item $\F_0$がmixedなら$R^if_{0!}\F_0$はmixed
+\end{enumerate}
+
+$\F_0$が$\tau$-pure of weight $\beta$とは
+全ての$x\in\abs{X_0}$について、その$f_x:\G_{0,\bar{x}}\to \G_{0,\bar{x}}$の固有値が$\abs{\tau(\alpha)}=N(x)^\beta$なること。
+
+poncturement pureとは？
+
+$\F_0$が$\tau$-mixedとは、
+ある有限filtration $W$が存在して$Gr^W$が$\tau$-pure of weight $\beta$であること。
+$w(\F_0)=\sup_{x\in\abs{X_0}}\sup_\alpha\log\abs{\tau(\alpha)}^2$
+
+mixed complexとは全てのcohomology sheafが$\tau$-mixedであること。
+
+$K_0\in D^b_c(X_0,\overline{Q}_\ell)$に対し、
+$K_0\in D^b_{\leq w}(X_0)$であるとは$w(K_0)=\max_\nu(w(H^\nu(K_0)))\leq w$であること。
+$K_0$がpureとは$D^b_{\leq w}(X_0)\cap D^b_{\geq w}(X_0)$に入ること。
+
+perverse sheafにおいてもweight filtrationが存在する。
+\end{thm}
+
+\end{frame}
 
 \begin{frame}{Schubert多様体のintersection cohomology}
 purityとdecomposition theoremを使う。
@@ -271,6 +362,62 @@ BBDG, trace formula, dualityなど
 weight filtrationからspectre系列を作る。
 
 $E_2$-pageが二重複体で、さらにここにweightでもう一つ次数が入って、三重次数複体。
+\end{frame}
+
+\begin{frame}{Webster-Williamson}
+Braid $\beta$やlink $L$から$\Phi_\beta\in D_{B\times B}(GL(N)), \F_D\in D_{G_D}(X_D)$を作る。
+これに対し、
+$\mathbb{H}^*_B(GL(N),\Phi_\beta), \mathbb{H}^*_{G_D}(X_D,\F_D)$はtriply graded
+
+$\F_D$のweight filtrationから定まるspectral sequenceにより$A_2^{p,q}$を定める。
+\begin{thm}
+\begin{align*}
+\mathcal{E}(L)=\mathcal{E}_{G_D}(X_D,\F_D)=\sum_{l,j,k}(-1)^lq^jt^kA_2^{j,k,l}(L)
+\end{align*}
+はHOMFLYPT多項式
+\end{thm}
+
+$\mathbb{H}^{j-l,j-k}(gr_l^W\F_D)$の部分商が$A^{j,k,l}(L)$に入る。
+ここで、
+\begin{align*}
+\mathbb{H}^{*,i}(\F)=\oplus_{\abs{\alpha}=q^{i/2}}\mathbb{H}^*_\alpha(\F)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Markov? traceの幾何的な記述}
+$\sigma\in B_n$に対し$[\Phi_\sigma]$が定まる。
+$K:D^b_{B\times B}(G)\to H_n$が存在し、
+trace $H_n \to \C(t,q^{1/2})$と$\dim \mathbb{H}_B:D^b_{B\times B}(G) \to \C(t,q^{1/2})$が存在。
+さらに$IC_w \in D^b_{B\times B}(G) \mapsto S_w=\mathbb{H}^*_{B\times B}(G, IC_w)$という$R$-bimodが定まる。
+これの$\dim HH$が$\C(t,q^{1/2})$の元。
+これらの相互の関係は？
+
+\begin{align*}
+\Phi_\sigma=j_{w,*}k_{BwB}<l(w)>\mapsto q^{1/2}\sigma_i\in H_n\\
+IC_w=j_{w,!*}k_{BwB}<l(w)/2>\mapsto \sigma_i\in H_n
+\end{align*}
+で定める？
+\end{frame}
+
+\begin{frame}
+$\F_D\in D_{G_D}(X_D)$の構成
+
+結び目からグラフを作って
+$G_D=\prod_e GL(1), X_D=\prod_v GL(2)$とする。
+（colored linkの場合は行列のサイズが変わる）
+
+\begin{align*}
+(a,b,c,d)x=\begin{pmatrix}a&0\\0&b\end{pmatrix}x\begin{pmatrix}c^{-1}&0\\0&d^{-1}\end{pmatrix}
+\end{align*}
+
+Bruhat分解$GL(2)=B\amalg BsB=B\amalg U$とし、$k:U \to GL(2)$とする。
+結び目の交差の上下に対応して、$k_*\Lambda_U<2>$または$k_!\Lambda_u<2>$を$\F_v$とする。
+ここで$k_*, k_!$の関係はPoincare duality$Rf_*(D_X(K))\sim D_S(Rf_!(K))$がある。
+
+\begin{align*}
+\F_D=res^G_{G'}(\boxtimes\F_v)\in D^b_{G_D}(X_D)
+\end{align*}
+と定義する。
 \end{frame}
 
 \begin{frame}

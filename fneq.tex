@@ -1,0 +1,100 @@
+\documentclass[uplatex, a4paper]{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz,pgfplots}
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+\usetikzlibrary{intersections, calc}
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{.6\textwidth}
+
+
+\title{Dirichlet $L$の函数等式}
+\author{梅崎 直也}
+\date{\today}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+\section{Riemann $\zeta$}
+まず初めにRiemann $\zeta$の函数等式を雑に証明します。
+証明のあらすじは
+\begin{enumerate}
+\item $\theta(t)$のMellin変換が$\zeta(s)\pi^{-s/2}\Gamma(\dfrac{s}{2})$
+\item Poisson和公式から$\theta$の函数等式
+\item $\theta$の函数等式のMellin変換が$\zeta$の函数等式
+\end{enumerate}
+ほんとは被積分関数の漸近挙動を調べるという重要な問題があるのですが、そこは省略します。
+
+まずはMellin変換の定義
+\begin{align*}
+M(f)(s)=\int^\infty_0f(t)t^{s}\frac{dt}{t}
+\end{align*}
+
+\begin{eg}
+$e^{-t}$のメリン変換は$\Gamma(s)$
+$e^{-ct}$のメリン変換は$c^{-s}\Gamma(s)$
+
+$e^{-n^2\pi t}$の$t$についてのメリン変換は$(n^2\pi)^{-s}\Gamma(s)$
+\end{eg}
+
+\begin{dfn}
+テータ函数は$e^{-n^2\pi t}$の$n$についての和
+\begin{align*}
+\theta(t)=\sum_{n\in \Z}e^{-n^2\pi t}
+\end{align*}
+\end{dfn}
+
+これのMellin変換は（積分の順序交換を無視すると）（漸近挙動を見る必要あり）
+\begin{align*}
+M(\theta)(s/2)=\zeta(s)\pi^{-s/2}\Gamma(\frac{s}{2})
+\end{align*}
+
+ポワソン和公式
+\begin{align*}
+\sum_nf(n)=\sum_n\hat{f}(n)
+\end{align*}
+
+$e^{-n^2\pi t}$の$n$についてのフーリエ変換は
+\begin{align*}
+e
+\end{align*}
+なので、
+これを$f(n)=e^{-n^2\pi t}$とすると
+
+\begin{align*}
+\theta(t)=t^{-1/2}\theta(1/t)
+\end{align*}
+
+が成り立つ。
+
+この左辺のMellin変換は上で見たように$\zeta$で右辺のMellin変換は
+\begin{align*}
+\int^\infty_0t^{-1/2}\theta(1/t)t^{s/2}\frac{dt}{t}
+&=\int^0_\infty t^{1/2}\theta(t)t^{-s/2}\frac{dt}{t}\\
+&=M(\theta((1-s)/2))
+\end{align*}
+
+これが函数等式です。
+
+\section{Dirichlet $L$}
+次にDirichlet $L$関数の函数等式を証明します
+
+\begin{align*}
+L(\chi,s)=\sum_n\frac{\chi(n)}{n^s}
+\end{align*}
+
+です。
+$\chi=1$としたものが$\zeta$です。
+
+関数等式の証明の準備として、いくつかの関数を定義します。
+テータ関数の変形版を定義します。
+\begin{align*}
+\theta_a\\
+\theta^a\\
+\zeta(s,a)=\sum_n(n+a)^{-s}\\
+\end{align*}
+\end{document}

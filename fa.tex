@@ -1,0 +1,1321 @@
+\documentclass{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+%\input{/Users/naoya/Library/TeXShop/theorems}
+%\input{/Users/naoya/Library/TeXShop/symbols}
+
+\newtheorem{dfn}{定義}
+\newtheorem{eg}{例}
+\newtheorem{thm}{定理}
+\newtheorem{lem}{補題}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\abs}[1]{|#1|}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\slim}{\mathrm{s}\lim}
+
+\usepackage[dvipdfmx]{graphicx}
+\title{関数解析}
+\author{@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+参考文献は共立出版の黒田成俊著、関数解析。基本的に線形空間は$\C$上で考える。
+\section{Banach空間 Hilbert空間}
+\begin{dfn}[Banach空間]
+完備ノルム空間をBanach空間という
+\end{dfn}
+
+\begin{eg}
+$\C^n$はその上のノルム
+\[
+\norm{u}=\sum^n_{i=1}\abs{u_i}
+\]
+についてBanach空間になる。
+\end{eg}
+
+\begin{eg}
+実数$-\infty<a<b<\infty$に対し、$C[a,b]$を閉区間$[a,b]\subset\R$上の複素数値連続関数のなす線形空間する。
+ $C[a,b]$のノルムを
+\[
+\norm{u}=\sup_{a\leq x\leq b}\abs{u(x)}
+\]
+で定める。
+すると連続関数の一様収束先が連続であることから、このノルム空間は完備でBanach空間になる。
+\end{eg}
+
+\begin{eg}
+\[
+\ell^1=\{(u_i)_{i=1,2,\ldots} \mid u_i\in\C, \sum_{i=1}^\infty\abs{u_i}<\infty\}
+\]
+とし、この上のノルムを
+\[
+\norm{u}=\sum_{i=1}^\infty\abs{u_i}
+\]
+により定めると、これはBanach空間である。
+\end{eg}
+
+\begin{thm}[Schwarzの不等式]
+線形空間$H$とその上の内積$(,)$について、
+\[
+\abs{(u,v)}\leq\norm{u}\norm{v}
+\]
+が成り立つ
+\end{thm}
+
+\begin{dfn}[Hilbert空間]
+内積が定義されている線形空間$H$がその内積の定めるノルムについて完備であるときHilbert空間という。
+\end{dfn}
+
+\begin{eg}
+\[
+\ell^2=\{(u_i)_{i=1,2,\ldots}\mid u_i\in\C, \sum\abs{u_i}^2 < \infty\}
+\]
+に、内積を
+\[
+(u,v)=\sum_{i=1}^\infty u_i\bar{v}_i
+\]
+で定める。$\abs{u_i\bar{v}_i}\leq2(\abs{u_i}^2+\abs{v_i}^2)$よりこれは収束する。
+この内積により$\ell^2$はHilbert空間になる。
+\end{eg}
+
+\begin{eg}
+$C[a,b]$に内積を
+\[
+(u,v)=\int_a^bu(x)\overline{v(x)}dx
+\]
+で定義すると、このノルムについてCauchy列であって不連続関数に各点収束するものが作れるのでこれは完備でない。
+\end{eg}
+
+\begin{thm}
+Banach空間$X$の部分空間$M$が$X$のノルムをノルムとしてBanach空間であるための必要十分条件は$M$が閉部分空間であること。
+\end{thm}
+
+\begin{eg}
+$C^m[a,b]$を閉区間$[a,b]$上の複素数値関数で$m$階微分かつ$m$階までの導関数が全て$[a,b]$上連続であるとする。
+このとき$C^m[a,b]\subset C[a,b]$は$m>0$であれば稠密な真部分空間であるから、閉部分空間でないことがわかる。
+特に$C[a,b]$のノルムでBanach空間ではない。
+
+一方で$C^m[a,b]$のノルムを
+\[
+\norm{u}=\sum^m_{j=0}\sup_{x\in[a,b]}\abs{u^{(j)}(x)}
+\]
+で定めるとこれはBanach空間である。
+\end{eg}
+
+\begin{dfn}[生成系]
+ノルム空間$X$の空でない部分集合$A$について、$A$が生成する部分空間とは$A$を含む$X$の最小の閉部分空間をいう。
+線形空間として$A$で生成される$X$の部分空間の閉包を取ればよい。
+\end{dfn}
+
+\begin{dfn}
+Hilbert空間$H$の空でない部分集合$A$に対し、
+\[
+A^\perp=\{u\in H\mid \forall v\in A, (u,v)=0\}
+\]
+と定める。
+特に$A$が$H$の閉部分空間であるとき、$A^\perp$を直交補空間という。
+\end{dfn}
+
+\begin{thm}
+ノルム空間$X$にたいし$S=\{u\in X\mid \norm{u}=1\}$がコンパクトなら$X$は有限次元
+\end{thm}
+
+\section{関数空間}
+$\Omega\subset\R^n$を空でない可測集合とし、$1\leq p<\infty$なる実数$p$をとる。
+\begin{dfn}
+\[
+\norm{u}_p=\left(\int_\Omega\abs{u(x)}^pdx\right)^{1/p}<\infty
+\]
+となる$\Omega$上の可測関数全体を$\mathcal{L}^p(\Omega)$と定義する。
+\end{dfn}
+
+\begin{thm}[H\"olderの不等式]
+$1<p$とし$\dfrac{1}{p}+\dfrac{1}{q}=1$とする。
+このとき$u\in\mathcal{L}^p(\Omega), v\in\mathcal{L}^q(\Omega)$に対し、$uv\in\mathcal{L}^1(\Omega)$であり、
+\[
+\abs{\int_\Omega u(x)v(x)dx}\leq\norm{u}_p\norm{v}_q
+\]
+が成り立つ。
+\end{thm}
+特に$p=2$のときはSchwarzの不等式。
+
+\begin{lem}
+実数$a, b\geq0$に対し
+\[
+\frac{a^p}{p}+\frac{b^q}{q}\geq ab
+\]
+が成り立つ。
+\end{lem}
+\begin{proof}
+$\log$が上に凸であるから、
+\[
+\log\left(\frac{a^p}{p}+\frac{b^q}{q}\right)\geq\log\frac{a^p}{p}+\log\frac{b^q}{q}=\log(ab)
+\]
+である。
+\end{proof}
+ 
+\begin{thm}[Minkowskiの不等式]
+$u,v\in \mathcal{L}^p(\Omega)$にたいし
+\[
+\norm{u+v}_p\leq\norm{u}_p+\norm{v}_p
+\]
+が成り立つ。
+\end{thm}
+\begin{proof}
+\[
+\int_\Omega\abs{u(x)+v(x)}^pdx\leq\int_\omega\abs{u(x)+v(x)}^{p-1}\abs{v(x)}dx+\int_\Omega\abs{u(x)+v(x)}^{p-1}\abs{v(x)}dx
+\]
+の右辺に$q=\dfrac{p}{p-1}$としてH\"olderの不等式を使えばよい。
+\end{proof}
+
+\begin{dfn}
+$L^p(\Omega)$を$\mathcal{L}(\Omega)^p$のいたるところ$0$な関数のなす同値類による商とし、
+$\norm{u}_p$でノルムを定めたノルム空間とする。
+\end{dfn}
+
+\begin{thm}
+$L^p(\Omega)$はBanach空間である。
+\end{thm}
+
+\begin{thm}
+$L^2(\Omega)$は
+\[
+(u,v)=\int_\Omega u(x)\overline{v(x)}dx
+\]
+によりHilbert空間である。
+\end{thm}
+
+\begin{thm}
+$C_0(\R^n)\subset L^p(\R^n)$は稠密。
+\end{thm}
+\section{Hilbert空間の完全正規直交系}
+\begin{dfn}[直交系]
+$H$の部分集合$A$が直交系とは任意の$u,v\in A, u\neq v$が$(u,v)=0$をみたすことをいう。
+
+また$A$が正規直交系であるとは特に$\norm{u}=1$であること。
+\end{dfn}
+
+\begin{thm}[射影定理]
+$M\subset H$をHilbert空間とその閉部分空間とする。
+このとき任意の$u\in H$は$u=u_1+u_2, u_1\in M, u_2\in M^\perp$と一意的に分解される。
+\end{thm}
+\begin{proof}
+\[
+d=\inf_{v\in M}\norm{u-v}
+\]
+とおき、$\{v_n\}$を$\norm{u-v_n}\to d$となるようとる。
+すると、中線定理により
+\[
+\norm{v_m-v_n}=2\norm{v_m-u}^2+2\norm{v_n-u}^2-\norm{2(\frac{v_m+v_n}{2}-u)}^2
+\]
+となるので、これはCauchy列であることがわかり、$M$が閉なことから$u_1\in M$に収束する。
+さらに$u_2=u-u_1$が$M^\perp$を示せばよい。
+これは任意の実数$\lambda$及び任意の$v\in M$にたいして
+\[
+\norm{u-(u_1+\lambda v)}^2=d^2-2\lambda Re(u_2,v)+\lambda^2\norm{v}^2\geq d^2
+\]
+であるから$u_2\in M^\perp$がわかる。
+\end{proof}
+
+\begin{dfn}[正射影]
+上の定理により定まる写像
+\[
+p_M\colon H\to M, u\mapsto u_1
+\]
+を$M$への正射影という。
+\end{dfn}
+
+\begin{thm}[Besselの不等式]
+$\{\phi_k\}$が$H$の正規直交系であるとする。
+このとき$u\in H$にたいし
+\[
+\sum_k\abs{(u,\phi_k)}^2\leq \norm{u}^2
+\]
+となる。
+\end{thm}
+\begin{proof}
+$(u,\phi_k)=c_k$とおく。
+\[
+0\leq\norm{u-\sum^n_{k=1}c_k\phi_k}^2=\norm{u}^2-\sum^n_{k=1}\abs{c_k}^2
+\]
+であり、ここで$n\to\infty$とすればよい。
+\end{proof}
+
+\begin{thm}
+$\{\phi_k\}$を$H$の正規直交系とし、$\{\phi_k\}$の生成する閉部分空間を$M$、$M$への正射影を$p_M$とする。
+このとき任意の$u\in H$にたいして
+\[
+p_M(u)=\sum_k(u,\phi_k)\phi_k
+\]
+が成り立つ。
+また任意の$u,v\in H$にたいして
+\[
+(p_M(u),p_M(v))=\sum_k(u,\phi_k)\overline{(v,\phi_k)}
+\]
+が成り立つ。ここでこの無限和は絶対収束。
+\end{thm}
+\begin{proof}
+$c_k=(u,\phi_k)$とする。
+$u^n=\sum^n_{k=1}c_k\phi_k$とすると、$n>m$について$m,n\to \infty$のとき
+\[
+\norm{u^n-u^m}=\sum^n_{k=m+1}\abs{c_k}^2\to0
+\]
+である。したがって$H$において$\sum_kc_k\phi_k$は収束するので、これを$u_1$とおく。
+定義から$u_1\in M$である。
+すると$u_2=u-u_1$は任意の$k$について$(u_2,\phi_k)=0$をみたすことから$u_2\in M^\perp$であることがわかり、
+$p_M(u)=u_1$であることが証明できる。
+
+さらに$(v,\phi_k)=d_k$とおく。
+Schwarzの不等式とBesselの不等式から
+\[
+\sum_{k=1}^n\abs{c_k\bar{d}_k}\leq(\sum_{k=1}^n\abs{c_k}^2)^{1/2}(\sum_{k=1}^n\abs{d_k}^2)^{1/2}\leq\norm{u}\norm{v}
+\]
+となるので、主張の右辺は絶対収束する。
+さらに上で示したことを用いれば主張の等式は示せる。
+\end{proof}
+
+\begin{thm}
+$\{\phi_k\}$を$H$の正規直交系とし、$M$を$\{\phi_k\}$の生成する閉部分空間とする。
+このとき、以下の5条件は同値。
+\begin{enumerate}
+\item $M=H$
+\item 任意の$u, v\in H$にたいし
+\[
+(u,v)=\sum_k(u,\phi_k)\overline{(v,\phi_k)}
+\]
+が成り立つ。
+\item 任意の$u\in H$にたいしPersevalの等式
+\[
+\norm{u}=\sum_k\abs{(u,\phi_k)}
+\]
+が成り立つ。
+\item 任意の$k$について$(u,\phi_k)=0$ならば$u=0$である。
+\item 任意の$u\in H$にたいし
+\[
+u=\sum_k(u,\phi_k)\phi_k
+\]
+が成り立つ。
+\end{enumerate}
+\end{thm}
+
+\begin{dfn}[完全正規直交系]
+上の同値な条件をみたす正規直交系$\{\phi_k\}$を完全正規直交系という。
+\end{dfn}
+
+\begin{eg}
+$H=L^2(-\pi,\pi)$とし、$k\in\Z$にたいし
+\[
+\phi_k(x)=\frac{1}{\sqrt{2\pi}}\exp(ikx)
+\]
+とする。
+このとき$\{\phi_k\}_{k\in\Z}$は完全正規直交系である。
+\end{eg}
+
+\begin{thm}
+可分な無限次元Hilbert空間には加算個の要素からなる完全正規直交系が存在する。
+\end{thm}
+
+\section{線形作用素}
+\section{線形汎関数と共役空間}
+\section{レゾルベント$\cdot$スペクトル}
+\begin{dfn}
+$X$をBanach空間とし$A$をその上の線形作用素で$\lambda\in\C$に対して
+$(\lambda I-A)^{-1}$を$A$のレゾルベント作用素という。
+$\rho(A)\subset \C$をレゾルベント作用素が存在し、
+しかも連続でかつ定義域が稠密であるような$\lambda\in\C$のなす集合とする。
+これを$A$のレゾルベントといい、その補集合$\sigma(A)=\C\setminus\rho(A)$をスペクトルという。
+スペクトルには以下の三種類がある。
+まずレゾルベント作用素$(\lambda I-A)^{-1}$が存在しないとき、これを点スペクトルという。
+次にレゾルベント作用素が存在するが定義域が稠密でないとき、これを剰余スペクトルという。
+最後にレゾルベント作用素が存在し定義域が稠密であるが連続でないとき、これを連続スペクトルという。
+\end{dfn}
+\begin{eg}
+$X$が有限次元のとき、スペクトルは全て点スペクトルで、これは$A$の固有値と一致する。
+\end{eg}
+
+\begin{eg}
+$X=l^p, T(u_1,u_2,\ldots)=(u_2,u_3,\ldots)$とする。
+まず$\norm{T}=1$であることを確かめよう。
+\[
+(\frac{\norm{Tu}_p}{\norm{u}_p})^p=\frac{\sum_{i=2}^\infty \abs{u_i}^p}{\abs{u_1}^p+\sum_{i=2}^\infty \abs{u_i}^p}
+=\frac{1}{(\abs{u_1}^p/\sum_{i=2}^\infty \abs{u_i}^p)+1}
+\]
+となる。
+
+$Tu=\lambda u$とすると$\lambda u_i=u_{i+1}$である。
+これが$l^p$に入るための条件は$\abs{\lambda}<1$であること。
+\end{eg}
+
+自己随伴作用素のスペクトル分解。
+
+\section{線形作用素の半群}
+\begin{eg}[平行移動により定まる半群]
+$X=B_u[0,\infty)$を一様連続で有界$\C$値関数のなす空間で$\norm{u}=\sum_{x\in[0,\infty)}\abs{u(x)}$とする。
+\[
+(T(t)u)(x)=u(x+t)
+\]
+と定めるとこれは半群となり、その生成作用素$A$は
+\[
+D(A)=\{u\in X\vert u\mbox{は}[0,\infty)\mbox{で微分可能で}u'\in X\}
+\]
+であり$Au(x)=u'(x)$である。
+
+$X=L^p(0,\infty)$に対して同様に$T(t)$を定義するとこれは半群となり、
+その生成作用素$A$は$D(A)=W^{1,p}(0,\infty)$であり$Au=Du$である。
+\end{eg}
+$u(t)$と$u(x)$がややこしいかも。
+
+\section{蔵本予想と一般スペクトル理論}
+ある微分方程式の解の漸近挙動が知りたい。
+
+$X$をBanach空間とし、
+\[
+\frac{du}{dt}=Tu
+\]
+という$X$上の線形方程式を考える。
+この解の$t\to \infty$の漸近挙動は$T$のスペクトルによってある程度理解することができる。
+
+Laplace逆変換による解の表示
+\[
+e^{Tt}u_0=\frac{1}{2\pi i}\int^{a+i\infty}_{a-i\infty}e^{\lambda t}(\lambda-T)^{-1}u_0d\lambda
+\]
+を用いる。
+ここで$a\in \R$は$T$のスペクトルよりも右側にある実数。（このようなものが必ずあるか？）
+$T$のスペクトルが適切な条件を満たせば、積分路を変形することができ、留数定理により$t\to \infty$の漸近挙動を調べることができる。
+例えば$X$が有限次元であったり、$T$が有界作用素であればよい。
+
+この$e^{Tt}u_0$は線形作用素$T$が生成する半群。
+
+例。$X=\R$で$a\in \R$に対し方程式
+\[
+\frac{du}{dt}=au
+\]
+を考える。（空気抵抗とか？）
+初期値$u(0)=u_0$とした時、これの解は$u(t)=u_0e^{at}$である。
+$t\to\infty$での挙動は$a>0$で指数関数の速さで発散、$a<0$で指数関数の速さで$0$に収束する。
+
+この解をLaplace逆変換により求めると
+\[
+u(t)=\lim_{y\to\infty}\frac{1}{2\pi i}\int^{x+yi}_{x-iy}e^{\lambda t}(\lambda-a)^{-1}u(0)d\lambda
+\]
+となる。この積分は留数定理を用いて計算することができる。
+
+$X=\R^2$の時。摩擦付きのバネ。
+\[
+m\frac{d^2y}{dt^2}+\mu\frac{dy}{dt}+ky=0
+\]
+なる方程式を考える。
+これを
+\[
+\frac{d}{dt}\begin{pmatrix}y\\v\end{pmatrix}=\begin{pmatrix}0&1\\-k/m&-\mu/m\end{pmatrix}\begin{pmatrix}y\\v\end{pmatrix}
+\]
+と書き換える。
+$k=m=\mu=1$として
+\[
+\frac{du}{dt}=\begin{pmatrix}0&1\\-1&-1\end{pmatrix}u
+\]
+を考える。
+この解は行列の指数関数を用いて$u(t)=u_0e^{At}$とかける。
+$A$を対角化すると$A=\begin{pmatrix}\omega&0\\0&\omega^2\end{pmatrix}$となる。
+ここで$\omega$は$1$の原始三乗根。
+特に固有値の実部は全て負で、$t\to\infty$で$0$に指数関数の速さで収束する。
+
+これもLaplace逆変換で解を求めてみよう。
+\[
+u(t)=\lim_{y\to\infty}\frac{1}{2\pi i}\int^{x+yi}_{x-iy}e^{\lambda t}(\lambda-A)^{-1}u(0)d\lambda
+\]
+こちらも上と同様に留数定理を用いて計算できる。
+
+拡散方程式
+\[
+\frac{\partial u}{\partial t}=\Delta u=\frac{\partial^2u}{\partial x^2}
+\]
+を考える。
+この場合には$X$をどのようにとるかで問題が変わってくる。
+以下の三種類で考える。
+\begin{enumerate}
+\item $X=C^0_D[0,L]$
+\item $X=BC^r(\R)$
+\item $X=L^2(\R)$
+\end{enumerate}
+
+これらについて$\Delta$のスペクトルを計算しよう。
+
+これらは非有界で$\abs{A}=\infty$なので$e^{tA}$は$t>0$で収束しないという問題がある。
+一方でLaplace逆変換は非有界でも存在する場合がある。
+上の場合には$A$は角域作用素であり、この場合には積分路をうまく取り替えることができ、以下の定理が成り立つ。
+\begin{thm}
+$A$を角域作用素としスペクトル集合$\sigma(A)\subset\{\lambda\in\C\mid Re\lambda<\alpha\}$とする。
+この時、任意の初期条件$u(t)\in X$に対し方程式
+\[
+\frac{du}{dt}=Au
+\]
+の解が$X$に一意的に存在して、ある$C>0$に対し$\norm{u(t)}<Ce^{\alpha t}$を満たす。
+\end{thm}
+これを半群の言葉で言い換えると半群$T(t)\colon u(0)\mapsto u(t)$は作用素ノルムについて
+\[
+\norm{T(t)}<Ce^{\alpha t}
+\]
+を満たす、ということ。
+
+その他、波動方程式、電磁気、量子論などの例。
+
+\section{応用のための関数解析}
+有界作用素と非有界作用素で何が違うか。
+スペクトルの様子、Dunford積分、半群の生成。
+有界作用素の例、非有界でも扱いやすいもの（自己共役、散逸型など？）
+
+\subsection{スペクトルの計算例}
+\begin{eg}
+$X=L^2(\R)$とし掛け算作用素$A\colon u(x)\mapsto xu(x)$とする。
+$(\lambda I-A)u=(\lambda-x)u$だから、これは$L^2(\R)$で単射である。
+
+$D((\lambda-x)^{-1})$は$x=\lambda$の周りで$0$になる$u\in L^2(\R)$全体である。
+$u$に対して$(\lambda-\epsilon,\lambda+\epsilon)$だけ$0$を取るようなものを考えると、
+$\epsilon\to 0$とできて、これは$X$で稠密。
+
+またこれは有界でない。
+例えば$\lambda=0$として$u_n$を区間$(\frac{1}{n+1},\frac{1}{n})$の特性関数の定数倍で$\norm{u_n}=1$とすると、
+$n\to\infty$で$\norm{x^{-1}u_n}$はどんどん大きくなる。
+\end{eg}
+
+\begin{eg}
+$X=L^2(0,1)$とし$H\psi(x)=-\frac{\partial^2}{\partial x^2}\psi(x)$とする。
+このとき$D(H)=H^1_0(0,1)\cap H^2_0(0,1)$である。
+これのスペクトルを計算しよう。
+
+Fourier級数展開により$L^2(0,1)\to l^2$を以下のように定める。
+\[
+\psi(x)=\sum_k a_k\sin(k\pi x)
+\]
+すると$H$は$l^2$で書くと
+\[
+(a_1,a_2,a_3,\ldots0\mapsto\pi^2(a_1,2^2a_2,3^3a_3,\ldots)
+\]
+となる。
+このことから$\sigma_p(H)=\{k^2\pi^2\}_{k=1,2,\ldots}$となることがわかる。
+\end{eg}
+
+\subsection{弱解と変分原理}
+$X$をHilbert空間として$S$を$X$上の作用素で$Sx=0$ならば$x=0$と仮定する。
+$\rho\in X$として$Sy=\rho$を解くことを考える。
+$(x,y)_S=(x,Sy)$とし、$X$をこの内積について完備化したものを$X_S$とする。
+このとき$x\mapsto(x,\rho)$が$X_S$上の有界汎関数であればRiesの補題よりある$y\in X_S$が存在して
+任意の$x\in X_S$について$(x,\rho)=(x,y)_S$となる。
+この$y$を$Sy=\rho$の弱解という。
+
+\begin{eg}
+ラプラシアンの場合の例。
+$u,v\in H^1_0(\Omega)$にたいして
+\[
+B(u,v)=\frac{1}{2}(\int_\Omega\nabla u\nabla vdx+\int_\Omega u(x)v(x)dx)
+\]
+とし、
+$\rho\in L^2(\Omega), u\in H^1_0(\Omega)$にたいして
+\[
+L(u)=\int_\Omega u(x)\rho(x)dx
+\]
+とする。
+これらは$H^1_0(\Omega)$上の連続汎関数を与え、
+ある$c>0$が存在して$B(u,u)\geq c\norm{u}^2_{H^1_0(\Omega)}$となる。
+
+$Q(u)=B(u,u)-L(u)$とする。
+$Q(v)=\inf_{u\in H^1_0(\Omega)}Q(u)$なる$v\in H^1_0(\Omega)$が一意的に定まり、
+これが$(-\Delta+1)y=\rho$の弱解を与える。
+\end{eg}
+
+\subsection{Sobolev空間}
+ $\Omega\subset\R^n$を開集合として、
+ $C_0^k(\Omega)\subset C^k(\Omega)$をそれぞれ（コンパクト台）$k$回微分可能な関数のなす集合とし、
+ $f\in C^k(\Omega)$に対して
+ \[
+ \norm{f}_{H^k}=(\sum_{\abs{S}\leq k}\int_\Omega\abs{D^Sf(x)}^2dx)^{1/2}
+\]
+と定義する。
+これはノルムを定めるが、$C^k(\Omega)$はこのノルムについて完備ではない。
+$L^2$ノルムの場合を考えよ。
+
+$\{f_l\}_l\subset C^k(\Omega)$を$\norm{}_{H^k}$についてのCauchy列とする。
+すると$\{D^sf_l\}$は$L^2$でCauchy列となり、したがって$f^{(s)}\in L^2$に収束する。
+これはどのような性質を満たすか？
+$\phi\in C^\infty_0(\Omega)$にたいして（これは$L^2(\Omega)$で稠密か？）部分積分を使えば
+\[
+\int_\Omega f^{(s)}(x)\phi(x)dx=\lim_{l\to\infty}\int_\Omega D^sf_l(x)\phi(x)dx
+=(-1)^{\abs{S}}\lim_{l\to\infty}\int_\Omega f_l(x)D^s\phi(x)dx
+=(-1)^{\abs{S}}\int_\Omega f(x)D^s\phi(x)dx
+\]
+となる。
+
+\subsection{発展方程式の初期値問題}
+\begin{eg}
+Schoredinger方程式。
+$u\in L^2(\Omega)$にたいし
+\[
+\frac{d}{dt}u=s\lim_{\delta\to 0}\frac{u(t+\delta)-u(t)}{\delta}
+\]
+と定義する（ここではノルムで収束を定義？）
+
+$u(t)$は$X$内の曲線である。
+$u(t)=T(t,s)u(s)$により$T(t,s)$を定義し、$T(t,s)=T(t-s,0)$をみたすときこれを自励系という。
+このとき$T(t)=T(t,0)$は半群をなす。
+
+この半群$T(t)$に対し、
+\[
+Au=s\lim_{t\to+0}\frac{(T(t)-I)u}{t}
+\]
+を$T(t)$の生成作用素という。
+
+逆に
+\[
+\frac{d}{dt}u=Au
+\]
+の初期値$u(0)=u_0$に対する解$u(t)$に対し$T(t)u_0=u(t)$とすることで半群$T(t)$が定まる。
+\end{eg}
+
+\begin{thm}[Duhamelの原理]
+\[
+\frac{d}{dt}u=Au+g(t)
+\]
+とし$u(0)=u_0$とする。
+$A$が半群$T(t)$を生成し、$g(t)\in U\subset X$は（どういう位相で？）連続であるとする。
+
+このとき、上の方程式の解は
+\[
+u(t)=T(t)u_0+\int^t_0T(t-s)g(s)ds
+\]
+により与えられる。
+\end{thm}
+有限次元の非斉次線形方程式を思い出そう。
+
+$T(t)$はどのようなものになるか？
+まず$A$が有界作用素の場合。
+\begin{dfn}[Dunford積分]
+\[
+e^{tA}=\frac{1}{2\pi i}\int_Ce^{t\lambda}(\lambda I-A)^{-1}d\lambda
+\]
+ここで$C$は$\sigma(A)$を全て含む閉曲線。
+\end{dfn}
+
+これをLaplace変換として解釈する。
+$u(t)$に対しそのLaplace変換を
+\[
+\hat{u}(\lambda)=\int^\infty_0e^{-t\lambda}u(t)dt
+\]
+と定義する。
+Banach空間に値を持つ関数でも同様にできるか？
+
+\[
+\int^\infty_0e^{-t\lambda}Au(t)dt=A\hat{u}
+\]
+\[
+\int^\infty_0e^{-t\lambda}\frac{d}{dt}u(t)dt=[e^{-t\lambda}u(t)]^\infty_0-\lambda\int^\infty_0e^{-t\lambda}u(t)dt
+=u(0)-\lambda\hat{u}
+\]
+となり、
+\[
+\hat{u}=(\lambda I-A)^{-1}u_0
+\]
+となる。
+
+Laplace逆変換は
+\[
+u(t)=\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}e^{t\lambda}(\lambda I-A)^{-1}u_0d\lambda
+\]
+である。
+ここで$c\in\R$は$\sigma(A)$の実部の最大値よりも大きくとる。
+
+\section{力学系の基礎}
+不動点の安定性について。
+
+力学系の不動点と安定性。
+$x_{n+1}=f(x_n)$なる力学系。
+$f(x)=rx+c$とすれば$a$を$x=rx+c$の解として$x_n=r^n(x_0-a)+a$となるので、
+$\abs{r}<1$なら$n\to\infty$で$a$に収束、そうでなければ振動か発散。
+
+次に$f(x)=ax(1-x)$とする。ここで$0\leq a\leq 4$とする。
+$a=0$の時は$x_n=0$である。
+そうでない時、$0<x_0<1$とすると$a\leq4$だから$x_n$は減少列。
+
+初期値$x_0$を不動点$x_0=f(x_0)$とする。これは$x_0=0, 1-\frac{1}{a}$のいずれか。
+次に不動点の近くに初期値をとるとしよう。
+この時、軌道$x_n$が不動点に収束するか？
+まず$x=0$が安定であるかを考える。$a>1$であれば$x$が十分小さい時$a(1-x)>1$となるので$f(x)>x$となる。
+よって$x=0$に収束しないであろう。
+$a<1$なら収束する。
+次にもう一つの不動点はどうか？
+
+次に周期点$x=f^n(x)$を考える。ここで$f^n$は$f$の$n$回合成。
+
+\begin{dfn}[自励系]
+次のような連立微分方程式を自励系という。
+ここで$f$は$t$に陽に依存しない。
+\[
+\begin{cases}
+\frac{dx_1}{dt}=f_1(x_1,\ldots,x_n)\\
+\cdots
+\frac{dx_n}{dt}=f_n(x_1,\ldots,x_n)
+\end{cases}
+\]
+ここで$(x_1,\ldots,x_n)\in\Omega\subset\R^n$を相空間という。
+\end{dfn}
+
+自励系に対応する方向場とは、$\Omega$上のベクトル場$x\mapsto f(x)$のこと。
+
+\begin{eg}
+自励系
+\[
+\begin{cases}
+\frac{dx_1}{dt}=x_2\\
+\frac{dx_2}{dt}=-\sin x_1
+\end{cases}
+\]
+に対応する方向場を書く。
+\end{eg}
+これは解軌道の接ベクトルを書いたもの。
+解軌道は解の一意性から交わりを持たない。
+
+\begin{dfn}[平衡点]
+$x\in\Omega$が平衡点であるとは$f(x)=0$であること。
+
+平衡点$x$が安定であるとは、任意の$\epsilon>0$に対してある$\delta>0$が存在して$x_0\in D(x,\delta)$にたいして任意の$t$で$x(t)\in D(x,\epsilon)$であること。
+
+また安定平衡点が漸近安定とは安定かつ$t\to \infty$で$x(t)\to x$となること。
+\end{dfn}
+
+線形自励系の平衡点
+\[
+\frac{dx}{dt}=Ax
+\]
+で$\det A\neq0$とする。
+この平衡点は$x=0$のみである。
+
+これが安定かどうかは$A$の固有値により判断できる。
+\begin{thm}
+$x=0$が安定であれば$A$の固有値の実部が全て$0$以下。
+
+$x=0$が漸近安定であれば$A$の固有値の実部が全て$0$未満。
+\end{thm}
+
+非線形自励系。
+孤立平衡点の様子は、その周りでの線形近似で調べることができる。
+（ハートマン、グロブマンの定理）
+
+\section{話したこと}
+\subsection{イントロ}
+$X$をHilbert空間もしくはBanach空間とし、$A$を$X$の作用素とする。
+$X$に値を持つ$\R$もしくは$\R_{\geq0}$上の関数$u(t)$に対する微分方程式
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+を考える。
+この方程式の解$u(t)$の$t\to\infty$における振る舞いを$A$のスペクトルの言葉で記述したい。
+また平衡点とその安定性について議論する。
+
+\subsection{数列のラプラス変換}
+ここでは上の問題の類似として時間$t$を離散的に考える。
+関数$u(t)$の代わりに数列$u_n$を考え、$\frac{d}{dt}u(t)$の代わりに数列の項をずらす、つまり
+\[
+u_{n+1}=Au_n
+\]
+という漸化式を考える。
+数列$u$に対してその項をずらす作用素を$D$とする。
+つまり$u=(u_0,u_1,u_2,\ldots)$に対しては$Du=(u_1,u_2,u_3,\ldots)$となる。
+これを用いると上の漸化式は
+\[
+Du=Au
+\]
+と書くことができる。
+
+例えば
+\[
+a_{n+2}=ca_{n+1}+da_n
+\]
+という漸化式をみたす数列だと$u_n=\begin{pmatrix}a_{n+1}\\a_n\end{pmatrix}$と置くことで、
+$A=\begin{pmatrix}c&d\\1&0\end{pmatrix}$とすれば上の形に変形できる。
+
+\begin{dfn}[$z$変換]
+数列$u=(u_n)$に対してその$z$変換$Z(u)$とは次のように定まる$z$を変数にもつべき級数。
+\[
+Z(u)(z)=\sum_{k=0}^\infty u_kz^{-k}
+\]
+\end{dfn}
+これは値が収束する範囲においては$z$を変数にもつ関数とみなすことができる。
+
+\begin{dfn}[逆$z$変換]
+関数$f(z)$の逆$z$変換とは以下のように定まる数列$f_n$のこと。
+\[
+f_n=\frac{1}{2\pi i}\int_cX(z)z^{n-1}dz
+\]
+$z$を変数にもつべき級数。
+\end{dfn}
+
+数列$u=(u_n)$を$z$変換し、逆$z$変換すると元に戻る。
+つまり
+\[
+u_n=\frac{1}{2\pi i}\int_CZ(u)(z)z^{n-1}dz
+\]
+がすべての非負整数$n$で成り立つ。
+ここで$C$は複素平面内の単位円とする。
+これはCauchyの積分公式を用いて証明できる。
+簡単にいうと、$k\neq-1$であれば$\dfrac{d}{dz}z^{k+1}=(k+1)z^k$となり、
+微積分の基本公式から$\int_Cz^kdz=[\exp(i\theta)^{k+1}]^{2\pi}_0=0$となる。
+
+$Du$の$Z$変換を計算すると
+\[
+Z(Du)(z)=\sum_{k=0}^\infty(Du)_kz^{-k}=\sum^\infty_{k=0}u_{k+1}z^{-k}=z\sum^\infty_{k=0}u_{k+1}z^{-(k+1)}=z(Z(u)-u_0)
+\]
+となる。
+これを用いて上の漸化式の両辺を$Z$変換すると
+\[
+z(Z(u)-u_0)=Z(Du)(z)=Z(Au)=AZ(u)
+\]
+となり、
+\[
+Z(u)=(zI-A)^{-1}zu_0
+\]
+となることがわかる。
+これを逆変換すれば
+\[
+u_n=\frac{1}{2\pi i}\int_CZ(u)(z)z^{n-1}dz
+\]
+となる。
+
+話を簡単にするために$A$が対角化されているとすると、上の式は
+
+ここでCauchyの積分公式
+\[
+\frac{1}{2\pi i}\int_C\frac{f(z)}{z-\lambda}dz=f(\lambda)
+\]
+を使う。ただし$C$は$z=\lambda$を内部に含む複素平面上の閉曲線。
+$A$が対角行列であれば
+\[
+u_n=A^nu_0
+\]
+と計算できる。
+一般には
+$P^{-1}AP=B$が対角行列とすると、$v_n=P^{-1}u_n$とすれば
+\[
+v_{n+1}=Bv_n
+\]
+となり、
+\[
+u_n=PB^n
+\]
+となる。
+
+$n\to\infty$での解の様子は$A$の固有値$\lambda$が$Re \lambda<0$であれば$u_n\to0$となる。
+一般には$\lambda$の正負や初期値によって変わる。
+
+\subsection{有限次元の微分方程式}
+$X$を有限次元のBanach空間$\R^n$で、$A$を$n$次正方行列、$u(t)$を$\R^n$値関数とし、
+微分方程式
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の解の$t\to\infty$での様子を$A$のスペクトルを用いて記述する。
+
+例えば二階の線形微分方程式
+\[
+\frac{d^2}{dt^2}f(t)=a\frac{d}{dt}f(t)+bf(t)
+\]
+であれば$u(t)=\begin{pmatrix}f'(t)\\f(t)\end{pmatrix}$とし$A=\begin{pmatrix}a&b\\1&0\end{pmatrix}$とすると
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の形に書き直すことができる。
+
+Laplace変換により解く。
+\[
+\frac{d}{dt}u(t)=au(t)
+\]
+の両辺をLaplace変換すると
+\[
+zL(u) -u(0)=aL(u)
+\]
+であり
+\[
+L(u)=\frac{u(0)}{z-a}
+\]
+である。
+これをLaplace逆変換すると、
+\[
+u(t)=u(0)\exp(at)
+\]
+と書くことができる。
+
+
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の両辺をLaplace変換すると
+\[
+sL(u)(s)-u(0)=AL(u)(s)
+\]
+となり、
+\[
+L(u)(s)=(sI-A)^{-1}u(0)
+\]
+となる。
+ここで$f(t)$のLaplace変換$L(f)$とは$s$を変数にもつ関数
+\[
+L(f)(s)=\int^\infty_0e^{-st}f(t)dt
+\]
+のこと。
+これの逆変換は
+\[
+\frac{1}{2\pi i}\int^{c+i\infty}-{c-i\infty}(sI-A)^{-1}u(0)ds
+\]
+が解になる。
+積分経路を動かして？Cauchyの積分公式を使えば
+\[
+\frac{1}{2\pi i}\int^{c+i\infty}-{c-i\infty}(sI-A)^{-1}u(0)ds=e^{tA}u(0)
+\]
+と書くことができる？
+
+まとめると、
+\[
+\frac{d}{dt}u(t)=Au(t)
+\]
+の初期値$u_0$に対する解は$\exp(tA)u_0$で与えられる。
+またLaplace変換を使った形で書くと
+\[
+u(t)=\frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty}(sI-A)^{-1}e^{-st}u_0ds=\frac{1}{2\pi i}\int_C(sI-A)^{-1}e^{-st}u_0ds
+\]
+となる。
+
+$t\to\infty$での解の様子は$Re \lambda<0$であれば$u(t)\to0$となる。
+
+有限次元であれば$A$は必ず有界作用素。
+半群を$T(t)=\exp tA$として定義することができる。
+これの作用素ノルムは、
+
+有界作用素でも同様にできる。
+有界作用素$A$に対して
+
+非有界の場合の問題点。
+積分経路の変更ができない。
+$\exp tA$が収束しない。
+
+今の問題を考える上で必要な$\exp(tA)$と同様の性質をみたすものを抽象的に定義しておく。
+\begin{dfn}[半群]
+Banach空間$X$上の有界作用素の族$\{T(t)\}_{t\geq0}$が$(C_0)$半群であるとは次をみたすこと。
+\begin{enumerate}
+\item $T(t+s)=T(t)T(s)$
+\item $T(0)=I$
+\item $T(t)$は$t\in[0,\infty)$について強連続
+\end{enumerate}
+\end{dfn}
+
+\begin{dfn}[生成作用素]
+$(C_0)$半群$\{T(t)\}$に対して$D\subset X$を$\lim_{h\to+0}h^{-1}(T(h)u-u)$が存在する$u\in X$を集めたものとする。
+これに対して$X$上の作用素$A$が$\{T(t)\}$の生成作用素であるとは$u\in D$に対して
+\[
+Au=\lim_{h\to+0}\frac{T(h)u-u}{h}
+\]
+が成り立つこと。
+\end{dfn}
+\begin{eg}
+$A$を有界作用素として
+\[
+T(t)=\exp(tA)=\sum^\infty_{k=0}\frac{(tA)^k}{k!}
+\]
+は$(C_0)$半群であり、その生成作用素は$A$である。
+\end{eg}
+
+\begin{dfn}
+Banach空間$X$上の作用素の族$T(t)$が$[0,\infty)$で強連続とは、任意の$u\in X$に対して$t'\to t$のとき
+\[
+\abs{T(t')u-T(t)u}\to 0
+\]
+をみたすこと
+\end{dfn}
+このとき$\sup_{t\in[0,1]}T(t)$は有限である。
+
+\begin{dfn}[強微分]
+\[
+\slim_{h\to0,t_0+h\in I}\frac{1}{h}(u(t_0+h)-u(t_0))
+\]
+\end{dfn}
+
+\begin{thm}
+$(C_0)$半群$\{T(t)\}$に対し、ある実数$\omega$と$M\geq1$が存在し、
+\[
+\norm{T(t)}\leq Me^{\omega t}
+\]
+となる。
+\end{thm}
+\begin{proof}
+$T(t)$が強連続なので$\sum_{t\in[0,1]}\norm{T(t)}=M_1<\infty$である。
+$t$の整数部分を$a$、小数部分を$b$とする。
+$\omega=\log\norm{T(1)}$の正負で場合分けする。
+半群の性質から$\norm{T(t)}=\norm{T(a)}\norm{T(b)}$となり、
+\end{proof}
+
+
+\subsection{熱方程式の近似}
+$\R$上を動く有限個の点の様子を記述するとき、
+各点の位置や速度を値にもつ関数をすべて並べることで前に見たような有限次元の微分方程式が出てくる。
+点の数が多い場合、点の密度を$\R$上の関数とし近似すると$\R$上の関数に関する微分方程式が出てくる。
+この場合$X$としては無限次元のBanach空間を考えることになり、
+$A$が非有界作用素の場合には前と同じようにはできない。
+
+$X=L^2(\R)$とし、 $A=D^2$とする。
+ここで$D$は$L^2$の意味での微分で、$Du=F^{-1}(i\xi)Fu$として定める。
+$u=u(x)$が微分可能な関数であれば$Du=\frac{d}{dx}u(x)$である。
+考える微分方程式は古典的には
+\[
+\frac{d}{dt}u(t,x)=\frac{d^2}{dx^2}u(t,x)
+\]
+と書かれるものである。
+
+この$A$は非有界作用素であり、$\exp(tA)$が定義できない。
+有界でない関数の掛け算作用素は有界でないので掛け算作用素$T_{-\xi^2}$は有界ではない。
+しかし、ここで$\exp(tT_{-\xi^2})$を考えることにすると、
+掛け算作用素を繰り返し適用すると$(T_f)^k=T_{f^k}$であり、また$T_f+T_g=T_{f+g}$であることから
+\[
+\exp(tT_{-\xi^2})=T_{\exp(-t\xi^2)}
+\]
+となる。
+$\exp(-t\xi^2)$は有界な関数なので、これは有界作用素であり、Fourier変換可能。
+よって$T(t)=F^{-1}T_{\exp(-t\xi^2)}F$は有界作用素で、
+$\exp(-t\xi^2)$のFourier逆変換
+\[
+G_t=\frac{1}{\sqrt{4\pi t}}e^{-x^2/4t}
+\]
+を使った畳み込みの形で書くと$T(t)u=G_t*u$となる。
+
+この$T(t)$が$(C_0)$半群を定めることを確かめよう。
+$\exp(-t\xi^2)\exp(-s\xi^2)=\exp(-(t+s)\xi^2)$であり、掛け算のFourier変換がFourier変換の畳み込みになることから
+$G_s*G_t*u=G_{s+t}*u$すなわち$T(t+s)=T(t)T(s)$となる。
+
+縮小か？
+$\norm{T(t)}$を計算しよう。
+畳み込みとノルムの関係。
+
+これの生成作用素が上で定めた$A$であることを証明しよう。
+つまり
+\[
+\frac{d}{dt}T(t)u=AT(t)u
+\]
+となり、$u(t)=T(t)u$は初期値$u$に対する$L^2$の意味での解になることを証明する。
+これがわかれば、例えばこの解の漸近挙動が$T(t)$のノルムの評価から$t\to\infty$で$T(t)u\to0$となることがわかる。
+
+$T(t)$の生成作用素が$A$であることを確かめるため、
+$A$を有界作用素$A_n$で近似し、$T(t)$を$A_n$生成する半群$T_n(t)$で近似する。
+まずは$A$のスペクトルとレゾルベント$R(\zeta;A)=(\zeta I-A)^{-1}$を計算する。
+\[
+(\zeta I-A)u=F^{-1}((\zeta+\xi^2)Fu)
+\]
+であることから、
+\[
+R(\zeta;A)=(\zeta I-A)^{-1}=F^{-1}T_{(\zeta+\xi^2)^{-1}}F
+\]
+となる。ここで$T_{(\zeta+\xi^2)^{-1}}$は掛け算作用素。
+$(\zeta+\xi^2)^{-1}$が有界になるための$\zeta$の条件は$\zeta\not\in\R$であるか$\zeta>0$であること。
+したがって$\zeta<0$がスペクトル。
+\[
+f_n(x)=-\frac{1}{2\sqrt{n}}e^{-\sqrt{n}\abs{x}}
+\]
+のFourier変換は
+\[
+-\frac{1}{2\sqrt{2n\pi}}\int^\infty_{-\infty}e^{-\sqrt{n}\abs{x}}e^{-i\xi x}dx=-\frac{1}{\sqrt{2\pi}(n+\xi^2)}
+\]
+となるので
+\[
+R(\zeta;A)u=F^{-1}(\frac{1}{\zeta+\xi^2})*u=-\sqrt{\pi}f_n*u
+\]
+となる。
+
+$J_n=nR(n;A)$とする。これの$n\to \infty$での極限を計算する。
+\[
+J_nu=R(n;A)nu=R(n;A)(nu-Au+Au)=u+R(n;A)Au
+\]
+であり、$n\to\infty$で
+\begin{align*}
+R(n;A)Au&=-\sqrt{2\pi}f_n*u\to0
+\end{align*}
+より$n\to\infty$で$J_n\to I$となる。
+
+$A_n=AJ_n$とする。
+$A_n=-n+n^2R(n;A)$であることから$FR(n;A)u=\dfrac{1}{n+\xi^2}Fu$であることを使うと、
+\[
+FA_nu=-nFu+n^2\frac{1}{n+\xi^2}Fu=\frac{-n\xi^2}{n+\xi^2}Fu
+\]
+となる。
+$\dfrac{-n\xi^2}{n+\xi^2}$は有界関数であり、このことから$A_n$は有界であることがわかる。
+
+$A_n$が生成する半群$T_n(t)=\exp(tA_n)$は
+\begin{align*}
+F((\exp tA_n)u)&=F(\sum^\infty_{k=0}\frac{t^k}{k!}A_n^ku)=\sum^\infty_{k=0}\frac{t^k}{k!}F(A_n^ku)\\
+&=\sum^\infty_{k=0}\frac{t^k}{k!}(\frac{-n\xi^2}{n+\xi^2})^kFu=\exp(\frac{-n\xi^2}{n+\xi^2})Fu
+\end{align*}
+となる。
+
+これの$n\to\infty$での極限をとると、
+\[
+\lim_{n\to\infty}F(T_n(t)u)=\exp(-\xi^2)Fu
+\]
+となり、Fourier逆変換すると
+\[
+\lim_{n\to\infty}T_n(t)u=F^{-1}(\exp(-\xi^2))*u
+\]
+となる。
+$F^{-1}\exp(-\xi^2)$を計算すると、これの右辺が初めの$G_t*u$と一致することがわかる。
+
+各$n$について$A_n$が$T_n(t)$の生成作用素であるから、その極限をとって$A$は$T(t)$の生成作用素であることがわかる。
+
+\subsection{Hille-Yoshidaの定理}
+ここではより一般に$A$が半群の生成作用素とな条件を調べる。
+このために、一般のBanach空間に値を持つ関数の微積分をする必要がある。
+だいたい普通の微積分と同じようにできると思ってもよい。
+
+\begin{thm}
+$X, Y$をBanach空間とし$u(t)$を$X$に値をとる強連続な関数、$\int_I\norm{u(t)}dt<\infty$と仮定する。
+このとき、
+\[
+\int_ITu(t)dt
+\]
+が存在し、
+\[
+T(\int_Iu(t)dt)=\int_ITu(t)dt
+\]
+をみたす。
+\end{thm}
+
+
+\begin{thm}
+$(C_0)$半群$\{T(t)\}_{t\geq0}$の生成作用素$A$は閉作用素で$D(A)\subset X$は稠密。
+上の定理で取れる$M$と$\omega$に対して、
+レゾルベント$\rho(A)\supset\{\lambda\in\C\vert Re\lambda>\omega\}$であり、
+$Re\lambda>\omega$なる$\lambda$に対して下の積分が存在し、等式が成立する。
+\[
+\int^\infty_0e^{-\lambda t}T(t)udt=R(\lambda;A)u
+\]
+さらにそのような$\lambda$に対して
+\[
+\norm{R(\lambda;A)^m}\leq\frac{M}{(Re\lambda-\omega)^m}
+\]
+が成り立つ。
+\end{thm}
+この積分はLaplace変換と同じ形をしている。
+\begin{proof}
+$e^{-\lambda t}T(t)u$は$t$について強連続なので積分可能で、前の定理より
+\[
+\abs{\int^\infty_0e^{-\lambda t}T(t)udt}\leq M\abs{\int^\infty_0e^{-\lambda t}e^{\omega t}udt}
+\]
+となるので$Re\lambda>\omega$で積分は有限の値を持つ。
+
+この積分を
+\[
+R(\lambda)u=\int^\infty_0e^{-\lambda t}T(t)udt
+\]
+と書くことにする。
+これが$R(\lambda;A)$と一致することを確かめる。
+
+$AR(\lambda)u$を計算する。
+$h>0$に対して
+\begin{align*}
+h^{-1}(T(h)-I)R(\lambda)u
+&=h^{-1}\int^\infty_0e^{-\lambda t}(T(t+h)-T(t))udt\\
+&=\int^\infty_0e^{-\lambda t}T(t+h)udt-\int^\infty_0e^{-\lambda t}T(t)udt\\
+&=\int^\infty_he^{-\lambda(t'-h)}T(t')udt-\int^\infty_0e^{-\lambda t}T(t)udt\\
+&=\int^\infty_0e^{-\lambda(t'-h)}T(t')udt-\int^h_0e^{-\lambda(t'-h)}T(t')udt-\int^\infty_0e^{-\lambda t}T(t)udt\\
+&=\int^\infty_0(e^{-\lambda(t-h)}-e^{-\lambda t})T(t)udt-\int^h_0e^{-\lambda(t-h)}T(t)udt
+\end{align*}
+ここで$h\to +0$とすると、
+\[
+\lambda R(\lambda)u-u
+\]
+となる。
+よって$AR(\lambda)u=\lambda R(\lambda)u-u$であり、$(\lambda I-A)R(\lambda)=I$となる。
+
+逆も同様に計算できる。
+
+$\lim_{\lambda\to\infty}\lambda R(\lambda)u=u$を示す。
+これを用いると$D(A)$が$X$で稠密なことがわかる。
+$\int^\infty_0\lambda e^{-\lambda t}dt=1$であり、$T(t)\to I$であるから与えられた$\epsilon$に対して適当に$\eta$をとって
+\[
+\int^\eta_0\lambda e^{-\lambda t}\norm{u-T(t)u}dt
+\]
+となるようでき、
+\[
+\int^\infty_\eta\lambda e^{-\lambda t}\norm{u-T(t)u}dt
+\]
+は$\norm{T(t)}$の評価から適当に評価できる。
+これを用いて
+\[
+\norm{u-\lambda R(\lambda)u}\leq\int^\infty_0\lambda e^{-\lambda t}\norm{u-T(t)u}dt
+\]
+を評価する。
+
+\[
+R(\lambda;A)u=\int^\infty_0e^{-\lambda t}T(t)udt
+\]
+の両辺を$\lambda$で繰り返し微分することで
+\[
+R(\lambda;A)^m=\frac{1}{m!}\int^\infty_0t^me^{-\lambda t}T(t)udt
+\]
+となる。
+これを適切に評価すれば良い。
+\end{proof}
+
+
+\begin{thm}
+$X$をBanach空間とし$A$をその上の線形作用素とする。
+$A$が$(C_0)$半群$\{T(t)\}_{t\geq0}$を生成する条件は
+\begin{enumerate}
+\item $A$は閉作用素で$D(A)\subset X$は稠密
+\item ある実数$\omega$と$M\geq1$が存在して$(\omega,\infty)\subset\rho(A)$であり、
+任意の正の整数$m$と$\lambda>\omega$に対して
+\[
+\norm{R(\lambda;A)^m}\leq\frac{M}{(\lambda-\omega)^m}
+\]
+をみたす。
+\end{enumerate}
+
+この時、$\{T(t)\}$は一意的であり、$\norm{T(t)}\leq Me^{\omega t}$をみたす。
+さらに$u\in D(A)$ならば$T(t)u\in D(A)$であり、$T(t)u$は強微分可能で
+\[
+\frac{d}{dt}T(t)u=T(t)Au=AT(t)u
+\]
+\end{thm}
+
+一様収束するところがポイント。
+一様収束すればなんでもできる。
+
+以下では常に$n>\omega$とする。
+
+$J_n=nR(n;A)$と定義する。
+$\slim_{n\to\infty}J_n=I$を示す。
+$J_nu=n(nI-A)^{-1}=(nI-A+A)(nI-A)^{-1}=n(I+R(n;A)Au)$であり、
+$\norm{R(n;A)Au}\leq\frac{M}{n-\omega}\norm{Au}\to0$である。
+また$\norm{J_n}$が一様有界？なので、
+
+$A_n=AJ_n$と定義する。
+$A_n=nA(nI-A)^{-1}=n(nI-(nI-A))(nI-A)^{-1}=n^2R(n;A)-n$である。
+\[
+A_\lambda=\lambda(A-\lambda I+\lambda I)(\lambda I-A)^{-1}
+=\lambda(A-\lambda I)(\lambda I-A)^{-1}+\lambda^2(\lambda I-A)^{-1}
+=\lambda(-I+\lambda(\lambda I-A)^{-1})
+=\lambda(J_\lambda-I)
+\]
+となる。
+とくに
+\[
+\norm{A_\lambda}=\abs{\lambda}\norm{J_\lambda-I}\leq2\lambda
+\]
+である。
+
+$T_n(t)=\exp(tA_n)$とおく。
+$A$に関する仮定から$\norm{T_n(t)}\leq Me^{n\omega t/n-\omega}$となる。
+これは$n>\omega>0$であれば$t$について単調増加。
+$n>0, \omega<0$であれば$t$について単調減少。
+
+$\slim_{n\to\infty}T_n(t)$が存在することを確かめる。
+$T_n$が$B(X)$において？Cauchy列であることを確かめる。
+有界作用素の生成する半群の性質から$\frac{d}{dt}T_n(t)=T_n(t)A_n$である。
+したがって、
+\begin{align*}
+T_n(t)-T_m(t)&=[T_m(t-s)T_n(s)]^{s=t}_{s=0}\\
+&=\int^t_0\frac{d}{ds}\{T_m(t-s)T_n(s)\}ds\\
+&=\int^t_0T_m(t-s)T_n(s)A_n-T_m(t-s)T_n(s)A_mdx\\
+&=\int^t_0T_m(t-s)T_n(s)(A_n-A_m)ds
+\end{align*}
+三つめの等式では作用素が交換することを使った。
+これのノルムを評価すると、
+\begin{align*}
+\norm{(T_n(t)-T_m(t))u}=\left\|\int^t_0T_m(t-s)T_n(s)(A_n-A_m)uds\right\|
+\end{align*}
+$\omega<0$であれば$t,n>0$に対して$e^{n\omega t/n-\omega}<1$である。
+$\omega>0$であれば$t>0$と十分大きな$n$に対して$e^{n\omega t/n-\omega}<e^{2\omega t}$である。
+\begin{align*}
+\left\|\int^t_0T_m(t-s)T_n(s)(A_n-A_m)uds\right\|\leq M^2e^{4\omega_+t}t\norm{(A_n-A_m)u}
+\end{align*}
+となる。
+$u\in D(A)$に対しては$n,m\to\infty$で$\norm{A_n-A_m}\to\infty$なので、上の式は$0$に収束する。
+これは$t$について広義一様収束。
+$T_n(t)u$は$T(t)u$に$t\in[0,\infty)$で広義一様収束する。
+
+この極限を$T(t)$と定義する。
+7章の結果から$\slim_{n\to\infty}T_n(t)=T(t)$である。
+$\{T(t)\}$は$(C_0)$半群で$\norm{T(t)}\leq Me^{\omega t}$をみたすことを示す。
+収束先の一意性から$T(t+s)=T(t)T(s)$となる。
+$T_n(t)u$は強連続でその広義一様収束先なので$T(t)u$も強連続である。
+さらに$T(0)=I$なので$T(t)$は$(C_0)$半群である。
+
+$\{T(t)\}_{t\geq0}$の生成作用素が$A$であることを示す。
+\[
+\frac{d}{dt}T_n(t)u=T_n(t)A_nu
+\]
+の両辺を$0$から$h>0$まで積分すると
+\[
+\int^h_0\frac{d}{dt}T_n(t)udt=T_n(h)-u=\int^h_0T_n(t)A_nudt
+\]
+である。
+ここで$T_n(t)A_nu\to T(t)Au$が$n\to\infty$で広義一様収束であるので積分と極限の交換ができて、上の式の$n\to\infty$の極限をとると、
+\[
+T(h)u-u=\int^h_0T(t)Audt
+\]
+となる。
+さらに$h^{-1}$を両辺にかけて$h\to+0$とすると、
+\[
+\lim_{h\to+0}h^{-1}(T(h)-I)u=\lim_{h\to+0}\frac{1}{h}\int^h_0T(t)Audt=T(0)Au=Au
+\]
+となるので$T(t)$の生成作用素が$A$であることがわかる。
+
+\begin{thm}[定理10.21]
+$D(A)$が稠密であるとする。
+$A$が$(C_0)$縮小半群の生成作用素である必要十分条件は、
+$[0,\infty)\subset\rho(A)$であり、任意の$\lambda>0$に対して$\norm{R(\lambda;A)}\leq\lambda^{-1}$であること。
+\end{thm}
+
+\begin{eg}
+$A$が有限次元で対角化可能な場合。
+固有値を$\lambda_1,\ldots,\lambda_n$とすると$A$が生成する半群$T(t)$の固有値は$e^{t\lambda_1},\ldots,e^{t\lambda_n}$である。
+これが縮小半群であることは、と同値。
+\end{eg}
+
+今の$A$が上の定理をみたすか確かめる。
+
+\subsection{レゾルベントとラプラス変換}
+$T(t)$を半群とし$A$をその生成作用素とする。
+$T(t)$のラプラス変換を
+\[
+\int_0^\infty e^{-\lambda t}T(t)dt
+\]
+と定義する（作用素の積分とは？）
+例えば$X$が一次元の場合、$A$を$a$倍とすると$T(t)$は$e^{ta}$倍。
+\[
+\int_0^\infty e^{-\lambda t}e^{ta}dt=\int_0^\infty e^{(a-\lambda)t}dt=\frac{1}{a-\lambda}
+\]
+作用素でも同様にできるとすると、これは$A$のレゾルベント作用素$R(\lambda;A)$となるはず。
+\begin{thm}[定理10.14]
+\end{thm}
+
+ラプラス逆変換はどのようになるか？
+$F(s)$のラプラス逆変換は
+\[
+f(t)=\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}F(s)e^{st}ds
+\]
+である。
+$F(s)=\frac{1}{s-a}$の逆変換はCauchyの積分公式を用いて
+\[
+\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}\frac{e^{st}}{a-s}ds=e^{at}
+\]
+と計算できる。
+
+作用素でも同様にできると思えば
+\[
+\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}e^{\lambda t}R(\lambda;A)d\lambda=e^{At}
+\]
+となる。もちろんこの両辺がちゃんと定義できるかどうかは定かではない。
+
+熱方程式の場合にどうなるか？
+\[
+u(t)=\frac{1}{2\pi i}\int^{c+i\infty}_{c-i\infty}R(\lambda;A)e^{-\lambda t}u_0d\lambda
+\]
+はどうなるか？
+\end{document}

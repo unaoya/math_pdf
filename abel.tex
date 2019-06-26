@@ -1,0 +1,250 @@
+\documentclass{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\newcommand{\fC}{\mathfrak{C}}
+\usepackage[dvipdfmx]{graphicx}
+\title{Abelと楕円積分}
+\author{@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+楕円積分の話
+- Legendre relation
+- レムニスケート周率
+- 算術幾何平均
+- 楕円関数の加法定理
+- アーベルの定理
+
+アーベルヤコビの定理
+因子が関数の因子となる条件、周期積分
+
+$1$と$\sqrt{2}$のAGMがレムニスケートになる話
+
+\begin{align*}
+\int^x_0\frac{dt}{\sqrt{1-t^4}}
+\end{align*}
+はレムニスケート積分。
+これは楕円積分の特別な場合。
+
+第一種完全楕円積分と第二種完全楕円積分
+\begin{align*}
+K(k)=\int^{\frac{\pi}{2}}_0\frac{dt}{\sqrt{1-k^2\sin^2t}}\\
+E(k)=\int^{\frac{\pi}{2}}_0\sqrt{1-k^2\sin^2t}dt
+\end{align*}
+
+算術幾何平均との関係
+$0<a<b$について
+\begin{align*}
+K(a,b)=\int^{\frac{\pi}{2}}_0\frac{dt}{\sqrt{a^2\cos^2t+b^2\sin^2t}}
+\end{align*}
+となる。
+$k=\dfrac{\sqrt{a^2-b^2}}{a}$とおけば
+\begin{align*}
+K(a,b)=\frac{1}{a}\int^{\frac{\pi}{2}}_0\frac{dt}{\sqrt{1-k^2\sin^2t}}
+\end{align*}
+となり、第一種完全楕円積分。
+
+\begin{thm}
+$a'=\dfrac{a+b}{2}, b'=\sqrt{ab}$とすると
+\begin{align*}
+K(a,b)=K(a',b')
+\end{align*}
+\end{thm}
+Landen変換
+\begin{align*}
+\tan x=\frac{\sin2t}{k+\cos2t}
+\end{align*}
+を用いて計算する。
+
+\section{Abel-Jacobiの定理}
+Abel-Jacobi mapとは$C$をリーマン面で種数$g$とする。
+$C \to Jac(C)$は周期積分を用いて定まる。
+$Jac(C)$は$\C^g/\Lambda$で、$\omega_1,\ldots,\omega_g$が正則$1$形式の基底とし、
+サイクル$\gamma$上の積分で生成される格子$\Lambda$を考える。
+すると、$x\in C$に対し、$(\int_{x_0}^x\omega_i)$は$\mod \Lambda$で決まる。
+積分の起点$x_0$を決めることで上の写像は定まる。
+
+$Pic$と$Jac$の関係。
+
+$C$が楕円曲線、すなわち$g=1$の場合を考える。
+定義式が$y^2=f(x)$とかける時、正則$1$形式として$\frac{dx}{y}$を取ることができる。
+これでの積分が楕円積分。
+この積分の因子$D$での値が$0$になることと、$D$が$div(f)$と書けることが同値？（AJ mapの単射性）
+全射性がJacobiの逆問題？
+
+\section{Griffiths}
+%https://publications.ias.edu/sites/default/files/legacy.pdf
+%https://publications.ias.edu/sites/default/files/variationsonatheorem.pdf
+
+\section{theta関数}
+wikipedia
+%https://en.wikipedia.org/wiki/Theta_function
+
+Jacobiのtheta functionとは、$z\in\C$と$\tau\in H$についての関数
+\begin{align*}
+\theta(z,\tau)=\sum_{n\in\Z}\exp(\pi in^2\tau+2\pi inz)
+\end{align*}
+のこと。
+$\exp$の周期性から、$z$について周期関数である、つまり
+\begin{align*}
+\theta(z+1,\tau)=\theta(z,\tau)
+\end{align*}
+となる。
+また、
+\begin{align*}
+\theta(z+\tau,\tau)=\sum\exp(\pi in^2\tau+2\pi inz+2\pi in\tau)
+\end{align*}
+
+さらに$\theta_{00}=\theta, \theta_{01}, \theta_{10}, \theta_{11}$という関数を
+\begin{align*}
+\theta_{01}=\theta(z+\frac{1}{2},\tau)\\
+\theta_{10}=\exp(\frac{1}{4}\pi i \tau+\pi i z)\theta(z+\frac{1}{2}\tau, \tau)\\
+\theta_{11}=\exp(\frac{1}{4}\pi i \tau+\pi i(z+\frac{1}{2}))\theta(z+\frac{1}{2}\tau+\frac{1}{2},\tau)
+\end{align*}
+と定める。
+
+$z=0$としたとき、これらは保形形式となり、例えばFermat曲線のパラメータ表示
+\begin{align*}
+\theta_{00}(0,\tau)=\theta_{01}(0,\tau)^4+\theta_{10}(0,\tau)^4
+\end{align*}
+を与える。
+
+Jacobiの恒等式。
+$\tau$についての保形性。
+\begin{align*}
+\theta_{00}(\frac{z}{\tau},-\frac{1}{\tau})=(-i\tau)^{\frac{1}{2}}\exp(\frac{\pi}{\tau}iz^2)\theta_{00}(z,\tau)\\
+\theta_{01}(\frac{z}{\tau},-\frac{1}{\tau})=(-i\tau)^{\frac{1}{2}}\exp(\frac{\pi}{\tau}iz^2)\theta_{10}(z,\tau)\\
+\theta_{10}(\frac{z}{\tau},-\frac{1}{\tau})=(-i\tau)^{\frac{1}{2}}\exp(\frac{\pi}{\tau}iz^2)\theta_{01}(z,\tau)\\
+\theta_{11}(\frac{z}{\tau},-\frac{1}{\tau})=-i(-i\tau)^{\frac{1}{2}}\exp(\frac{\pi}{\tau}iz^2)\theta_{11}(z,\tau)
+\end{align*}
+これを使って、$\zeta$の函数等式を示せる。
+
+$\wp$との関係
+\begin{align*}
+\wp(z,\tau)=-(\log(\theta_{11}(z,\tau)))''+c
+
+$\eta$との関係
+\begin{align*}
+\theta_{10}(0,\tau)=\frac{2\eta^2(2\tau)}{\eta(\tau)}\\
+\theta_{00}(0,\tau)=\frac{\eta^2(\frac{1}{2}(\tau+1))}{\eta(\tau+!)}\\
+\theta_{01}(0,\tau)=\frac{\eta^2(\frac{1}{2}\tau)}{\eta(\tau)}
+\end{align*}
+
+Heisenberg群との関係。
+Jacobi thetaはHeisenberg群のある離散部分群で不変。
+theta representaionという。
+Heisenberg群とは
+%https://en.wikipedia.org/wiki/Heisenberg_group
+\begin{align*}
+\begin{pmatrix}
+1 & a & c\\
+0 & 1 & b\\
+0 & 0 & 1
+\end{pmatrix}
+\end{align*}
+のなす群。
+$a,b,c\in\R$のものを$H_3(\R)$とかく。
+\begin{thm}[Stone-von Neumann]
+$H_3(\R)$のについて、
+与えられた指標に対し、それを中心の作用とする既約ユニタリ表現が一意に存在。
+\end{thm}
+この表現の実現として\Schr\"odinger modelは二乗可積分函数の空間に、
+theta rerpresentaionは上半平面上の正則関数の空間に、それぞれ実現する。
+このLie代数$\mathfrak{h}$は
+\begin{align*}
+\begin{pmatrix}
+0 & a & c\\
+0 & 0 & b\\
+0 & 0 & 0
+\end{pmatrix}
+\end{align*}
+のなすLie代数。
+これは量子力学における、位置、運動量作用素の交換関係と同じ関係を満たす。
+
+Schr\"odinger表現。
+一般には$H_{2n+1}$の$L^2(\R)$への表現。
+$n=1$でやる。
+$h\in\R$に対して、既約ユニタリ表現$\Pi_h$を$\psi(x) \mapsto e^{ihc}e^{ibx}\psi(x+ha)$で定める。
+
+theta representation
+%https://en.wikipedia.org/wiki/Theta_representation
+$f(z)$を正則関数とし、$a,b$を実数とする。
+\begin{align*}
+(S_af)(z)=f(z+a)=\exp(a\partial_z)f(z)\\
+(T_bf)(z)=\exp(i\pi b^2\tau+2\pi ibz)f(z+b\tau)=\exp(2\pi ibz+b\tau\partial_z)f(z)
+\end{align*}
+と定める。
+これらはそれぞれ$\R$の表現を定め、交換関係は
+\begin{align*}
+S_aT_b=\exp(2\pi iab)T_bS_a
+\end{align*}
+となる。
+これにより$H=U(1)\times\R\times\R$の表現を定める。
+\begin{align*}
+U_\tau(\lambda,a,b)f(z)=\lambda(S_aT_bf)(z)
+\end{align*}
+Hilbert空間にこれを実現する。
+$H_\tau$をノルム
+\begin{align*}
+\abs{f}_\tau^2\int_\C\exp)\frac{-2\pi y^2}{Im\tau}\abs{f(+iy)}^2dxdy
+\end{align*}
+と定める。
+これはHilbert空間であり、$H$が作用する。
+%https://ncatlab.org/nlab/show/Heisenberg+group
+
+Stone-von Neumann theorem
+%https://en.wikipedia.org/wiki/Stone\UTF{2013}von_Neumann_theorem
+
+Metaplectic group
+%https://en.wikipedia.org/wiki/Metaplectic_group
+Spの二重被覆を閉部分群にもつ。
+
+Weil表現
+Weil Representation, Howe Duality, and the Theta correspondence
+Dipendra Prasad
+%http://www.math.tifr.res.in/~dprasad/montreal.pdf
+The Weil Representation
+Charlotte Chan
+%http://www-personal.umich.edu/~charchan/TheWeilRepresentation.pdf
+Weil表現とHowe duality 松本久義
+%http://www.sci.kumamoto-u.ac.jp/~narita/5_Matsumoto_weil_representation.pdf
+重さ半整数の Siegel モジュラー形式と Jacobi 形式, 高瀬幸一 
+%http://www.sci.kumamoto-u.ac.jp/~narita/6_Takase_Saito-Kurokawa_1.pdf
+Reductive Dual PairとWeil表現
+西山 享
+%http://rtweb.math.kyoto-u.ac.jp/preprint/sss.pdf
+HEISENBERG GROUPS, THETA FUNCTIONS AND THE WEIL REPRESENTATION
+JAE-HYUN YANG
+%https://arxiv.org/pdf/0905.1865.pdf
+
+Representations of Heisenberg Groups
+Matt Collins
+%https://pdfs.semanticscholar.org/7582/4b4bc258254a42774f712d05abb15032bb35.pdf
+
+Quadratic Reciprocity and the Sign of the Gauss Sum via the Finite Weil Representation
+Shamgar Gurevich1, Ronny Hadani2, and Roger Howe3
+%https://www.math.wisc.edu/~shamgar/QR-IMRN.pdf
+
+リー群の表現から見たテータ関数* 落合啓之
+%http://www.kurims.kyoto-u.ac.jp/~kyodo/kokyuroku/contents/pdf/1476-26.pdf
+
+nLab
+Jacobi theta function
+%https://ncatlab.org/nlab/show/Jacobi+theta+function
+
+nLab
+theta function
+%https://ncatlab.org/nlab/show/theta+function
+
+Non-abelian theta functions
+Arnaud Beauville
+%https://math.unice.fr/~beauvill/conf/chennai.pdf
+
+Abel積分の理論、土屋
+%http://www.kurims.kyoto-u.ac.jp/~yanagida/198603T.pdf
+
+The Theta group of a line bundle.
+%https://www.math.ru.nl/~bmoonen/BookAV/ThetaGr.pdf
+\end{document}

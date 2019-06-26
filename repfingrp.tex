@@ -1,0 +1,910 @@
+\documentclass{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\usepackage{ytableau}
+
+\input{../tex/theorems}
+\input{../tex/symbols}
+\title{有限群の表現}
+\author{梅崎 直也@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+参考。数学セミナーのSchurの特集。
+Serreの本、平井先生の本、今野先生のノート、
+
+\begin{itemize}
+\item 正則表現
+\item 既約表現と共役類の個数の一致
+\item 指標の直交関係式
+\item 誘導表現の定義とFrobenius相互律
+\item 既約表現の分類と構成
+\end{itemize}
+
+U(1)対称性。座標に依存しない理論が欲しい。電磁気だと波の位相の自由度の対称性。
+
+場が満たすべき微分方程式を解くときに理論的にGの対称性があれば解はGの既約表現で展開できる。これは線形微分方程式や数列の漸化式の固有ベクトルによる展開と同じ。この既約表現が基本的な粒子を表す。水素原子のシュレディンガー方程式だと回転対称性があるのでSO(2)の表現が出てきてこれが球面調和関数。
+
+\section{イントロ}
+固有ベクトル。
+固有ベクトルを一般化したものが既約表現。アーベル群の場合は既約表現が一次元でこれは同時対角化で同時固有ベクトルになっている。
+多項式への$S_n$の作用と、それによる分解について。
+対称式と交代式。
+
+\section{群と作用}
+\begin{dfn}
+群とその準同型
+群$G$とは集合と演算$G \times G \to G$が定まっていて、
+
+群$G, H$の間の準同型とは$f:G \to H$で
+\end{dfn}
+
+\begin{eg}[巡回群]
+生成元と関係式で書けば$g, g^n=e$
+$\C^\times$の部分群として。
+実数行列をもちいてかく。
+回転
+\end{eg}
+
+巡回群は正多角形の回転。
+
+\begin{eg}[二面体群]
+二面体への作用。
+生成元と関係式
+\end{eg}
+
+\begin{eg}[対称群]
+有限集合への作用。
+生成元と関係式でかける？
+行列での表示
+\end{eg}
+
+\begin{eg}
+対称群の多項式への作用
+\end{eg}
+
+今回の目標。
+対称式、交代式などをどのように一般化するのか理解する。
+言い換えると$S_n$の既約表現の分類。
+
+
+\begin{eg}[正多面体群]
+正四面体群。
+頂点への作用から$G(T_4)\to S_4$がある。
+また各辺の中点を結んだ三本の直線への作用から$G(T_4)\to S_3$が定まる。
+$G(T_4)=A_4$
+
+正六面体群。
+四本の対角線への作用から$G(T_6)\to S_4$が定まる。
+また各面の中心を結んだ三本の直線への作用から$G(T_6)\to S_3$が定まる。
+$G(T_6)=S_4$
+
+正十二面体群。
+$G(T_{12})=A_5$
+\end{eg}
+
+
+\begin{eg}
+$H$を線形作用素、$E\in\mathbb{R}$とし、$H$は群$G$に関する対称性を持つとする。
+$H\psi=E\psi$なる$\psi$のなす線形空間は$G$の表現を作る。
+\end{eg}
+
+\begin{dfn}
+群$G$と$\C$上のベクトル空間$V$について群準同型$\rho:G\to GL(V)$を表現という。表現の射と同型
+
+\end{dfn}
+
+\begin{eg}
+自明表現$1$、部分表現、直和、商、$\otimes$、$\Hom$
+\end{eg}
+
+表現の直和分解を基底をとって行列のブロック分けの形で説明。
+対角化との類似。
+巡回群の場合、生成元を対角化すれば十分。
+$S_3$の三次元表現で説明。
+自然な基底だと対角化できない。
+$a$について対角化すると$b$については保たれていない。
+$2$次元にまとめる必要がある。
+
+まずは巡回群の表現を調べる。
+一次元表現は$C_n \to \C^\times$
+
+二次元表現は
+
+\begin{dfn}
+非自明な部分表現を持たないとき既約表現という。
+\end{dfn}
+
+有限群の既約表現は有限次元。
+\begin{thm}
+有限群の（複素数体係数の）表現は完全可約（マシュケの定理）。
+\end{thm}
+\begin{proof}
+$W\subset V$を部分表現とする。
+線形写像$s:V/W\to V$を適当にとり$s_G(x)=\frac{1}{\abs{G}}\sum_{g\in G}g^{-1}s(gx)$とすればこれが$G$の射になる。
+$s_G\circ p$が冪等。
+\end{proof}
+
+以下では表現は全て有限次元$\C$ベクトル空間、群は有限群とする。
+
+$G=C_n$の表現はどのようなものがあるか見てみよう。
+$V$を$C_n$の表現とし$g\in Cn$を生成元としよう。
+$\rho(g)$を対角化すると任意の$\rho(g^k)$も対角化できる。
+このことから$C_n$の既約表現は$1$次元であることがわかる。
+
+既約表現を全て書き出す。
+またそれらの間の写像を
+
+\begin{lem}[Schurの補題]
+$V, W$を$G$の既約表現とする。このとき
+\[
+\Hom_G(V,W)\cong\begin{cases}\C&V\cong W\\0&\mbox{otherwise}\end{cases}
+\]
+\end{lem}
+\begin{proof}
+$V, W$を既約表現とし$\phi:V\to W$が$0$でないとする。
+既約性より$\ker\phi=0, Im\phi=W$となるのでこれは同型。
+同型を固定して$V=W$とする。
+$f:V\to V$の固有値$\lambda$を取る。
+$f-\lambda\neq0$とすると、これは上と同じように$V$の$G$同型だが$\lambda$が固有値なら単射ではありえない。
+したがって$f-\lambda=0$
+\end{proof}
+$V$と$W$の同型を固定しておけばスカラー行列にのみになるということ。
+既約表現$\pi$の$V$における重複度は$\Hom_G(\pi,V)$をみればよい。
+
+\begin{thm}
+アーベル群の既約表現は全て一次元。
+\end{thm}
+\begin{proof}
+$V$を既約表現とする。
+アーベルだから$G$の作用$\rho(g):V\to V$は$G$射となる。
+したがってSchurの補題から$g$はスカラー倍で作用する。
+既約性から$1$次元。
+\end{proof}
+
+$\rho(g)\in\C^\times$であり$\rho(g)^n=1$だから$1$の$n$乗根に対応する。
+$\hat{C}_n\cong C_n$である。
+
+改めて巡回群の既約表現についてまとめておくと、
+
+一般のアーベル群については簡単に触れるにとどめる。
+$C_2\times C_2$の表現を調べよう。
+それぞれの生成元の行き先で決まる。
+この場合も双対性あり
+
+\begin{thm}
+$G$がアーベル群であれば$G$と$\hat{G}$の双対性。
+\end{thm}
+
+\section{正二面体群の表現}
+ここでは正二面体群$D_n$の既約表現にどのようなものがあるか調べる。
+
+まずは小手調べで$D_3$の既約表現を全て求めよう。
+
+$D_3$がどのような群かというと、生成元として$a,b$をもち$a^3=e, b^2=e, aba=b^{-1}$という関係式を満たすもの。
+実際に全ての元を書き出してみると、
+
+$D_3$から別の群への群準同型は$a,b$の行き先を関係式を満たすように決めればよい。
+例えば、$D_3$から有限巡回群$C_n$への群準同型がどのようなものがあるか決定してみよう。
+
+さて、まず$1$次元表現にどのようなものがあるか考える。
+$1$次元表現というのはつまり群準同型$\rho\colon D_3\to \C^\times$のことであり、
+$\C^\times$がアーベル群であることに注意する。
+
+$D_3$はアーベル群ではないので$xyx^{-1}y^{-1}\neq e$となるような$x,y$が存在する。
+具体的には$aba^{-1}b^{-1}$など。
+このような$x, y$が存在するかどうかがアーベル群であるかと同値。
+$\C^\times$はアーベル群なので全ての$x, y$に対して$\rho(xyx^{-1}y^{-1})=1$となる。
+
+$D_3$の場合には$aba^{-1}b^{-1}=ba^{-2}b=bab=a^2, a^2ba^{-2}b^{-1}=ba^{-1}b^{-1}=a$であり、
+上で述べたことから$\rho(a)=\rho(a^2)=1$である。
+したがって$D_3$の一次元表現は$\rho(b)$を決定すればよく、
+$b^2=e$であるから$\rho(b)=1$または$\rho(b)=-1$のいずれか。
+したがって$D_3$の一次元表現は二つあって、これらは一次元なので既約であり、また同型でない。
+
+これ以外に既約表現があるか？
+正多面体の$\R^2$への埋め込みから$2$次元表現を作る。
+つまり$\GL_2(\C)=\GL(V)$への群準同型を
+\begin{align*}
+\pi(a)&=\begin{pmatrix}\cos \frac{2\pi}{3}&\sin \frac{2\pi}{3}\\-\sin \frac{2\pi}{3}&\cos \frac{2\pi}{3}\end{pmatrix}\\
+\pi(b)&=\begin{pmatrix}-1&0\\0&1\end{pmatrix}
+\end{align*}
+と定義したい。
+関係式を全て確かめよう。
+
+これは$2$次元表現を与える。
+これが既約表現か調べるため、Schurの補題を使う。
+自己準同型全体の空間$\Hom_G(V,V)$がどのようになるかを調べよう。
+つまり$2$次の正方行列であって$a, b$と交換するもの。
+まず$b$と交換するという条件から
+\[
+\begin{pmatrix}a_{11}&a_{12}\\ a_{21}&a_{22}\end{pmatrix}\begin{pmatrix}-1&0\\0&1\end{pmatrix}=
+\begin{pmatrix}-1&0\\0&1\end{pmatrix}\begin{pmatrix}a_{11}&a_{12}\\ a_{21}&a_{22}\end{pmatrix}
+\]
+であるので、$a_{21}=a_{12}=0$でなければならない。
+さらにこれが$a$と交換するので
+\[
+\begin{pmatrix}a_{11}&0\\ 0&a_{22}\end{pmatrix}\begin{pmatrix}\cos \frac{2\pi}{3}&\sin \frac{2\pi}{3}\\-\sin \frac{2\pi}{3}&\cos \frac{2\pi}{3}\end{pmatrix}=
+\begin{pmatrix}\cos \frac{2\pi}{3}&\sin \frac{2\pi}{3}\\-\sin \frac{2\pi}{3}&\cos \frac{2\pi}{3}\end{pmatrix}\begin{pmatrix}a_{11}&0\\0&a_{22}\end{pmatrix}
+\]
+であるので、$(a_{11}+a_{22})\sin\frac{2\pi}{3}=0$より$a_{11}+a_{22}=0$である。
+したがってこのような行列は一次元空間をなし、自己準同型の空間が一次元であるからこれは既約であることがわかる。
+
+さて、このようにして$1$次元表現$2$つと既約$2$次元表現$1$つを見つけることができた。
+これ以外に$D_3$の既約表現は存在するだろうか？
+
+上と似たような表現として
+\begin{align*}
+\pi(a)&=\begin{pmatrix}\cos \frac{4\pi}{3}&\sin \frac{4\pi}{3}\\-\sin \frac{4\pi}{3}&\cos \frac{4\pi}{3}\end{pmatrix}\\
+\pi(b)&=\begin{pmatrix}-1&0\\0&1\end{pmatrix}
+\end{align*}
+を考えると、これも同様に既約な$2$次元表現を定めている。
+しかし、実はこの二つの表現は同型になる。
+同型写像を、
+
+正則表現を考える。
+これを$G$上の関数のなす表現として定義する。
+すなわち$V=\C^G$に$G$による平行移動を用いて$(gf)(x)=f(g^{-1}x)$と定義する。
+
+正則表現はすべての既約表現を含む、正確には以下の定理が成り立つ。
+\begin{prop}
+$\pi$を$G$の既約表現とする。
+このとき$G$の表現の射$f\colon\C^G\to \pi$であって$0$でないものが存在する。
+\end{prop}
+\begin{proof}
+$\pi$の$0$でない元$v$を一つ取り、写像$f\colon \C^G\to \pi$を$[e]\mapsto v$を$G$線形に伸ばしたものとすればよい
+\end{proof}
+
+この定理を使えば$\C^G$を$\pi_1\oplus\cdots\oplus\pi_n$と既約分解したとき、
+どれか$\pi_i$が$\pi$と同型であることがいえる。
+実際Schurの補題を使えば、すべての$\pi_i$が$\pi$と異なるなら$0$射しかないことがいえる。
+これは上の対偶である。
+
+さらに上の考えを進めると既約分解における各既約表現の重複度も求めることができる。
+重複度というのは上のように既約分解したときに$\pi$と同型な$\pi_i$の個数のこと。
+これは写像の空間の次元を計算すればよい。
+
+$D_3$の場合、正則表現は$6$次元ある。
+今のところ既約表現の候補は二つの一次元表現と二次元表現。
+各既約表現と正則表現の間にどれぐらい写像があるか計算してみよう。
+一次元表現への写像は定数倍の差しかないのでそれぞれ$1$次元ずつある。
+例えば$\C^G\to \pi$の次元は$2$次元である。
+上の証明で見たように$[e]$の行き先を決めれば$\C^G$からの$G$表現の射は決定される。
+したがって$2$次元ある。
+重複度が$2$であることがわかり、$G=D_3$の正則表現の既約分解は
+\begin{align*}
+\C^G=1\oplus\chi\oplus\pi^2
+\end{align*}
+となる。
+
+$D_3=\{e,a,a^2,b,ab,a^2b\}, aba=b^2$とすると、共役類は$\{e\}, \{a,a^2\},\{b,ab,a^2b\}$の三つ。
+正則表現は$R=k^G\cong \C^6$を分解して、$R \to 1, R\to \pi$がある。
+写像は$R \to k$は$\sum a_g\mapsto a_g$とする。
+$v\in\pi$を$0$以外で適当にとって$R \to \pi$は$\sum a_g\mapsto a_g\pi(g)v$とする。
+
+指標を計算する。
+$\chi_R=\sum n_i\chi_{\pi_i}$となるはず。
+$(\chi_R,\chi_\pi)$を計算する。
+
+指標は類関数である。
+逆に類関数の空間は指標が規定になることを証明する。
+このことから、指標の個数が類関数の空間の次元すなわち共役類の個数と一致することがわかる。
+
+
+ここに述べたことを一般の正二面体群$D_n$について考察する。
+$D_n$は生成元と関係式で$a^n=b^2=e, bab=a^{-1}$ととる。$a$が回転、$b$が折り返し。
+$ba^kb=a^{-k}$となる。また全ての元は$a^kb^l$と書くことができる。
+
+\begin{dfn}
+交換子群とアーベル化
+\end{dfn}
+
+交換子群を求める。
+具体的に書き下すと$a^2$で生成される部分群が交換子群であることがわかる。
+したがって最大アーベル化は$n$が奇数の時$C_2$で偶数の時$C_2\times C_2$であることがわかる。
+このことから$1$次元表現が全て求められる。
+
+\begin{prop}
+$G$の$1$次元表現は必ずそのアーベル化$G^{\rm ab}$を経由する。
+\end{prop}
+
+一般の$D_n$についても同様に正多面体の$\R^2$への埋め込みから$2$次元表現を作る。
+\begin{align*}
+\pi_k(a)&=\begin{pmatrix}\cos k\theta_n&\sin k\theta_n\\-\sin k\theta_n&\cos k\theta_n\end{pmatrix}\\
+\pi_k(b)&=\begin{pmatrix}-1&0\\0&1\end{pmatrix}
+\end{align*}
+これが表現を定めるか？（関係式を全て確かめる）
+これらが既約か？これらの指標はどうなるか？これらの関係はどうなるか？
+上で考察したように$\pi_k$の次元が正則表現における重複度であるから、全て考えると$2^2n$となって$\C^G$の次元を超えてしまう。
+したがって、異なる$\pi_k$たちの間に同型なものが存在する。
+これを発見するための便利な方法が、指標を用いること。
+
+$\pi_k=\pi_{n-k}$である。
+$n$が偶数の時$\pi_{\frac{n}{2}}$は$1$次元表現の和にわかれる。
+
+\section{指標}
+\begin{dfn}
+指標$\chi$とは表現$\rho:G\to GL(V)$のトレースのこと。
+指標の内積（正確には類関数の空間の内積）とは
+\[
+(\chi,\chi')=\frac{1}{\abs{G}}\sum_{g\in G}\chi(g)\overline{\chi'(g)}
+\]
+\end{dfn}
+なぜ指標を考えるか？
+対角化可能な行列の情報は固有値がすべて。
+固有値が重複度も込めて等しければ基底の取替えで移り合う。
+すべてのべきのトレースの情報と固有値の情報は等しい。
+基本対称式と冪和対称式の関係。
+したがってすべてのべきのトレースを知ればよい。
+有限群だからすべての元のトレースを知ればよい。
+
+表現$\pi:G\to \GL(V)$の指標$\chi_V:G\to\C$とは$g\in G$に対して$\trace(\pi(g))$を対応させる$G$上の関数のこと。
+$G$上の$\C$値関数全体のなすベクトル空間に内積を
+\[
+(\chi,\chi')=\frac{1}{\abs{G}}\sum_{g\in G}\chi(g)\overline{\chi'(g)}
+\]
+として定義する。
+\begin{thm}[既約表現の指標の直交性]
+$V, W$を$G$の既約表現とし、それらの指標を$\chi_V, \chi_W$とする。この時
+\[
+(\chi_V,\chi_W)=\begin{cases}1&V\cong W\\0&\mbox{otherwise}\end{cases}
+\]
+が成り立つ。
+\end{thm}
+
+三角関数の和が$0$になることの一般化。
+
+\begin{proof}
+$\chi_{\Hom_G(V,W)}=\chi_V\chi_{W^*}$をSchurの補題から計算すればよい。
+$\Hom_G(V,W)=\Hom(V,W)^G$であることに注意。
+
+$p\colon V\to V$を
+\[
+v\mapsto\frac{1}{\abs{G}}\sum gx
+\]
+により定めると$p^2=p$となり、$p(V)=V^G$である。
+冪等元の一般論で$V=pV\oplus(1-p)V=im p\oplus\ker p$と分解し$\trace p=\dim p(V)$である。
+したがって$\dim V^G=\trace(p)=\frac{1}{\abs{G}}\chi_V(g)$である。
+
+さらに$V\otimes W^*$に上を使えば
+\[
+(\chi_v,\chi_W)=\frac{1}{\abs{G}}\chi_V(g)\overline{\chi_W(g)}=\frac{1}{\abs{G}}\chi_{V\otimes W^*}(g)
+\]
+から直交性が出る。
+\end{proof}
+
+既約表現の重複度は指標の内積を見れば計算できる。
+指標により表現は決定される。直交性と完全可約性を合わせると出る。
+Fourier級数。
+
+指標を使って$D_3$の既約表現を調べよう。
+正則表現の指標と既約表現の指標の内積を計算する。
+正則表現の指標は$tr\rho(g)=0, g\neq e, tr\rho(e)=\dim R=6$である。
+よって$(\chi_R,1)=1, (\chi_R,sgn)=1, (\chi_R,\chi_\pi)=2$である。
+内積が重複度を表すので$R$には$1$と$sgn$が重複度$1$で、$\pi$が重複度$2$で現れる。
+この時点で$1\oplus sgn\oplus \pi^2$の次元が$1+1+2^2=6$となり、これが$R$と同型である。
+このようにして正則表現の既約分解が得られた。
+
+一般に正則表現の次元は、各既約成分の次元の二乗の和になることが上の計算と同様にしてわかる。
+\begin{prob}
+正則表現$R$の既約分解は
+\[
+R=\bigoplus\pi^{\oplus\dim\pi}
+\]
+であり、特に次元は
+\[
+\dim R=\sum(\dim\pi)^2
+\]
+をみたす。
+\end{prob}
+
+指標の内積はどのような意味を持つか。
+まず指標は$G$上の複素数値関数であるが、特に類関数と呼ばれる性質を持つ。
+この関数の空間は有限次元複素ベクトル空間であるが、そこ上のHermite内積とみなすことができる。
+
+実は既約表現の指標は類関数の空間の正規直交基底を与えている。
+
+\begin{prop}
+既約指標は類関数の空間の正規直交基底となる。
+\end{prop}
+\begin{proof}
+生成することを示そう。
+$f\in H$と$G$の表現$\rho$に対し
+\[
+\rho_f=\sum_{t\in G}f(t)\rho_t
+\]
+とする。これは$\rho$の表現空間$V$の自己準同型を定める。
+\end{proof}
+
+逆に言えばこれが正規直交基底となるような内積を決めているとも言える。
+類関数の空間の次元は共役類の個数と等しい。
+したがって既約表現の個数は共役類の個数と等しいことがわかる。
+\begin{dfn}
+共役類
+\end{dfn}
+$D_n$の共役類を計算する。
+$a^{-1}ba=a^{-2}b$となるので共役類は$n$が奇数なら$\{e\}, \{a^k,a^{-k}\}_k,\{a^kb\}$、$n$が偶数なら$\{e\}, \{a^k,a^{-k}\}, \{a^{2k}b\}, \{a^{2k+1}b\}$。
+\begin{eg}
+$D_4$の表現の指標を計算しよう。
+まず$D_4$の生成元$a, b$を$a^4=b^2=e, bab=a^3$なる関係式で定める。
+すると$D_4$の共役類への分解は
+\[
+D_4=\{e\}\cup\{a, a^3\}\cup\{a^2\}\cup\{b,ba^2\}\cup\{ba,ba^3\}
+\]
+とできる。
+$\pi_2(a)=\begin{pmatrix}0&1\\-1&0\end{pmatrix}, \pi_2(b)=\begin{pmatrix}-1&0\\0&1\end{pmatrix}$である。
+$\pi_2$の指標は$\chi_{\pi_2}(e)=2, \chi_{\pi_2}(a)=-2, \chi_{\pi_2}(a^2)=2, \chi_{\pi_2}(b)=0, \chi_{\pi_2}(ba)=0$となる。
+$2^2+(-2)^2+2^2\neq8$なのでこれは既約ではなく、実際に指標の値は$\chi_{\pi_2}=\chi_{00}+\chi_{01}$となることがわかる。
+このことから$\pi_2=\chi_{00}\oplus\chi_{01}$と分解することがいえる。
+\end{eg}
+
+
+$R$を左正則表現$k[G]$とする。
+$\Hom_G(V,R)\cong V^*$となる。
+左辺から右辺を$\phi$に対し$v\mapsto\phi(v)(e)$を対応させる。
+また左辺から$\phi$に対し$v\mapsto\phi(gv)$とする。
+これらが$G$同型を与える。
+
+\begin{thm}
+一般に表現の既約分解は次のように与えられる
+\[
+\bigoplus_{W\in\hat{G}}W\otimes \Hom_G(W,V)\cong V
+\]
+\end{thm}
+双対$W\otimes\Hom(W,V)\to V$から誘導される射が$G$加群の同型を与える。
+\begin{lem}
+$G\times G$の$G$への作用$(g,h)x=gxh^{-1}$から誘導される$k[G]$への$G\times G$作用を考える。
+$\Hom_G(V,k[G])$を$k[G]$の$G$加群構造として左作用をとったものの$G$射の集合とする。
+これは$k[G]$の右作用から誘導される$G$加群構造をもつ。
+$\Hom_G(V,k[G])$は$V^*$と$G$加群として同型。
+\end{lem}
+\begin{proof}
+$k$線形空間の双対の普遍性。
+$\phi\colon V\otimes W\to k$が完全なら$W$は自然に$V^*$に同型。
+$w\mapsto\phi(-,w)$により射が定まり、完全性からこれが単射。
+
+$V\otimes V^*\to k$が$G$同変になるような$V^*$への作用は一意的に決まる。
+ここで$k$には自明作用を定めておく。
+実際、このペアリングの完全性から$f\in V^*$に対して$gf$が決定される。
+
+$\Hom_G(V,k[G])\times V\to k$を$f(v)$の$e$の係数をとるものとする。
+この時、これは$G$同変な完全ペアリングである。
+実際$g(f,v)\mapsto(gf)(gv)_e=gf(v)g^{-1}_e=f(v)_e$となるので$G$同変。
+\end{proof}
+
+上の既約分解の同型は$G$右作用も保つことに注意すれば
+\begin{prop}
+$G\times G$加群として
+\[
+k[G]=\bigoplus_{\pi\in\hat{G}}\pi\otimes\pi^*
+\]
+\end{prop}
+両辺の次元を比較すると$\abs{G}=\sum_{\pi\in\hat{G}}(\dim\pi)^2$となる。
+また$\Delta G\subset G\times G$作用の固定部分空間の次元を見ると、
+左辺は$G$の共役類の個数で右辺は$(\pi\otimes\pi^*)^{\Delta G}=\Hom_G(\pi,\pi)=k$から
+共役類の個数と$\abs{\hat{G}}$が等しいことがわかる。
+
+\begin{thm}
+$G\times G$の表現として
+\[
+\C[G]\cong\bigoplus_{V\in\hat{G}}V\otimes V^*
+\]
+\end{thm}
+
+このことから
+\begin{align}
+\abs{G}=\sum_{V\in\hat{G}}(\dim V)^2\\
+\abs{\hat{G}}=\mbox{共役類の個数}
+\end{align}
+となることがわかる。
+
+定理の説明。
+ベクトル空間$\C[G]=\{\sum_{x\in G}c_x[x]\mid c_x\in\C\}$上に$G\times G$の表現を
+$(g,h)\sum_{x\in G}c_x[x]=\sum_{x\in G}c_x[gxh^{-1}]$によりさだめる。
+
+\section{制限と誘導}
+先ほど$D_n$の既約表現を調べる際に、$\R^2$への埋め込みを用いて正二面体への作用から表現を構成していた。
+しかし一般の群で、そのようにうまく表現が構成できるかはわからない。
+ここでは一般の群に対して適用可能な既約表現の構成法について説明する。
+\begin{dfn}[表現の制限]
+$H\subset G$が部分群とする。
+\end{dfn}
+
+誘導表現と制限。
+$H\subset G$を部分群とする。
+$H$の表現$\pi:H\to \GL(W)$から$G$の表現を次のようにして構成できる。
+まずベクトル空間として
+\[
+\Ind^G_H\pi=\{f:G\to W, f(gh)=\pi(h^{-1})f(g), g\in G, h\in H\}
+\]
+を考え、これに$G$の作用を$gf:x\mapsto f(g^{-1}x)$として定める。
+また$G$の表現$\pi:G\to\GL(V)$に対してその制限$\Res^G_H\pi$を$\pi$の定義域を$H$に制限した$\pi:H\to \GL(V)$として定義する。
+
+\begin{dfn}[誘導表現]
+$H\subset G$とし$W$を$H$の表現とする。
+誘導表現$\Ind_H^GW$を
+\[
+\Ind^G_HW=\{f\colon G\to W\vert f(gh)=h^{-1}f(g), h\in H, g\in G\}
+\]
+で定義する。
+ここに$G$作用を$(gf)(x)=f(g^{-1}x)$で定める。
+\end{dfn}
+$H$が自明群で$W$が自明表現の場合、上は正則表現。
+より一般の$H$について$W$が自明表現である場合、
+
+$G\times_HW\to G/H$の切断として幾何的に解釈する。
+実際、$f$は$G/H$の値のみで決まってしまうので$G/H$上の$W$値関数の集合とみなせる。
+ここへの$G$作用の決まり方は
+
+部分群の表現からの誘導により構成する。
+$C_n\subset D_n$の各既約表現を誘導したものは生成元で決まるからいずれも$2$次元表現になる。
+これが既約表現になるか、あるいは上の$\pi_k$と一致するかどうかは指標を計算することでわかる。
+
+誘導表現の計算をするときに便利なのがFrobenius相互律。
+これを使えばある表現からの射が存在するか、特に既約かどうかが、制限の間の射を見ることで計算できる。
+\begin{thm}[Frobenius相互律]
+$H\subset G$を部分群とし$V$を$G$の表現、$W$を$H$の表現とする。
+この時
+\[
+\Hom_H(\Res^G_HV,W)=\Hom_G(V,\Ind^G_HW)
+\]
+が成り立つ。
+\end{thm}
+
+誘導表現の指標を調べる。
+
+\begin{eg}
+誘導指標の計算例。
+$C_n\subset D_n$で$\rho_k=\Ind^{D_n}_{C_n}\chi_k$とする。
+$D_n$の生成元$a,b$を$b^2=a^n=e, bab~a^{-1}$ととっておく。
+$\chi_k\colon a\mapsto \zeta_n^k$なる巡回群の$1$次元表現。
+$\pi_k$の指標を計算しよう。
+$C_n$は位数$2$なので$\rho_k$は$2$次元表現。
+剰余類$D_n/C_n$の代表元を$e, b$として、それらの双対となる関数$f_1, f_2$を考える。
+$f_1(e)=1, f_1(b)=0, f_2(e)=0, f_2(b)=1$である。
+$a^if_1=\zeta^{ki}f_1, a^if_2=\zeta^{-ki}f_2$であり、$bf_1=f_2, bf_2=f_1$である。
+このことから$(\chi_{\rho_k},\chi_{rhoi_k})$を計算できる。
+
+相互律を用いた計算。
+$D_n$の既約表現$\pi$に対し$\Hom_{D_n}(\pi,\Ind^{D_n}_{C_n}\chi_k)=\Hom_{C_n}(\Res^{D_n}_{C_n},\chi_k)$を計算。
+\end{eg}
+
+\section{対称群の表現}
+対称群$S_n$の既約表現を全て分類し、その指標を計算しよう。
+
+上で見たように、既約表現の個数は共役類の個数に対応する。
+したがって$S_n$の共役類がどのようになるかをまず調べることにしよう。
+
+\subsection{対称群の構造}
+$S_3, S_4, S_5$の交換子群と組成列。
+
+$S_3/[S_3,S_3]=S_3/A_3=C_2$である。
+$A_4/[A_4,A_4]=C_3$である。
+
+$S_3\supset A_3=C_3\supset1$となる。
+$S_4\supset A_4\supset H_4\supset C_2\supset 1$となる。
+$A_5$は単純群。
+
+共役類の決定。
+対称群の場合、同じ長さの巡回置換は共役である。
+したがって対称群$S_n$の共役類の個数は$n$の分割に対応する。
+
+以上のことから$S_n$の既約表現は$n$の分割に一対一対応することがわかった。
+これを具体的に表現を構成することで確かめてみよう。
+
+\subsection{Specht加群}
+ここでは$S_n$の既約表現と$n$の分割についてSpecht加群を用いた具体的な対応をみる。（堀田良之、加群十話）
+
+\begin{dfn}
+大きさ$n$の\rm{Young}図形の集合$Y_n$と標準盤
+\end{dfn}
+
+大きさ$3$のYoung図形は以下の$3$種類。
+\begin{ytableau}
+~\cr
+\cr
+\cr
+\end{ytableau}
+\begin{ytableau}
+~&\cr
+\cr
+\end{ytableau}
+\begin{ytableau}
+~&&\cr
+\end{ytableau}
+$3=2+1=1+1+1$
+
+大きさ$4$のYoung図形は以下の種類。
+\begin{ytableau}
+~\cr
+\cr
+\cr
+\cr
+\end{ytableau}
+\begin{ytableau}
+~&\cr
+\cr
+\cr
+\end{ytableau}
+\begin{ytableau}
+~&\cr
+&\cr
+\end{ytableau}
+\begin{ytableau}
+~&&\cr
+\cr
+\end{ytableau}
+\begin{ytableau}
+~&&&\cr
+\end{ytableau}
+
+$4=3+1=2+2=2+1+1=1+1+1+1$
+
+大きさ$5$のYoung図形は以下の種類。
+\begin{ytableau}
+~&~\cr
+\cr
+\end{ytableau}
+\begin{ytableau}
+~&~&~\cr
+\end{ytableau}
+\begin{ytableau}
+~\cr
+\cr
+\cr
+\end{ytableau}
+
+$5=4+1=3+2=3+1+1=2+2+1=2+1+1+1=1+1+1+1+1$
+
+\begin{thm}
+$Y_n$と$\hat{S}_n$の間に全単射が存在する。
+\end{thm}
+
+多項式を用いた具体的構成。
+$\lambda\in Y_n$に対し、$\{\Delta^T\mid T\in Tab(\lambda)\}$が生成する$S_n$の表現$V^\lambda$を対応させる。
+
+$\lambda=\begin{ytableau}
+~&\cr
+\cr
+\end{ytableau}
+$
+の場合、
+\begin{ytableau}
+1&3\cr
+2\cr
+\end{ytableau}
+\begin{ytableau}
+1&2\cr
+3\cr
+\end{ytableau}
+\begin{ytableau}
+2&3\cr
+1\cr
+\end{ytableau}
+\begin{ytableau}
+2&1\cr
+3\cr
+\end{ytableau}
+\begin{ytableau}
+3&2\cr
+1\cr
+\end{ytableau}
+\begin{ytableau}
+3&1\cr
+2\cr
+\end{ytableau}
+これらの間には$S_3$が作用する。
+これから多項式を作る。
+それぞれ$X_1-X_2, X_1-X_3, X_2-X_1, X_2-X_3, X_3-X_1, X_3-X_2$を定める。
+これらが生成する多項式の部分空間$V^\lambda$は$S_3$の表現としても部分表現になっている。
+実はこれが$2$次元の既約表現である。
+
+まず$2$次元であることは、
+
+既約なことを確かめよう。
+Schurの補題によれば、$G$-自己同型$V^\lambda\to V^\lambda$がスカラー倍のみであればよい。
+$f$をとる。
+これが$G$の表現の射であるから$X_1-X_2$の行き先がスカラー倍であることを示せばよく、
+$(12)$の作用との可換性からこれが従う。
+
+他のYoung図形からも既約表現が構成できる。
+$\lambda=\begin{ytableau}
+~\cr
+\cr
+\cr
+\end{ytableau}$からは$(X_1-X_2)(X_2-X_3)(X_1-X_3)$が生成する$V^\lambda$
+
+$\lambda=\begin{ytableau}
+~&&\cr
+\end{ytableau}$のからは$1$が生成する$V^\lambda=$
+
+これらが互いに同型でないことを確かめる。
+
+よって$S_3$の既約表現が$3$つ構成でき、これが全て。
+
+\begin{dfn}
+大きさ$n$の盤$T$に対し$\Delta^T\in K[X_1,\ldots,X_n]$を次のように定義する。
+まず$T$の列毎に$i_1,\ldots,i_m$がある時$\prod_{i_j<i_k}(X_{i_j}-X_{i_k})$を考え、
+それらを全ての列について積を取ったものを$\Delta^T$とする。
+$1$文字しかなければその列は$1$とする。
+\end{dfn}
+例えば$\lambda$が縦一列の時$\Delta^T$は差積、$\lambda$が横一列の時$\Delta^T=1$となる。
+
+交代式は必ず差積で割り切れる。
+より一般に次が成り立つ。
+\begin{lem}
+$T_0$から$S_{T_0}$を定める。
+任意の$\sigma\in S_{T_0}$に対し$\sigma P=sgn(\sigma)P$がなりたてば
+$P$は$\Delta^{T_0}$で割り切れる。
+\end{lem}
+\begin{lem}
+$V^\lambda$は既約
+\end{lem}
+\begin{proof}
+Schurの補題を使う。
+$f:V-\lambda\to V^\lambda$をとる。これがスカラー倍であれば$V^\lambda$は既約。
+$\lambda$から標準盤$T_0$を選ぶ。
+$\sigma\in S_{T_0}$にたいし$\sigma f(\Delta^{T_0})=f(\sigma\Delta^{T_0})=f(sgn(\sigma)\Delta^{T_0})=sgn(\sigma)f(\Delta^{T_0})$となるのでこれは$\Delta^{T_0}$で割ることができる。
+どちらも$V^\lambda$の元で次数を比較すると$f(\Delta^{T_0})=c\Delta^{T_0}$となる。
+
+次に一般の$\Delta^T$についてある$\sigma\in S_n$があって$T=\sigma T_0$となるので、
+$f(\Delta^T)=f(\Delta^{\sigma T_0})=f(\sigma\Delta^{T_0})=\sigma f(\Delta^{T_0})=\sigma c\Delta^{T_0}=c\Delta^{T}$
+となる。
+したがって$f$はスカラー倍。
+\end{proof}
+
+\begin{lem}
+$\lambda\mapsto V^\lambda$は単射
+\end{lem}
+\begin{proof}
+Schurの補題を使う。
+$f:V^\lambda\to V^{\lambda'}$なる同型があるとする。
+$\lambda$の次数が$\lambda'$の次数以上であると仮定できる。
+上と同じように$f(\Delta^{T_0})$は$\Delta^{T_0}$で割れるが次数を比較するとスカラー倍である。
+
+
+文字に関して辞書式順をつけて、先頭項について比較すればよい。
+\begin{lem}
+異なる標準盤については先頭項が異なる
+\end{lem}
+
+\begin{lem}
+標準盤に関する$\Delta^T$は一次独立
+\end{lem}
+
+標準盤$T_0$を左の列から順番に縦に数字を埋めていったものとする。
+盤の集合に$S_n$は推移的に作用することに注意。
+
+したがって$\Delta^{T_0}=\sum_{T\in\lambda'}c_{T}\Delta^T$とかける。
+これの先頭項を比較すればいずれかの$T$について$T_0$が一致することがわかり、$\lambda=\lambda'$となる。
+\end{proof}
+これを示せば、どちらも位数が$S_n$の共役類の個数と等しいので全射であることもわかる。
+
+\subsection{放物誘導による構成}
+今野先生のノート。
+\begin{thm}[Frobenius相互律]
+\[
+\Hom_G(\pi,\Ind^G_H(\rho))=\Hom_H(\Res^G_H(\pi),\rho)
+\]
+\end{thm}
+
+\begin{thm}[Mackeyの公式]
+\[
+\Res^G_K(\Ind^G_H\rho)=\bigoplus_{s\in K\backslash G/H}\Ind^K_{K\cap sHs^{-1}}(\Res^{sHs^{-1}}_{K\cap sHs^{-1}}(\rho^s))
+\]
+\end{thm}
+
+この二つから次のような計算ができる
+\[
+\Hom_G(\Ind^G_K\pi,\Ind^G_H\rho)=\bigoplus_{s\in K\backslash G/H}\Hom(\Res\tau,\Res\rho^s)
+\]
+$\lambda$を$n$の分割とし$T$を$\lambda$を型に持つ盤とする。
+$\Hom_{S_n}(\Ind^{S_n}_{S_T}1,\Ind^{S_n}_{S_{{}^tT}}sgn)=\C$となるので、これらが共通に持つ既約表現がただ一つ存在する。
+それを$\pi_\lambda$とする。（$T$によらないか？）
+分割に適切に順序を入れる。
+$\Hom_{S_n}(\Ind^{S_n}_{S_\mu}1,\pi_\lambda)\neq0$ならば$\mu\leq\lambda$となることがわかる。
+このことから、$\pi_\lambda=\pi_\mu$ならば$\mu\leq\lambda,\lambda\leq\mu$となり、$\mu=\lambda$がわかる。
+
+具体的に$S_n$の既約表現がどのようなものがあるか。
+また$n$変数多項式環の各次数の既約分解がどのようになるか、記述できるか？
+
+$S_3$の既約表現。
+$S_3/A_3=C_2$だから$1$次元表現が自明表現と符号の二種類。
+$6=1^2+1^2+2^2$だから$2$次元の既約表現があるはず。
+これは$3$変数$1$次式の空間を分解すれば出てくる。
+
+放物誘導の計算。
+位数$2$の部分群が放物型部分群。
+これを$P$とする。
+$\Ind_{P}^{S_3}1=\{f:S_3\to\C,f(gh)=f(g), g\in S_3, h\in P\},
+\Ind_P^{S_3}sgn=\{$（本の定義を確かめる）はそれぞれ$[S_3:P]=3$次元表現。
+これらが$1$次元表現を成分に持つか？
+$\Hom_{S_3}(1,\Ind^{S_3}_P1)=\Hom_P(\Res^{S_3}_P1,1)=\Hom_P(1,1)=\C$なので重複度$1$で持つ。
+$\Hom_{S_3}(sgn,\Ind^{S_3}_P1)=\Hom_P(\Res^{S_3}_Psgn,1)=\Hom_P(sgn,1)=0$なので重複度$0$で持つ。
+$2$次元の既約表現がある。
+
+$S_3$の正則表現はどのようなものか？
+
+$T$を
+\begin{ytableau}
+1&3\cr
+2\cr
+\end{ytableau}
+とすると
+${}^tT$は
+\begin{ytableau}
+1&2\cr
+3\cr
+\end{ytableau}
+であり、
+$K=S_T=\{1, (1,2)\}, H=S_{{}^tT}=\{1, (1,3)\}$であり、$K\backslash G/H=S_T\backslash S_3/S_{{}^tT}=\{1, (2,3)\}$である。
+$\Ind^G_H1, \Ind^G_Ksgn$を計算する。
+
+$S_4$の既約表現。
+$S_4/A_4=C_2$なので$1$次元表現が自明表現と符号の二つ。
+$1$次式の空間に$3$次元の既約表現が実現できる？
+$S_3$や$S_2\times S_2$からの誘導を計算してみよう。
+$\Hom_{S_4}(1,\Ind^{S_4}_{S_3}1)=\Hom_{S_3}(1,1)=\C, \Hom_{S_4}(sgn,\Ind^{S_4}_{S_3}1)=\Hom_{S_3}(sgn,1)=0$より
+$\Ind^{S_4}_{S_3}1=1\oplus V$で$3$次元の既約表現$V$が現れる。
+$S_2\times S_2$からの誘導も計算しよう。
+$\Hom_{S_4}(\Ind^{S_4}_{S_2\times S_2}1,\Ind^{S_4}_{S_3}1)$などを計算できるか。
+
+指標を計算できるか？
+多項式環のある次数部分への表現の既約分解を決め、そこでの指標を計算することから既約表現の指標を計算できる。
+例えば$S_4$の既約表現は$1$次式、$2$次式、$3$次式、$4$次式にそれぞれ一つずつあるので、
+$2$次式の空間が$10$次元あり、
+
+誘導表現の指標の計算方法。
+$H\subset G$を部分群として$G$の共役類$C$での値$\chi_{\Ind^G_HV}(C)$をどのように計算できるか？
+
+\subsection{Schur-Weyl双対}
+cf 荒川知幸、共形場理論と表現論
+
+$V=\C^n$への$gl_n(\C)$の自然な作用を$V^{\otimes l}$に延長する。
+\[
+X(v_1\otimes\cdots\otimes v_l)=(Xv_1)\otimes\cdots\otimes v_l+\cdots+v_1\otimes\cdots\otimes(Xv_l)
+\]
+また$S_l$を入れ替えとして作用させる。
+この二つの作用は可換であり、以下のように分解できる。
+\[
+V^{\otimes l}=\bigoplus_\lambda V_\lambda\otimes U_\lambda
+\]
+ここで$\lambda$は大きさ$l$のヤング図形で、$V_\lambda, U_\lambda$はそれに対応する$gl_n, S_l$の既約表現。
+
+これを用いてSchur関手
+\[
+F\colon M\mapsto \Hom_{gl_n(\C)}(M,V^{\otimes l})
+\]
+を定義すると$F(V_\lambda)=U_\lambda$となる。
+すなわち、$gl_n(\C)$の多項式表現から$S_l$の既約表現を全て構成することができる。
+
+Schur関数と既約指標。
+\begin{thm}
+$\chi^\lambda_\rho=\omega^\lambda_\rho$
+\end{thm}
+\begin{thm}
+$V$を$GL_n$の表現とする。
+$V^{\otimes n}=\sum_{\lambda\in P_n}V_\lambda\otimes S^\lambda$と$GL_n(\C)\times S_n$の表現として分解する。
+\end{thm}
+これの指標をとることで、$P_\rho(x)=\sum_\lambda\omega^\lambda_\rho s_\lambda(x)$を導く。
+ここで$s_\lambda(x)$はSchur多項式。
+
+\subsection{Robinson-Shensted-Knuth対応}
+Young図形に対する操作と表現に対する操作の対応。
+幾何的にSchubert vatとかを使って、表現を構成する。
+
+\subsection{交代群の表現}
+交代群の表現。
+対称群の表現の制限として構成する。
+制限の指標の計算をする。
+
+\subsection{Schur多項式}
+神保三輪
+
+\subsection{関連する話題}
+
+組み合わせ論への応用。
+Littlewood-Richardson rule
+
+
+\end{document}

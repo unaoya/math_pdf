@@ -1,0 +1,216 @@
+\documentclass[dvipdfmx,aspectratio=169]{beamer}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage{bxdpx-beamer}
+\title{Chowla-Selbergの公式}
+\author{梅崎直也@unaoya}
+\date{\today}
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}{Chowla-Selbergの公式}
+\begin{align*}
+\prod_{a\in Cl(k)}\Delta(a)\Delta(a^{-1})=\left(\frac{2\pi}{d}\right)^{12h}\prod_{a\in(\Z/d\Z)^\times}\Gamma\left(\frac{a}{d}\right)^{6w\epsilon(a)}
+\end{align*}
+
+\begin{itemize}
+\item $k=\Q(\sqrt{-d})$は虚二次体で$o_k$をその整数環
+\item $Cl(k)$はイデアル類群で$h=\abs{Cl(k)}, w=\abs{o_k^\times}$
+\item $\epsilon$は二次体$k$に対応するDirichlet指標（平方剰余記号）
+\item $\Delta$はweight 12のcusp form
+\end{itemize}
+\end{frame}
+
+\begin{frame}{解析的な証明}
+Chowla-Selbergによる
+
+\begin{align*}
+\prod_{a\in Cl(k)}\Delta(a)\Delta(a^{-1})=\left(\frac{2\pi}{d}\right)^{12h}\prod_{a\in(\Z/d\Z)^\times}\Gamma\left(\frac{a}{d}\right)^{6w\epsilon(a)}
+\end{align*}
+
+\begin{block}{方針}
+$\dfrac{\zeta'_k}{\zeta_k}$をふた通りの方法で計算。
+\end{block}
+\begin{enumerate}
+\item Kronecker limit formulaを使うと左辺が出てくる
+\item Lerchの公式とDirichlet類数公式を使うと右辺が出てくる
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{代数幾何的な証明}
+Grossによる
+\begin{align*}
+\prod_{a\in Cl(k)}\Delta(a)\Delta(a^{-1})\sim\left(\frac{2\pi}{d}\right)^{12h}\prod_{a\in(\Z/d\Z)^\times}\Gamma\left(\frac{a}{d}\right)^{6w\epsilon(a)}
+\end{align*}
+
+\begin{block}{違い}
+\begin{enumerate}
+\item より一般の場合にも公式
+\item 代数的数倍のずれは特定できない
+\end{enumerate}
+\end{block}
+
+\begin{block}{方針}
+\begin{enumerate}
+\item 両辺をあるアーベル多様体の周期として解釈
+\item これらのアーベル多様体をうまく連続的に変形する
+\item 変形した時に周期が代数的数倍のずれであることを示す
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}{$\Delta$}
+\begin{block}{discriminant}
+$\Delta(z)$は$E_z=\C/(\Z + z\Z)$のdiscriminantであり、
+これは$z$の関数としてweight 12でlevel $SL(2,\Z)$の保型形式である。
+\end{block}
+
+\begin{align*}
+E_z:y^2=4x^3-g_2(\tau)x-g_3(\tau)
+\end{align*}
+にたいし
+\begin{align*}
+\Delta(\tau)=g_2(\tau)^3-27g_3(\tau)^2
+\end{align*}
+
+\end{frame}
+
+\begin{frame}{周期}
+\begin{block}{比較定理}
+微分形式を積分することでコホモロジーの同型が得られる。
+\begin{align*}
+H^i_{dR}(X/k) \otimes \C &\to H^i(X(\C), \C)\\
+\omega &\mapsto (\gamma\mapsto\int_\gamma\omega)
+\end{align*}
+\end{block}
+
+\begin{block}{Hodge分解}
+\begin{align*}
+H^1_{dR}(X/\C)=H^0(X,\Omega^1)\oplus H^1(X,O_X)
+\end{align*}
+楕円曲線$X=E$の場合$\omega_E$が$H^0(E,\Omega^1)$の基底（正則微分形式）
+\end{block}
+\end{frame}
+
+\begin{frame}{楕円曲線の積}
+楕円曲線$n=\phi(d)$個の積A=$E_1\times\cdots\times E_n$で$k$で虚数乗法を持つものを作る。
+
+\begin{itemize}
+\item 各$E_i$が$k$で虚数乗法を持つものとする
+\item これらは全て同種であり、周期は代数的数倍のずれ
+\item $E$が虚数乗法を持つとき、$\Delta(\tau)$と周期$\omega_E^{12}$のずれは代数的数。
+（Weilの本）
+\end{itemize}
+
+$A$の周期として左辺がでてくる。
+\end{frame}
+
+\begin{frame}{Fermat曲線}
+\begin{block}{$B$関数}
+\begin{align*}
+B(\frac{a}{d},\frac{b}{d})
+&=\int^1_0t^{\frac{a}{d}-1}(1-t)^{\frac{b}{d}-1}dt\\
+&=\int^1_0x^{a-1}y^{b-d}dx \mod \Q^\times
+\end{align*}
+ここで$y=\sqrt[d]{1-x^d}$とする。これはFermat曲線$F(d):x^d+y^d=1$の周期。
+\end{block}
+\end{frame}
+
+\begin{frame}{Jacobian}
+\begin{block}{Jacobian}
+曲線$C$に対して定まるアーベル多様体$J_C$。
+\begin{itemize}
+\item $H^1$は$C$と一致
+\item $\dim J_C=g(C)$
+\end{itemize}
+\end{block}
+$C=F(d):x^d+y^d=1$の場合、$J_C$は$n$次元の商を持つ。
+また$\mu_d$の作用から虚数乗法を持つ。
+\end{frame}
+
+\begin{frame}{楕円曲線の族}
+\begin{block}{相対$1$形式}
+$\tau\in H$に対して
+$E_\tau=\C/(\Z\otimes\tau\Z)$は$y^2=4x^3-g_2(\tau)x-g_3(\tau)$と書けて
+\begin{align*}
+\omega_\tau=\dfrac{dx}{y}=\dfrac{dx}{\sqrt{4x^3-g_2(\tau)x-g_3(\tau)}}
+\end{align*}
+\end{block}
+
+\begin{block}{モジュラー曲線}
+$L=\{(\tau, x), x \in \Z \oplus \tau\Z \subset \C\}$とし、
+$\pi:h\times \C/L \to h$を$SL_2(\Z)$でわる。
+\end{block}
+
+\begin{block}{虚数乗法}
+虚二次体に対応する点を$h$の部分集合と思い、$SL_2(\Z)$が作用。
+これに楕円曲線を引き戻して割る。
+\end{block}
+\end{frame}
+
+\begin{frame}{相対的な状況}
+$\pi:A\to S$をアーベル多様体の族とする。
+$\mathcal{H}^n_{dR}(A/S)$は$H^n_{dR}(A_s/s)$をまとめた$S$上の層。
+$R^n\pi_*\C$は$H^n(A_s,\C)$をまとめた$S$上の層、$O_S$は正則関数の層。
+
+\begin{block}{相対版比較定理}
+\begin{align*}
+\mathcal{H}^n_{dR}(A/S) \to R^n\pi_*\C \otimes_{\C}O_S
+\end{align*}
+\end{block}
+
+$H_{dR}(A/S)$の切断$\omega$について、各点$s \in S$ごとに$\omega_s$の周期が定まる。
+$\omega$が定数周期を持つとはこの周期が一定であること。
+\end{frame}
+
+\begin{frame}{志村多様体}
+$k=\Q(\sqrt{-d})$とし、$o_k$で虚数乗法を持つ$n$次元アーベル多様体を全部集める。
+（偏極とレベル構造もつける）
+
+\begin{block}{志村多様体}
+普遍的なアーベル多様体の族
+\begin{align*}
+A \to S
+\end{align*}
+ができて、$S$は代数体上の代数多様体になる
+\end{block}
+\end{frame}
+
+\begin{frame}{大域切断}
+
+%\begin{enumerate}
+%\item $\pi_1(S,s)$不変は$H^n(A_s,\C)$の元
+%\item $R^n\pi_*\C$の大域切断
+%\item 正則ベクトル束$\mathcal{H}^n_{dR}(A(\C)/S(\C))$の定数周期
+%\item 代数的ベクトル束$\mathcal{H}^n_{dR}(A/S)$の定数周期
+%\end{enumerate}
+
+虚数乗法を持つことを使って、各点での周期が$\overline{\Q}$倍のずれであることを証明できる。
+
+\begin{itemize}
+\item 虚数乗法による$k$の$\mathcal{H}^n_{dR}(A/S)$への作用を分解して、$S$上の大域切断$\omega$を作る。
+\item 一方で$R^n\pi_*\C$にも$\tau^n$で作用する部分空間が存在し、これらは比較同型で対応する。
+\item $\mathcal{H}^n_{dR}(A/S)$にはGauss-Manin接続という代数的な微分方程式が定まっている。
+これを用いて、上の大域切断が代数的で、さらに$\overline{\Q}^\times$上定義されることがわかる。
+\item またこの大域切断の次元はコンパクト化を用いて計算すると$1$であることがわかる。
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Hodge予想}
+\begin{block}{Deligneのコメント}
+I began by saying that I had found a new proof of the period implication of the Chowla Selberg formula, using some techniques from algebraic geometry. Deligne immediately asked, in all seriousness, if I had proved the Hodge conjecture. I replied that I would be delighted to hear that I had done so, as I was still looking for a thesis topic (and felt that a proof of the Hodge conjecture would probably be sufficient).
+\end{block}
+\end{frame}
+
+\begin{frame}{参考文献}
+\begin{enumerate}
+\item Andre Weil,アイゼンシュタインとクロネッカーによる楕円関数論
+\item Benedict H. Gross, On the Periods of Abelian Integrals and a Formula of Chowla and Selberg
+\item Benedict H. Gross, On the periods of abelian varietiese
+\end{enumerate}
+\end{frame}
+\end{document}

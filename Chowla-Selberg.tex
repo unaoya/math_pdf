@@ -1,0 +1,234 @@
+\documentclass{jsarticle}
+\setlength{\textwidth}{\fullwidth}
+\setlength{\evensidemargin}{\oddsidemargin}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz, tikz-cd, tkz-euclide}
+\usetkzobj{all}
+\usetikzlibrary{intersections, calc}
+
+%\newcommand{\Xb}{\overline{X}}
+%\newcommand{\Gm}{\mathbb{G}m}
+
+
+\title{Chowla-Selbergの公式}
+\author{@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+
+CS公式
+- Weilの本の証明（ゼータ関数とか使うやつ）
+- Grossの証明（代数幾何、Fermat曲線）
+- 新谷の証明（多重ガンマ）
+- Arakelov使う証明（SouleのSB）
+- Gross-Degline（いくつか証明されてる例）
+
+Anderson, Colmetzのアーベル多様体？関連した論文？
+
+関連ありそうなFresanのExponentioal motives
+%http://javier.fresan.perso.math.cnrs.fr/publications.html
+
+ON THE GROSS-DELIGNE CONJECTURE
+FOR VARIATIONS OF HODGE-DE RHAM STRUCTURES
+MASANORI ASAKURA AND JAVIER FRESA\'N
+%http://javier.fresan.perso.math.cnrs.fr/gross-deligne.pdf
+
+On the Hodge number of fibrations with relative multiplication
+朝倉政典 (北大理)
+%http://www.math.sci.hiroshima-u.ac.jp/branched/files/2015/Asakura.pdf
+
+UNE APPROCHE ARAK\'ELOVIENNE \`A LA CONJECTURE DE GROSS-DELIGNE
+(D'APR\`ES V. MAILLOT ET D. R\"OSSLER)
+Javier Fres\'an
+%https://jfresan.files.wordpress.com/2010/09/memoria21.pdf
+
+The Chowla\UTF{2013}Selberg Formula and The Colmez Conjecture
+Tonghai Yang
+%https://www.math.wisc.edu/~thyang/ColmezConjectureFinal2010.pdf
+
+The Chowla-Selberg Formula CARLOS JULIO MORENO
+%https://core.ac.uk/download/pdf/82739999.pdf
+
+\section{Kronecker limit formula}
+Eisenstein級数の$s=1$でのLaurent展開、$z=x+\sqrt{-1}y$とすると、
+\begin{align*}
+E(z,s)=\frac{\pi}{s-1}+2\pi(\gamma-\log(2\sqrt{y}\abs{\eta(z)}^2))+O(x-1)
+\end{align*}
+
+Kronecker limit formulaと関連する話題. 加塩 朋和 (京大・理)
+%https://www.math.kyoto-u.ac.jp/~chida/Gross-Zagier/Kashio.pdf
+
+絶対CM周期について、吉田敬之
+%https://www.jstage.jst.go.jp/article/sugaku/59/4/59_4_380/_pdf/-char/ja
+
+
+A Proof of the Classical Kronecker Limit Formula
+Takuro SHINTANI
+%https://projecteuclid.org/download/pdf_1/euclid.tjm/1270472992
+
+\section{Gross}
+%http://www.math.harvard.edu/~gross/preprints/cs.pdf
+
+\section{Asakura-Otsubo}
+%https://arxiv.org/abs/1503.07962
+%https://arxiv.org/abs/1503.08894
+
+\section{Fresan}
+%https://jfresan.files.wordpress.com/2010/09/memoria21.pdf
+
+KRONECKER’S FIRST LIMIT FORMULA, REVISITED
+W. DUKE, \"O. IMAMOGLU, AND \'A . T\'OTH
+%http://www.math.ucla.edu/~wdduke/preprints/kronecker.pdf
+
+
+RAMANUJAN’S CLASS INVARIANTS, KRONECKER’S LIMIT FORMULA, AND MODULAR EQUATIONS
+BRUCE C. BERNDT, HENG HUAT CHAN, AND LIANG\UTF{2013}CHENG ZHANG
+%http://www.math.nus.edu.sg/~chanhh/papers/10.pdf
+
+
+A Kronecker Limit Formula for Real Quadratic Fields* Don Zagier
+%https://people.mpim-bonn.mpg.de/zagier/files/doi/10.1007/BF01343950/KroneckerLimit.pdf
+
+\section{The mechanics of the analytic proof}
+In "The Chowla-Selberg Formula", by CARLOS JULIO MORENO.
+
+$F$を総実体、$K$を$F$の総虚二次拡大とする。
+\begin{align*}
+E(s,z)=\sum_{\sigma\in\Gamma/\Gamma_\infty}Ny(\sigma(z))^{(1+s)/2}
+\end{align*}
+を$\Gamma=SL_2(r_F)$に付随するEisenstein seriesとする。
+$\Gamma_\infty$は上三角行列。
+
+$E(s,z)$のFourier係数の定数項は
+\begin{align*}
+Ny(z)^{(1+s)/2}+\frac{\Lambda_F(s)}{\Lambda_F(1+s)}Ny(z)^{(1-s)/2}
+\end{align*}
+となる。$\Lambda_F$は$F$の完備$\zeta$
+
+$s=-1, 0 , 1$での展開を考える。$s=1$での展開がKronecker limit formulaで$s=0$がMaass formに対応。
+
+Epstein $\zeta$とEisenstein sereisの関係を考えると
+
+\section{Gross-Deligne}
+CM motiveの周期と$\Gamma$関数の特殊値。
+
+楕円曲線の場合がChowla-Selberg（から従う。）
+参考 http://www.math.sci.hiroshima-u.ac.jp/branched/files/2015/Asakura.pdf
+
+$y^2=x^3-1$の$H^1$は$\Q(\zeta_3)$をCMに持つ。
+$\chi:\Q(\zeta_3) \to \C$を$H^\chi=H^{1,0}$なるものとする。
+この時
+\begin{align*}
+per(H^{\chi})=\int^{\zeta_3}_1\frac{dx}{y}\sim\int^1_0\frac{dx}{\sqrt{1-x^3}}\\
+=\frac{1}{3}B(\frac{1}{3},\frac{1}{2})\\
+=\frac{1}{3}\frac{\Gamma(1/3)\Gamma(1/2)}{\Gamma(5/6)}
+\end{align*}
+となる。
+
+\section{Dedekind $\eta$ function}
+nLab
+Dedekind eta function
+%https://ncatlab.org/nlab/show/Dedekind+eta+function
+
+The Logarithm of the Dedekind $\eta$-Function
+Michael Atiyah
+%https://www.maths.ed.ac.uk/~v1ranick/papers/atiyahlg.pdf
+
+\section{GENRES DE TODD ET VALEURS AUX ENTIERS DES DE\'RIVE\'ES DE FONCTIONS $L$
+par Christophe SOUL\'E}
+%http://www.numdam.org/article/SB_2005-2006__48__75_0.pdf
+
+HRR
+\begin{align*}
+\chi(E)=\int_Xch(E)Td(TX)\\
+Td(x)=1-\sum_{m\geq0}\zeta(-m)\frac{x^{m+1}}{m!}
+\end{align*}
+
+Arakelov類似
+\begin{align*}
+R(x)=\sum_{m\geq1, m:odd}(2\zeta'(-m)+(1+\frac{1}{2}+\cdots+\frac{1}{m})\zeta(-m))\frac{x^m}{m!}
+\end{align*}
+
+Lerch zeta
+\begin{align*}
+\zeta(z,x)=\sum_{m\geq1}\frac{z^m}{m^s}
+\end{align*}
+（これはDirichlet zetaの($(\Z/n)^\times$での？）Fourier変換？）
+
+$u\in\Z/n$に対して$P_u(H^k(X))\in\C^\times/F^\times$を定義する。
+$\det_FH^k_{dR}(X)_u$と$\det_FH^k_B(X(\C),F)_u$の比として定まる。
+
+$\mathcal{C}$を$\C$の$K$ベクトル空間で$\log\abs{a}, a\in F^\times$で生成されるものとする。
+
+\begin{thm}[Theoreme 4.4]
+$\C/\mathcal{C}$における等式
+\begin{align*}
+\sum_{k\geq0}(-1)^k\sum_{u\in(\Z/n)^\times}\chi(u)\log\abs{P_u(H^k(X))}
+=\sum_{k\geq0}(-1)^k\frac{L'(\chi,0)}{L(\chi,0)}\sum_{u\in(\Z/n)^\times}\sum_{p+q=k}p\dim_\C(H^{p,q}(X(\C))_u)\chi(u)
+\end{align*}
+\end{thm}
+
+交代和を取らず、各$k$での等式は$k=1$とそれ以外のいくつかの場合に証明されている。
+
+\subsection{arithmetic Riemann-Roch}
+
+\subsection{arithmetic Lefschetz}
+RRのequivariant版？
+
+自然数$n>1$と$G=\Spec(\Z[tT]/(T^n-1))$とする。
+$X$をarithmetic varietyとし、$G$作用$\mu:G \times X \to X$を持つとする。
+固定点$Y=X^G$はarithmetic varietyである。
+$\bar{E}=(E,h)$を$X$上のhermitian bundleとし、$G$の作用が$h$を保つように$E$に伸びるとする。
+この時、$E_Y=\oplus_{u\in\Z/n}E_u$と分解する。
+
+$V\subset Y$をopenとすると、$\mu^*:E(V) \to E(V) \otimes \Z[T]/(T^n-1)$が定まり、
+$\mu^*(s)=\sum_{u\in \Z/n}s_u\otimes T^u$と分解する。
+
+$1$の原始$n$乗根$\gamma\in\C$を固定し、$g\in G(\C)$を対応する元とする。
+$G, F_\infty$で不変な$TX(\C)$のK\"ahler計量$h_X$を固定する。
+$H^q(X,E)$は$L^2$直交分解$\oplus_{u\in\Z/n}H^q(X,E)_u$を持つ。
+\begin{align*}
+\hat{\deg}_g(H^q(X,E))=\sum_{u\in\Z/n}\hat{\deg}(H^q(X,E)_u,h_{L^2})\gamma^u\\
+\hat{\chi}_g(\bar{E})=\sum_{q\geq0}(-1)^q\hat{\deg}_g(H^q(X,E))
+\end{align*}
+と定める。
+$A^{0,q}(X(\C),E_\C)$も直交分解し、$\zeta_{q,u}(s)$を$\Delta_q$の$A^{0,q}(X(\C),E_\C)_u$のゼータ関数とし、
+\begin{align*}
+T_g(\bar{E}_\C)=\sum_{q\geq0}(-1)^{q+1}q\sum_{u\in\Z/n}\zeta'_{q,u}(0)\gamma^u
+\end{align*}
+とし、これを同変解析的トーションという。
+
+$K=\Q(\gamma)\subset\C$とし、Chern characterを
+\begin{align*}
+\hat{ch}_g(\bar{E})=\sum_{u\in\Z/n}\hat{ch}(\bar{E}_u)\gamma^u \in \hat{CH}(Y)_K
+\end{align*}
+と定める。
+\begin{align*}
+\lambda_{-1}(\bar{E})=\sum_{k\geq0}(-1)^k\Lambda^k(\bar{E})
+\end{align*}
+とおき、
+\begin{align*}
+ch_g(\lambda_{-1}(\bar{E}))=\sum_{k\geq0}(-1)^kch_g(\Lambda^k(\bar{E}))
+\end{align*}
+と書く。
+$\bar{N}^\vee$を$Y \subset X$の余法束とし、$h_X$から計量を誘導する。
+$\hat{Td}(Y) \in \hat{CH}(Y)_\Q$を$(Y,h_Y)$のarithmetic Todd classとする。
+\begin{align*}
+\hat{Td}_g(X)=\hat{ch}_g(\lambda_{-1}(\bar{N}^\vee))^{-1}\hat{Td}(Y)\in\hat{CH}(Y)_K
+\end{align*}
+とおき、
+\begin{align*}
+ch_g(E_\C)=\sum_{u\in\Z/n}ch(E_{u,\C})\gamma^u\\
+Td_g(TX(\C))=ch_g(\lambda_{-1}(\bar{N}^\vee_\C))^{-1}Td(TY(\C))\in\oplus_{p\geq0}H^{p,p}(Y_\R)_K
+\end{align*}
+と定める。
+
+\begin{thm}[Theorem 3.1]
+\end{thm}
+
+
+\end{document}

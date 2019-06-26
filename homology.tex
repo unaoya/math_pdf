@@ -1,0 +1,804 @@
+\documentclass{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz-cd}
+
+\title{ホモロジー}
+\author{梅崎 直也@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+このノートではホモロジーの公理を用いていくつかの簡単な空間のホモロジーを計算します。
+ホモロジーを計算する上で必要な線形代数の事実は\ref{linalg}にまとめてありますので、必要に応じてお読みください。
+\setcounter{tocdepth}{1}
+\section{準備}
+\subsection{線形代数}\label{linalg}
+ここでは全て$\R$ベクトル空間を扱う。
+\begin{dfn}[完全列]
+ベクトル空間の列$V_0,V_1,V_2,V_3\ldots$とその間の線形写像の列
+\[
+\begin{tikzcd}
+V_0\ar[r] & V_1\ar[r] & V_2 \ar[r] & V_3 \ar[r] & \cdots
+\end{tikzcd}
+\]
+が完全列であるとは
+全ての$i>0$について$\im f_{i-1,i}=\ker f_{i,i+1}$を満たすものをいう。
+\end{dfn}
+
+\begin{prop}
+$V_0=0$である完全列
+\[
+\begin{tikzcd}
+0\ar[r]& V_1\ar[r] & V_2
+\end{tikzcd}
+\]
+について$f_{12}$は単射。
+
+逆に$f_{12}$が単射なら上は完全列。
+\end{prop}
+\begin{proof}
+完全列であるから$i=1$で$\im f_{01}=\ker f_{12}$である。
+$V_0=0$なので$\im f_{01}=0$である。
+したがって$\ker f_{12}=0$であり、$f_{12}$は単射。
+\end{proof}
+
+\begin{prop}
+$V_2=0$である完全列
+\[
+\begin{tikzcd}
+V_0\ar[r]& V_1\ar[r] & 0
+\end{tikzcd}
+\]
+について$f_{01}$は全射。
+
+逆に$f_{01}$が全射なら上は完全列。
+\end{prop}
+\begin{proof}
+完全列であるから$i=1$で$\im f_{01}=\ker f_{12}$である。
+$V_2=0$なので$\ker f_{12}=V_1$である。
+したがって$\im f_{01}=V_1$であり、$f_{01}$は全射。
+\end{proof}
+
+\begin{eg}
+$0\to V\to 0$が完全とする。
+このとき上で見たように$V\to 0$が単射なので$V=0$である。
+\end{eg}
+
+\begin{eg}
+$0\to V_1\to V_2\to 0$が完全とする。
+このとき上で見たように$V_1\to V_2$が単射かつ全射なので$V_1$と$V_2$は同型。
+\end{eg}
+
+\begin{eg}
+$0\to V_1\to V_2\to V_3\to 0$が完全とする。
+$f_{12}$は単射なので$V_1$と$\im f_{12}=\ker f_{23}$は同型で$V_2/\ker f_{23}\to V_3$が同型になる。
+とくにこのとき$\dim V_2=\dim V_1+\dim V_3$である。
+\end{eg}
+
+$V_0\to V_1\to V_2$が完全列で$V_1\to V_2$が同型でも$V_0=0$は言えないことに注意する。
+
+\subsection{ホモトピー}
+連続写像。
+
+空間対の圏対象は適切な条件をみたす位相空間$X$とその部分空間$A\subset X$の対$(X,A)$で射$(X,A)\to (Y,B)$は連続写像$f\colon X\to Y$で$f(A)\subset B$を満たすもの。
+
+\begin{dfn}[ホモトピー]
+$f, g$を連続写像$X\to Y$とする。
+$f$と$g$のホモトピーとは連続写像$F\colon X\times [0,1]\to Y$であって
+\begin{align*}
+F(0,x)=f(x)\\
+F(1,x)=g(x)
+\end{align*}
+を満たすもの
+\end{dfn}
+
+\begin{eg}
+$f\colon X\to p$と$i\colon p\to X$の合成$i\circ f$は恒等写像$\id_X\colon X\to X$とホモトピックである。
+\end{eg}
+
+空間対の射のホモトピーとは。
+
+\section{ホモロジーの公理}
+\begin{dfn}
+空間対の圏から$\R$線形空間の圏への関手の族$(H_k)_{k=0,1,2,\ldots}$にたいし以下の公理を設定する。
+\begin{enumerate}
+\item 境界準同型と呼ばれる自然変換$\partial^{(X,A)}_k\colon H_{k+1}(X,A)\to H_k(A,\emptyset)$が存在し、$(A,\emptyset)\to(X,A)\to(X,\emptyset)$にたいして次が完全列になる。
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(X,A) \ar[dll]\\
+H_k(A,\emptyset) \ar[r] &H_k(X,\emptyset) \ar[r] &H_k(X,A) \ar[dll]\\
+H_{k-1}(A,\emptyset) \ar[r] &H_{k-1}(X,\emptyset) \ar[r] &H_{k-1}(X,A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(A,\emptyset) \ar[r] &H_{1}(X,\emptyset) \ar[r] &H_{1}(X,A) \ar[dll]\\
+H_{0}(A,\emptyset) \ar[r] &H_{0}(X,\emptyset) \ar[r] &H_{0}(X,A) \ar[r]&0
+\end{tikzcd}
+\]
+\item $A,B\subset X$が$i(A)\cup i(B)=X$を満たし$B$が閉集合とする。
+これにたいし埋め込み$i\colon(B,B\cap A)\to(X,A)$から定まる
+\[
+H_k(i)\colon H_k(B,A\cap B)\to H_k(X,A)
+\]
+は同型。
+\item 二つの連続写像$f, g\colon (X,A)\to (Y,B)$がホモトピー同値ならこれらが誘導する射
+\begin{align*}
+H_k(f)\colon H_k(X,A)\to H_k(Y,B)\\
+H_k(g)\colon H_k(X,A)\to H_k(Y,B)
+\end{align*} 
+は一致する。
+\item 一点$p$のホモロジーは
+\[
+H_k(p,\emptyset)=\begin{cases}\R&k=0\\0&k>0\end{cases}
+\]
+となる
+\end{enumerate}
+\end{dfn}
+これを満たすものは一意的、正確に言えば自然同値？
+帰納的に一意性を示すにはCW複体とか単体分割できるとかいう条件が必要になりそう。
+
+もしそのようなものが存在すれば、という仮定付きで公理のみを使ってホモロジーを計算する。
+\section{計算例}
+\begin{prop}
+$p\to X\to p$という射を考えれば$H_0(p,\emptyset)\to H_0(X,\emptyset)$は任意の$X$に対し単射。
+\end{prop}
+\subsection{有限個の点}
+有限個の点からなる集合についてそのホモロジーを計算しよう。
+
+\begin{prop}
+離散的な$2$点からなる集合$p\coprod p$のホモロジーは
+\[
+H_k(p\coprod p,\emptyset)=\begin{cases}\R^2&k=0\\0&k>0\end{cases}
+\]
+となる
+\end{prop}
+\begin{proof}
+$A=\{x\}$とし、対の完全列をかくと
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(\{x,y\},\{x\}) \ar[dll]\\
+H_k(\{x\},\emptyset) \ar[r] &H_k(\{x,y\},\emptyset) \ar[r] &H_k(\{x,y\},\{x\}) \ar[dll]\\
+H_{k-1}(\{x\},\emptyset) \ar[r] &H_{k-1}(\{x,y\},\emptyset) \ar[r] &H_{k-1}(\{x,y\},\{x\}) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(\{x\},\emptyset) \ar[r] &H_{1}(\{x,y\},\emptyset) \ar[r] &H_{1}(\{x,y\},\{x\}) \ar[dll]\\
+H_{0}(\{x\},\emptyset) \ar[r] &H_{0}(\{x,y\},\emptyset) \ar[r] &H_{0}(\{x,y\},\{x\}) \ar[r]&0
+\end{tikzcd}
+\]
+となり、$H_k(\{x\},\emptyset)$は次元公理から計算できる。
+したがって$H_k(\{x,y\},\{x\})$を計算すればよい。
+これは切除公理を$B=\{y\}$として使って$H_k(\{x,y\},\{x\})=H_k(\{y\},\emptyset)$となるのでこれもわかる。
+
+したがって上の完全列は
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &0 \ar[dll]\\
+0 \ar[r] &H_k(\{x,y\},\emptyset) \ar[r] & 0 \ar[dll]\\
+0 \ar[r] &H_{k-1}(\{x,y\},\emptyset) \ar[r] & 0 \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &H_{1}(\{x,y\},\emptyset) \ar[r] & 0 \ar[dll]\\
+\R \ar[r] &H_{0}(\{x,y\},\emptyset) \ar[r] & \R \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+\end{proof}
+$X$が$3$点以上からなる場合も同様に計算できる。
+
+\subsection{数直線$\R$}
+数直線$\R$や開区間、閉区間のホモロジー
+\begin{prop}
+$X=\R$のホモロジーは一点のホモロジーと同型。
+すなわち
+\[
+H_k(\R,\emptyset)=\begin{cases}\R&k=0\\0&k>0\end{cases}
+\]
+\end{prop}
+\begin{proof}
+前に見たように$f\colon X\to p$と$g\colon p\to X$の合成は恒等写像$\id_X$とホモトピックである。
+したがってホモトピー不変性より
+\[
+H_k(g)\circ H_k(f)=H_k(\id_X)=\id_{H_k(\R,\emptyset)}\colon H_k(\R,\emptyset)\to H_k(\R,\emptyset)
+\]
+である。
+また$f\circ g\colon p\to p$は$\id_p$と一致するので、
+\[
+H_k(f)\circ H_k(g)=H_k(\id_p)=\id_{H_k(p,\emptyset)}\colon H_k(p,\emptyset)\to H_k(p,\emptyset)
+\]
+である。
+したがって$H_k(g)$と$H_k(f)$は互いに逆射であり、これらが同型射であることがわかる。
+\end{proof}
+
+$X$が開区間や閉区間の場合にも一点とのホモトピーを作ることができる。
+
+これは一般に言えて$f\colon X\to Y, g\colon Y\to X$が$g\circ f$と$\id_X$がホモトピー同値かつ$f\circ g$が$\id_Y$とホモトピー同値なら、$X$と$Y$のホモロジーは同型になる。
+
+\subsection{円周$S^1$}
+\begin{prop}
+$X=S^1$のホモロジーは
+\[
+H_k(S^1,\emptyset)=\begin{cases}\R&k=0,1\\0&k>1\end{cases}
+\]
+となる。
+\end{prop}
+
+\begin{proof}
+$S^1=A\cup B$と分ける。
+$A$は開、$B$は閉で重なるようにしておく。
+
+これに対して対の完全列を使うと
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(S^1,A) \ar[dll]\\
+H_k(A,\emptyset) \ar[r] &H_k(S^1,\emptyset) \ar[r] &H_k(S^1,A) \ar[dll]\\
+H_{k-1}(A,\emptyset) \ar[r] &H_{k-1}(S^1,\emptyset) \ar[r] &H_{k-1}(S^1,A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(A,\emptyset) \ar[r] &H_{1}(S^1,\emptyset) \ar[r] &H_{1}(S^1,A) \ar[dll]\\
+H_{0}(A,\emptyset) \ar[r] &H_{0}(S^1,\emptyset) \ar[r] &H_{0}(S^1,A) \ar[r]&0
+\end{tikzcd}
+\]
+である。
+
+切除公理から$H_k(S^1,A)\cong H_k(B,B\cap A)$である。
+$(B\cap A,\emptyset)\to(B,\emptyset)\to(B,B\cap A)$の対の完全列をかくと
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+H_k(B\cap A,\emptyset) \ar[r] &H_k(B,\emptyset) \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+H_{k-1}(B\cap A,\emptyset) \ar[r] &H_{k-1}(B,\emptyset) \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(B\cap A,\emptyset) \ar[r] &H_{1}(B,\emptyset) \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+H_{0}(B\cap A,\emptyset) \ar[r] &H_{0}(B,\emptyset) \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+
+$B$のホモロジーは一点のホモロジー、$B\cap A$のホモロジーは二点のホモロジーと同じになるので、上の完全列は
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+\R^2 \ar[r] &\R \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+よって完全性から$k>1$であれば$H_k(B,B\cap A)=0$である。
+
+次に$H_0(B\cap A,\emptyset)=\R^2\to H_0(B,\emptyset)=\R$が全射であることを確かめよう。
+$\R$が一次元なので、これが全射でなければ$0$写像である。
+$B\cap A$の一点を適当にとり、$p\to B\cap A\to B\to p$という写像の合成を考えるとこれは$p$の恒等写像である。
+もし$H_0(B\cap A,\emptyset)\to H_0(B,\emptyset)$が$0$写像であれば$H_0(p,\emptyset)=0$となり、次元公理に反する。
+したがって$H_0(B\cap A,\emptyset)=\R^2\to H_0(B,\emptyset)=\R$は全射である。
+
+したがって完全列の定義から$H_0(B,B\cap A)=0, H_1(B,B\cap A)=\R$である。
+
+これを用いて$S^1$の対の完全列を計算する。
+$A$のホモロジーも一点のホモロジーと同じなので、
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &0 \ar[dll]\\
+0 \ar[r] &H_k(S^1,\emptyset) \ar[r] &0 \ar[dll]\\
+0 \ar[r] &H_{k-1}(S^1,\emptyset) \ar[r] &0 \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &H_{1}(S^1,\emptyset) \ar[r] &\R \ar[dll]\\
+\R \ar[r] &H_{0}(S^1,\emptyset) \ar[r] &0 \ar[r]&0
+\end{tikzcd}
+\]
+
+完全列の定義から$H_0(A,\emptyset)=\R\to H_0(S^1,\emptyset)$が全射であることがわかる。
+さらに$H_0(S^1,\emptyset)=\R$であることを確かめよう。
+全射性から$H_0(S^1,\emptyset)$の次元は$1$以下であるので、$H_0(S^1,\emptyset)=0$でないことを確かめればよい。
+$A$の点を一つとり、一点から$A$への写像$p\to A$を定める。
+これに$A\to S^1$を合成し、さらに一点への写像$S^1\to p$を合成することで得られる写像
+\[
+p\to A\to S^1\to p
+\]
+は恒等写像$\id_p\colon p\to p$となる。
+したがってこれらがホモロジーに定める写像
+\[
+H_0(p,\emptyset)\to H_0(A,\emptyset)\to H_0(S^1,\emptyset)\to H_0(p,\emptyset)
+\]
+は合成すると恒等写像$H_0(p,\emptyset)\to H_0(p,\emptyset)$である。
+もし$H_0(S^1,\emptyset)=0$であれば上の写像が$0$写像であることになり、$0$写像が恒等写像であれば$H_0(p,\emptyset)=0$となるが、
+これは次元公理に反する。
+したがって$H_0(S^1,\emptyset)\cong\R$である。
+さらに完全性から$H_1(S^1,\emptyset)\cong\R$
+\end{proof}
+
+\subsection{球面$S^2$}
+\begin{prop}
+球面$X=S^2$のホモロジーは
+\[
+H_k(S^2,\emptyset)=\begin{cases}\R&k=0,2\\0&k\neq 0,2\end{cases}
+\]
+となる。
+\end{prop}
+\begin{proof}
+$S^2=A\cup B$と半分に分ける。
+$A$は開、$B$は閉で重なるようにしておく。
+
+これに対して対の完全列を使うと
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(S^2,A) \ar[dll]\\
+H_k(A,\emptyset) \ar[r] &H_k(S^2,\emptyset) \ar[r] &H_k(S^2,A) \ar[dll]\\
+H_{k-1}(A,\emptyset) \ar[r] &H_{k-1}(S^2,\emptyset) \ar[r] &H_{k-1}(S^2,A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(A,\emptyset) \ar[r] &H_{1}(S^2,\emptyset) \ar[r] &H_{1}(S^2,A) \ar[dll]\\
+H_{0}(A,\emptyset) \ar[r] &H_{0}(S^2,\emptyset) \ar[r] &H_{0}(S^2,A) \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+
+切除公理から$H_k(S^2,A)\cong H_k(B,B\cap A)$である。
+$(B\cap A,\emptyset)\to(B,\emptyset)\to(B,B\cap A)$の対の完全列をかくと
+
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+H_k(B\cap A,\emptyset) \ar[r] &H_k(B,\emptyset) \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+H_{k-1}(B\cap A,\emptyset) \ar[r] &H_{k-1}(B,\emptyset) \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(B\cap A,\emptyset) \ar[r] &H_{1}(B,\emptyset) \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+H_{0}(B\cap A,\emptyset) \ar[r] &H_{0}(B,\emptyset) \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+
+$B\cap A$のホモロジー$S^1$のホモロジーと同じ。
+$B$のホモロジーは一点のホモロジーと同じ。
+このことから上の完全列は
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_{2}(B,B\cap A) \ar[dll]\\
+\R \ar[r] &0 \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+\R \ar[r] &\R \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+よって$k\neq 2$で$H_k(B,B\cap A)=0$であり$H_2(B,B\cap A)=\R$である。
+
+また$\R\to \R$は$p\to B\cap A\to B$を考えれば全射である。
+したがって完全列の定義から$H_0(B,B\cap A)=H_1(B,B\cap A)=0$である。
+
+$A$のホモロジーは$1$点のホモロジーと同じである。
+これを用いて$S^2$の対の完全列を計算する。
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &0 \ar[dll]\\
+0 \ar[r] &H_k(S^2,\emptyset) \ar[r] &0 \ar[dll]\\
+0 \ar[r] &H_{k-1}(S^2,\emptyset) \ar[r] &0 \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &H_{2}(S^2,\emptyset) \ar[r] &\R \ar[dll]\\
+0 \ar[r] &H_{1}(S^2,\emptyset) \ar[r] &0 \ar[dll]\\
+\R \ar[r] &H_{0}(S^2,\emptyset) \ar[r] &0 \ar[r]&0
+\end{tikzcd}
+\]
+
+この完全列から結論を得る。
+\end{proof}
+
+\subsection{トーラス}
+$T$をトーラスとし$H_k(T)$を計算しよう。
+
+\begin{prop}
+\[
+H_k(T,\emptyset)=\begin{cases}\R&k=0,2\\\R^2&k=1\\0&k>0,2\end{cases}
+\]
+\end{prop}
+
+\begin{proof}
+$T$を半分に切った片側を$A$、もう片側を$B$として$T=A\cup B$と分ける。
+$A$は開、$B$は閉で重なるようにしておく。
+
+これに対して対の完全列を使うと
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(T,A) \ar[dll]\\
+H_k(A,\emptyset) \ar[r] &H_k(T,\emptyset) \ar[r] &H_k(T,A) \ar[dll]\\
+H_{k-1}(A,\emptyset) \ar[r] &H_{k-1}(T,\emptyset) \ar[r] &H_{k-1}(T,A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(A,\emptyset) \ar[r] &H_{1}(T,\emptyset) \ar[r] &H_{1}(T,A) \ar[dll]\\
+H_{0}(A,\emptyset) \ar[r] &H_{0}(T,\emptyset) \ar[r] &H_{0}(T,A) \ar[r]&0
+\end{tikzcd}
+\]
+
+ホモトピー不変性から$A$のホモロジーは$S^1$のホモロジーと等しい。
+したがって上の完全列は
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(T,A) \ar[dll]\\
+0 \ar[r] &H_k(T,\emptyset) \ar[r] &H_k(T,A) \ar[dll]\\
+0 \ar[r] &H_{k-1}(T,\emptyset) \ar[r] &H_{k-1}(T,A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &H_{2}(T,\emptyset) \ar[r] &H_{2}(T,A) \ar[dll]\\
+\R \ar[r] &H_{1}(T,\emptyset) \ar[r] &H_{1}(T,A) \ar[dll]\\
+\R \ar[r] &H_{0}(T,\emptyset) \ar[r] &H_{0}(T,A) \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+
+切除公理から$H_k(T,A)\cong H_k(B,B\cap A)$である。
+
+$(B\cap A,\emptyset)\to(B,\emptyset)\to(B,B\cap A)$の対の完全列をかくと
+
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+H_k(B\cap A,\emptyset) \ar[r] &H_k(B,\emptyset) \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+H_{k-1}(B\cap A,\emptyset) \ar[r] &H_{k-1}(B,\emptyset) \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(B\cap A,\emptyset) \ar[r] &H_{1}(B,\emptyset) \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+H_{0}(B\cap A,\emptyset) \ar[r] &H_{0}(B,\emptyset) \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+
+$B, B\cap A$のホモロジーは$S^1$のホモロジーと同様に計算でき、上の完全列は
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_{2}(B,B\cap A) \ar[dll]\\
+\R^2 \ar[r] &\R \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+\R^2 \ar[r] &\R \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+よって$k>3$で$H_k(B,B\cap A)=0$である。
+$H_0, H_1$の射は$p\to B\cap A\to B, S^1\to B\cap A\to B$を考えればそれぞれ全射であることがわかる。
+したがって完全列の定義から$H_0(B,B\cap A)=0, H_1(B,B\cap A)=\R$である。
+
+これを用いて$T$の対の完全列を計算する。
+元の完全列に戻ると
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &0 \ar[dll]\\
+0 \ar[r] &H_k(T,\emptyset) \ar[r] &0 \ar[dll]\\
+0 \ar[r] &H_{k-1}(T,\emptyset) \ar[r] &0 \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &H_{2}(T,\emptyset) \ar[r] &\R \ar[dll]\\
+\R \ar[r] &H_{1}(T,\emptyset) \ar[r] &\R \ar[dll]\\
+\R \ar[r] &H_{0}(T,\emptyset) \ar[r] &0 \ar[r]&0
+\end{tikzcd}
+\]
+$p\to A\to T$を考えると$\R\to H_0(T,\emptyset)$は全射。
+また$p\to T\to p$を考えると$H_0(T,\emptyset)\cong\R$である。
+したがって$H_0(T,\emptyset)\cong H_1(T,\emptyset)\cong\R$
+
+$H_2(T,\emptyset)\to \R$が全射であることを証明する。
+そのためには$\partial\colon H_2(T,A)\to H_1(A,\emptyset)$が$0$射であることを言えばいい。
+これは対の完全列の自然性から
+\[
+\begin{tikzcd}
+H_2(T,A)& H_1(A,\emptyset)\\
+H_2(B,B\cap A) & H_1(B\cap A,\emptyset) &H_1(B,\emptyset)
+\end{tikzcd}
+\]
+という可換図式が存在する。
+
+$(B,\emptyset)\to (A,\emptyset)$はホモトピー同値で、ホモロジーの同型を誘導する。
+実際これらは$S^1$のホモロジーと同型でもある。
+
+$H_2(B,B\cap A)\to H_1(B\cap A,\emptyset)\to H_1(B,\emptyset)$が対の完全列から$0$射なので
+$B\cap A\to B\to A$が誘導する射$H_1(B,B\cap A)\to H_1(B\cap A,\emptyset)\to H_1(A,\emptyset)$も$0$射である。
+ここでは$S^1$からの射を調べていると考えることもできる。
+上の図式の可換性と切除同型から$\partial$は$0$射である。
+\end{proof}
+
+\subsection{実射影平面$\R P^2$}
+実射影平面$\R P^2$を球面の$\pm1$での商とみなす。
+
+\begin{prop}
+\[
+H_k(S^2,\emptyset)=\begin{cases}\R&k=0,2\\0&k\neq 0,2\end{cases}
+\]
+\end{prop}
+\begin{proof}
+球面を赤道付近と上半球面、下半球面に3分割し、
+それの$\pm 1$での商を考えることによって$\R P^2=A\cup B$と分割する。
+
+$B$は可縮。
+$A\cap B$は$S^1$とホモトピー同値。
+$A$も$S^1$とホモトピー同値？
+
+なので対の完全列をかくと
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(\R P^2,A) \ar[dll]\\
+H_k(A,\emptyset) \ar[r] &H_k(\R P^2,\emptyset) \ar[r] &H_k(\R P^2,A) \ar[dll]\\
+H_{k-1}(A,\emptyset) \ar[r] &H_{k-1}(\R P^2,\emptyset) \ar[r] &H_{k-1}(\R P^2,A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(A,\emptyset) \ar[r] &H_{1}(\R P^2,\emptyset) \ar[r] &H_{1}(\R P^2,A) \ar[dll]\\
+H_{0}(A,\emptyset) \ar[r] &H_{0}(\R P^2,\emptyset) \ar[r] &H_{0}(\R P^2,A) \ar[r]&0
+\end{tikzcd}
+\]
+
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(\R P^2,A) \ar[dll]\\
+0 \ar[r] &H_k(\R P^2,\emptyset) \ar[r] &H_k(\R P^2,A) \ar[dll]\\
+0 \ar[r] &H_{k-1}(\R P^2,\emptyset) \ar[r] &H_{k-1}(\R P^2,A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+\R \ar[r] &H_{1}(\R P^2,\emptyset) \ar[r] &H_{1}(\R P^2,A) \ar[dll]\\
+\R \ar[r] &H_{0}(\R P^2,\emptyset) \ar[r] &H_{0}(\R P^2,A) \ar[r]&0
+\end{tikzcd}
+\]
+
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+H_k(B\cap A,\emptyset) \ar[r] &H_k(B,\emptyset) \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+H_{k-1}(B\cap A,\emptyset) \ar[r] &H_{k-1}(B,\emptyset) \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(B\cap A,\emptyset) \ar[r] &H_{1}(B,\emptyset) \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+H_{0}(B\cap A,\emptyset) \ar[r] &H_{0}(B,\emptyset) \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_k(B,B\cap A) \ar[dll]\\
+0 \ar[r] &0 \ar[r] &H_{k-1}(B,B\cap A) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+\R \ar[r] &0 \ar[r] &H_{1}(B,B\cap A) \ar[dll]\\
+\R \ar[r] &\R \ar[r] &H_{0}(B,B\cap A) \ar[r]&0
+\end{tikzcd}
+\]
+\end{proof}
+
+
+\begin{prop}
+$p\in X$に対し
+\begin{align*}
+H_k(X,p)&\cong H_k(X,\emptyset) &k>0\\
+\dim H_0(X,p)+1&=\dim H_0(X,\emptyset)&k=0
+\end{align*}
+\end{prop}
+\begin{proof}
+$(p,\emptyset)\to (X,\emptyset)\to (X,p)$に関する対の完全列を書くと
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(X,p) \ar[dll]\\
+H_k(p,\emptyset) \ar[r] &H_k(X,\emptyset) \ar[r] &H_k(X,p) \ar[dll]\\
+H_{k-1}(p,\emptyset) \ar[r] &H_{k-1}(X,\emptyset) \ar[r] &H_{k-1}(X,p) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+H_{1}(p,\emptyset) \ar[r] &H_{1}(X,\emptyset) \ar[r] &H_{1}(X,p) \ar[dll]\\
+H_{0}(p,\emptyset) \ar[r] &H_{0}(X,\emptyset) \ar[r] &H_{0}(X,p) \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+ここで次元公理を使うと上の完全列は
+\[
+\begin{tikzcd}
+~ &\cdots \ar[r] &H_{k+1}(X,p) \ar[dll]\\
+0 \ar[r] &H_k(X,\emptyset) \ar[r] &H_k(X,p) \ar[dll]\\
+0 \ar[r] &H_{k-1}(X,\emptyset) \ar[r] &H_{k-1}(X,p) \ar[dll]\\
+~&\cdots&\ar[dll]\\
+0 \ar[r] &H_{1}(X,\emptyset) \ar[r] &H_{1}(X,p) \ar[dll]\\
+\R \ar[r] &H_{0}(X,\emptyset) \ar[r] &H_{0}(X,p) \ar[r]&0
+\end{tikzcd}
+\]
+となる。
+上の命題から$H_0(i)$は単射なので$\im\partial=\ker H_0(i)=0$である。
+したがって$\im H_1=\ker\partial=H_1(X,p)$であり$H_1$は全射。
+したがって同型。
+\end{proof}
+
+\section{基本的な図形からの写像}
+
+連結な場合の$H_0$について。
+\begin{prop}
+対の連続写像$f\colon(X,\emptyset)\to (Y,\emptyset)$で$Y$は連結とする。
+このとき$H_0(f)\colon H_0(X,\emptyset)\to H_0(Y,\emptyset)$は全射である。
+\end{prop}
+\begin{proof}
+まず$p\in Y$に対し$H_0(p,\emptyset)\to H_0(Y,\emptyset)$が単射であることを示す。
+これは$p\to Y \to p$が定める$H_0$の射が恒等写像であるので関手性からわかる。
+したがって$H_0(Y,\emptyset)$が$0$でなければこれは同型であるが、
+適当に$p\in X$をとり$(p,\emptyset)\to (X,\emptyset)\to (Y,\emptyset)$を考える。
+するとこの合成の$H_0$は全射になる？
+\end{proof}
+
+実際に$H_0$の次元がが連結成分の個数と一致することも同様の考察で証明できる？
+
+
+赤道半分を$S^1$からの写像の像と見たとき、これは$1$点に縮めることができない？
+境界と交わる部分を動かすと反対側が自動的に動いてしまうので。
+ところが$H_1(\R P^2,\emptyset)=0$である。
+
+\begin{prop}
+次に$H_1$について理解しよう。
+$S^1$からの写像を考える。
+上で計算したように$H_1(S^1,\emptyset)=\R$である。
+したがって$f\colon S^1\to X$があれば$H_1(f)$は単射であるか$0$射であるかのいずれか。
+$f$が定数写像とホモトピックであれば$0$射である。
+\end{prop}
+多分逆は言えない。$H_1$にトーションがある例。実射影平面とか？
+$\R$線形代数としてホモロジーを定義すると情報が落ちてしまう。
+$\Z$加群として定義すると、$H_1(\R P^2,\emptyset)=\Z/2$となって上の状況でも情報が残る。
+それではこれでホモロジーは空間の幾何的な情報を十分に持っているかというと、それはまた別の話になってくる。
+
+対のホモロジーは次のような意味を持つ。
+\begin{prop}
+$H(X,A)\to H(X/A,p)$は同型、特に$k>0$なら$H(X,A)$は $H(X/A)$と同型。
+\end{prop}
+
+\begin{proof}
+$H_k(X,A)=H_k(X,X\cap CA)\cong H_k(X\cup_ACA,CA)\cong H_k(X/A,p)$となる。
+一つ目の同型は切除定理、二つ目の同型はホモトピー不変性
+\end{proof}
+
+\subsection{一意性と比較}
+具体的に構成した3つのホモロジーは全てこの公理を満たすので、自然に同型になる。
+これを具体的に確かめてみよう。
+$(X,A)$を胞体複体の組とする。これに対し$C_n(X,A)=H_n(\bar{X}^n,\bar{X}^{n-1})$と定義する。
+右辺は特異ホモロジー。
+また特異ホモロジーの境界準同型として$\partial_n\colon H_n(\bar{X}^n,\bar{X}^{n-1})\to H_{n-1}(\bar{X}^{n-1},\bar{X}^{n-2})$により定めると、これが以前に胞体分割を用いて定義した複体と一致する？
+
+$X, A$の胞体分割により$\phi_\lambda\colon e^n_\lambda\to X\setminus A$が与えられる。
+またこれにより$H(\phi_\lambda\colon H(D^n,S^{n-1})\to H(\bar{X}^n, \bar{X}^{n-1})$が定まる。
+これの基底による像たちが$H(\bar{X}^n, \bar{X}^{n-1})$の基底を与える。
+
+$M=\cup_\lambda\phi_\lambda(0)\subset X$とする。
+$r\colon D^n-0\to S^{n-1}$を$0$から$x$に向かって引いた半直線の球面との交点とすると、これは変位レトラクト？
+でさらに変位レトラクト？$r'\colon X^n-M\to X^{n-1}$を与える。
+よって$H(i)\colon H(\bar{X}^n,\bar{X}^{n-1})\to H(\bar{X}^n,\bar{X}^n-M)$が同型を与える。
+さらに切除定理により$H(\bar{X}^n, \bar{X}^n-M)$と$H(\coprod_\lambda e_\lambda^n,\coprod_\lambda(e_\lambda^n-0))$
+が同型であることと、$\phi_\lambda$によりここへの同型が与えられる事を使えばよい。
+
+\begin{lem}
+\[
+H_k(\bar{X}^n,A)=\begin{cases}0&k>n\\H_k(X,A)&k<n\end{cases}
+\]
+\end{lem}
+
+\begin{thm}
+\[
+H(X,A)\cong H(C(X,A))
+\]
+\end{thm}
+\begin{proof}
+二つの完全列
+\[
+C_{k+1}(X,A)=H_{n+1}\to H_n(\bar{X}^n,\bar{X}^{n-2})\to H_n(\bar{X}^{n+1},\bar{X}^{n-2})\to0
+\]
+と
+\[
+0\to H_n(\bar{X}^n,\bar{X}^{n-2})\to H_n(\bar{X}^n,\bar{X}^{n-1})\to H_{n-1}(\bar{X}^{n-1},\bar{X}^{n-2})
+\]
+を組み合わせる。
+$H_n(X,A)\cong H_n(\bar{X}^{n+1},A)\cong H_n(\bar{X}^{n+1},\bar{X}^{n-2})$を使う。
+\end{proof}
+
+\section{応用}
+\subsection{写像度と代数学の基本定理}
+前に見たように$H_n(S^n)$は$1$次元ベクトル空間である。
+$1$次元ベクトル空間から自分自身への線形写像は$1\times1$行列に対応すなわちある実数$d\in\R$に対応する。
+
+\begin{dfn}
+連続写像$f:S^n\to S^n$の写像度とは$H(f):H_n(S^n)\to H_n(S^n)$に対応するスカラー$d$、
+すなわち任意の$v\in H_n(S^n)$に対し$H(f)(v)=dv$をみたす$d\in\R$のことをいう。
+\end{dfn}
+
+\begin{eg}
+$f_k:S^2\to S^2$を$z\mapsto z^k$で定めると$\deg f_k=k$
+\end{eg}
+
+\begin{prop}
+写像度は次の性質をみたす
+\begin{enumerate}
+\item $f, g:S^n\to S^n$がホモトピー同値なら$\deg f=\deg g$
+\item $f$が全射でないなら$\deg f=0$
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+\item ホモトピー不変性から
+\item $f$が全射でないなら（適当に座標を取り替えることで）像は$\R^n\subset S^n$に含まれ、$S^n\to\R^n\to S^n$と分解できる。
+この時ホモロジーの関手性から$H(f)$も$H^n(S^n)\to H^n(\R^n)\to H^n(S^n)$と分解し、$H^n(\R^n)=0$より$H(f)=0$となる。
+よってこの写像度は$0$
+\end{enumerate}
+\end{proof}
+
+これを用いて代数学の基本定理を証明する。
+与えられた多項式を$f(z)=z^n+a_1z^{n-1}+\cdots+a_n$とする。
+これを$S^2\to S^2$の連続写像に延長する。
+この時$f(z)$は$g(z)=z^k$とホモトピー同値になる！
+（説明をかく。ホモトピー$f_t(z)=z^k+t(a_1z^{k-1}+\cdots+a_n$が連続になること。
+他の$z^{k-i}$とはホモトピー同値にならないことも説明する。）
+したがって$\deg f=\deg g=k\neq0$なので$f$は全射であり、特に$f(z)=0$となる$z\in\C$が存在する。
+\subsection{不動点定理}
+
+\section{特異ホモロジー}
+公理を満たすホモロジー関手が実際に存在することを構成により示す。
+
+$\Delta^k$を標準$k$単体、$\epsilon^i_k\colon\Delta^{k-1}\to\Delta^k$を$i$番目の面への埋め込みとする。
+特異チェイン複体とは次のようなベクトル空間とその間の線形写像の列である。
+整数$k\geq0$にたいし$S_k(X)=\bigoplus_{\sigma\colon\Delta^k\to X, \text{conti}}\R\sigma$と$\partial_k\colon S_k(X)\to S_{k-1}(X)$を$\sigma\mapsto\sum_{i=0}^k(-1)^i\sigma\circ\epsilon_k^i$により定める。
+これらは$\partial_k\circ\partial_{k+1}$をみたし、この列のことを複体と呼び$S(X)=\cdots\to S_k(X)\to S_{k-1}(X)\to\cdots$と書くことにする。
+複体は次のような射により圏となる。
+この構成は関手的である。すなわち連続写像$f\colon X\to Y$があれば複体の射$S(f)\colon S(X)\to S(Y)$が$\sigma\mapsto f\circ\sigma$と写像を合成することで得られる。 
+
+この複体$S(X)$のホモロジーをとることにより、$X$の特異ホモロジー$H_k(X)$を定義する。
+つまり$H_k(X)=\ker\partial_k/im\partial_k$である。
+
+このホモロジーが公理をみたすことを以下で確認する。
+\subsection{ホモトピー不変性}
+二つの連続写像$f, g\colon X\to Y$がホモトピックとする。
+すなわち連続写像$F\colon X\times I\to Y$であって$F(x,0)=f(x), F(x,1)=g(x)$をみたすものが存在するとする。
+この時複体の射$S(f)$と$S(g)$もホモトピックであり、これが導くホモロジーの射は$H(f)=H(g)$となる。
+実際複体の射のホモトピーを次のように構成できる。
+まず$i=0,1,\ldots,k$にたいし$\theta^i_{k+1}\colon\Delta^{k+1}\to\Delta^k\times I$を
+\[
+\theta^i_{k+1}(P_j)=\begin{cases}(P_j,0)&j\leq i\\(P_j,1)&j>i\end{cases}
+\]
+とし、$D\colon S_k(X)\to S_{k+1}(X)$を$D\sigma=\sum^q_{i=0}(-1)^i(\sigma\times1)\circ\theta^i_{k+1}$とし、
+これと$S(F)$の合成によりホモトピー$H\colon S(X)\to S(Y)$を定義する。
+これが$\partial\circ H+H\circ\partial=f-g$をみたすことを確かめる。
+
+
+\subsection{対の完全列}
+位相空間対$(X,A)$にたいし、その特異チェイン複体を商複体$S(X,A)=S(X)/S(A)$として定義する。
+これがちゃんと複体を与えることを確かめる。
+これは実は$\sigma\not\subset A$であるような連続写像を基底に持つ。
+
+この複体$S(X,A)$のホモロジーを$H_k(X,A)$とかく。
+この時複体の完全列$0\to S(A)\to S(X)\to S(X,A)\to 0$があり、そこから次の完全列を得る。
+\[
+\cdots\to H_k(A)\to H_k(X)\to H_k(X, A)\to H_{k-1}(A)\to
+\]
+ここで$\partial_k\colon H_k(X,A)\to H_{k-1}(A)$は境界準同型と呼ばれ、次のように定義される。
+これらは自然変換である。
+\subsection{切除定理}
+$S(B,A\cap B)\to S(X,A)$はチェイン同値
+
+$S(A)+S(B)\to S(X)$がチェイン同値であることを確かめる。
+$\sigma\colon\Delta\to X$を$\sigma=\sigma_A+\sigma_B\mod \partial$とできることをみる。
+例えば$\sigma\colon\Delta^1\to X$の像から一点$p$をとり$\sigma_A$と$\sigma_B$に分解できる状況を考える。
+$\tau\colon\Delta^2\to X$を一つの辺が$\sigma$で写り、余った頂点を$p$に写すようにすれば$\partial\tau=\sigma-\sigma_A+\sigma_B$とできる。
+
+\subsection{1点のホモロジー}
+$X$が1点$p$の場合にホモロジーを定義から計算しよう。
+
+\section{単体複体とホモロジー}
+単体的ホモトピー
+$K$を単体複体とし$\Delta^1$との積単体$K\times\Delta^1$を構成する。
+単体$\sigma=a_0a_1\cdots a_n$とする。
+また$I=01$とする。
+この時$(a_0,0)\cdots(a_i,0)(a_i,1)\cdots(a_n,1)$で定まる $n+1$単体がなす単体複体を積複体$K\times I$と定める。
+これが単体複体と単体的写像の圏での直積となる？
+\begin{eg}
+$I\times I$は2つの$2$単体$(0,0)(0,1)(1,1), (0,0)(1,0)(1,1)$を貼り合わせたもの。
+$\Delta^2\times I$は
+\end{eg}
+二つの単体的写像$f,g\colon K\to K'$がホモトピックとは単体的写像$F:K\times\Delta^1\to K'$であって、
+この時複体のホモトピーを定める。
+
+二つの単体複体の幾何的実現が同相ならばホモロジーは同型になる。
+\begin{thm}
+$\abs{K}\cong\abs{L}$ならば$H(K)\cong H(L)$
+\end{thm}
+重心細分によるホモロジーの不変性と単体近似定理を用いて証明する。
+
+単体写像$f\colon K\to L$が連続写像$f\colon\abs{K}\to\abs{L}$の単体近似であるとは
+任意の$K$の頂点$v$について$\phi(st^\circ(v;K))\subset st^\circ(f(v);L)$をみたすこと。
+ここで$st^\circ(v;K)$とは$v$を含む$K$の単体の内部の合併からなる$\abs{K}$の部分空間。
+単体近似でない例。
+
+$K$の重心細分$SdK$と複体の射$Sd\colon C(K)\to C(SdK)$を定義する。
+これがホモロジーの同型を与える。
+
+\section{CW複体とホモロジー}
+胞体分割とは$X\supset e_\lambda$で$X=\bigcup_\lambda e_\lambda$で互いに交わらず、
+次元$\dim e_\lambda=n$なる整数が定まり$\phi_\lambda\colon D^n\to \bar{e}_\lambda$という連続写像があって、
+内部$D^n\setminus S^{n-1}$を$e_\lambda$に同相にうつすもの。
+各整数$n$にたいし$X^n=\bigcup_{\dim e_\lambda\leq n}e_\lambda$すなわち次元$n$以下の胞体を集めた$X$の部分空間とする。
+例、球面の胞体分割。
+\end{document}

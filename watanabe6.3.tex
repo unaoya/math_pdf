@@ -1,0 +1,262 @@
+\documentclass[uplatex, slide, papersize]{jsarticle}
+\usepackage[dvipdfmx]{graphicx, color}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\title{Watanebe, 6.3}
+\date{\today}
+\author{@unaoya}
+\begin{document}
+\maketitle
+
+\section*{統計的学習}
+\begin{enumerate}
+\item 真の分布$q(x)$またはそこから生成されるサンプルを予測したい
+\item モデル$p(x\vert w)$とパラメータ空間$W$を設定
+\item 与えられたサンプルからパラメータ空間上の測度および予測分布$\hat{p}(x)$を決定
+\end{enumerate}
+
+\begin{center}
+\Large{モデルを評価したい}
+\end{center}
+
+\section*{Bayes quartet}
+四つのモデルの評価基準
+
+\begin{table}[!h]
+\begin{tabular}{ccc}
+&Bayes推測&Gibbs推測\\
+分布&$B_g$&$G_g$\\
+サンプル&$B_t$&$G_t$
+\end{tabular}
+\end{table}
+
+これらはサンプル$D_n$に依存した確率変数
+
+\section*{6.3の目標}
+\begin{itemize}
+\item サンプル数$n\to\infty$における漸近挙動
+\item サンプルについての期待値
+\item これらの4つの間の関係
+\end{itemize}
+について調べる。
+
+\newpage
+\vspace*{\stretch{1}}
+\begin{center}
+\huge{今日は$G_g$について}
+\end{center}
+\vspace{\stretch{2}}
+\newpage
+\subsection*{Gibbs推測}
+事後分布に従ってパラメータ$\hat{w}$をサンプリングし、$\hat{p}(x)=p(x\vert \hat{w})$を予測分布とする。
+\subsection*{汎化誤差$G_g$}
+$q(x)$と$\hat{p}(x)$のKL divergenceを$w$について事後分布$p(w\vert \textcolor{red}{D_n})$で積分したもの
+\[
+G_g=\int_WK(w)p(w\vert \textcolor{red}{D_n} )dw
+\]
+
+\newpage
+\subsection*{問題}
+$n\to\infty$で$nG_g$がどのような確率変数に収束するか？
+
+\subsection*{主要項}
+\[
+G_g(\epsilon)=\frac{\int_{K(w)\leq\epsilon}K(w)p(w\vert D_n)dw}{\int_{K(w)\leq\epsilon}p(w\vert D_n)dw}
+\]
+
+\begin{lem}[Lemma 6.3]
+$nG_g-nG_g(\epsilon)$は$0$に確率収束する。
+\end{lem}
+
+\section*{主要項の評価}
+\begin{align*}
+G_g(\epsilon)&=\frac{\int_{K(w)\leq\epsilon}K(w)p(w\vert D_n)dw}{\int_{K(w)\leq\epsilon}p(w\vert D_n)dw}\\
+&=E[K(w)\vert_{K(w)\leq\epsilon}]
+\end{align*}
+の評価をしたいが直接は難しい。
+\begin{center}
+\large{特異点解消を使う}
+\end{center}
+
+\section*{標準形}
+$f(x,g(u))=\log(\frac{q(x)}{p(x\vert g(u))})=a(x,u)u^k$とし
+\begin{align*}
+K(g(u))&=u^{2k}\\
+K_n(g(u))&=u^{2k}-\frac{1}{\sqrt{n}}u^k\xi_n(u)\\
+\xi_n(u)&=\frac{1}{\sqrt{n}}\sum_{i=1}^n\{a(X_i,u)-E_X[a(X,u)]\}
+\end{align*}
+$\xi_n(u)$はサンプル$D_n$に依存した確率過程。
+$\xi_n$はGauss過程$\xi$に法則収束する。
+
+\begin{lem}[6.51]
+\[
+G_g^*(\xi_n)=E_{y,t}[t\vert\xi_n]
+\]
+と定義すると
+\[
+nG_g(\epsilon)-G_g^*(\xi_n)\to^P0
+\]
+\end{lem}
+\newpage
+\subsection*{特異点解消$M$上での積分$E_{y,t}$と$E_u$}
+\begin{itemize}
+\item $\xi(u)$: $M$上の$C^1$級関数（サンプルの確率過程）
+\item$f(u)$: $M$上の関数（$K(w)$に対し$f(u)= u^{2k}$）
+\item $0\leq\sigma\leq1$
+\end{itemize}
+\[
+E^\sigma_u[f(u)\vert\xi]=\frac{\displaystyle\sum_{\alpha\in A}\int_{[0,b]^d}f(u)Z(u,\xi)du}{\displaystyle\sum_{\alpha\in A}\int_{[0,b]^d}Z(u,\xi)du}
+\]
+$A$は座標近傍の（有限）集合。
+
+$Z(u,\xi)$は
+\[
+u^h\phi^*(u)\exp(-\beta nu^{2k}+\beta\sqrt{n}u^k\xi(u)-\sigma u^ka(X,u))
+\]
+事後分布$p(w\vert D_n)$との関係。
+\begin{itemize}
+\item $u^h\phi^*(u)$が事前分布$\phi(w)$に対応。
+\item $\sigma=0$として
+\begin{align*}
+Z_n^0p(w\vert D_n)&=\exp(-n\beta K_n(w))\\
+&=\exp(-\beta nu^{2k}+\beta\sqrt{n}u^k\xi_n(u))
+\end{align*} 
+\end{itemize}
+\begin{lem}[6.41]
+\[
+G_g(\epsilon)=E^0_u[u^{2k}\vert\xi_n]
+\]
+\end{lem}
+
+$u^{2k}=K(g(u))$であった。
+\newpage
+\subsection*{本質的部分}
+座標$u=(x,y)$と本質的部分$A^*\subset A$（$K(w)$の特異点解消から決まる）
+
+$E_{y,t}[f(y,t)\vert\xi]= $
+\begin{align*}
+\frac{\displaystyle\sum_{\alpha\in A^*}\int dt\int_{[0,b]^{d-m}}f(y, t)Z_0(y, t,\xi)du}{\displaystyle\sum_{\alpha\in A^*}\int dt\int_{[0,b]^{d-m}}Z_0(y, t,\xi)du}
+\end{align*}
+
+\[
+Z_0(y,t,\xi)=\gamma_by^\mu t^{\lambda-1}\exp(-\beta t+\beta\sqrt{t}\xi_0(y))\phi^*_0(y)
+\]
+
+\begin{lem}[Lemma 6.6, $p=1, f=1, \xi=\xi_n$]
+\[
+\abs{E^0_u[nu^{2k}\vert\xi_n]-E_{y,t}[t\vert\xi_n]}\leq\frac{D(\xi_n,1,\phi^*)}{\log n}
+\]
+\end{lem}
+これの証明に4章での分配関数の計算を用いる。
+
+\newpage
+\subsection*{収束先の構成}
+\begin{dfn}[6.46]
+$M$上の関数$\psi(u)$に対し
+\[
+G_g^*(\psi)=E_{y,t}[t\vert\psi]
+\]
+\end{dfn}
+
+これを使ってさっきの補題を書き直すと
+\begin{lem}
+\[
+\abs{nG_g(\epsilon)-G_g^*(\xi_n)}\leq\frac{D(\xi_n,1,\phi^*)}{\log n}
+\]
+\end{lem}
+
+\subsection*{結論}
+$\xi_n$が$\xi$に法則収束することから
+\begin{itemize}
+\item 補題4を用いて$nG_g(\epsilon)-G_g^*(\xi_n)\to 0$
+\item $G_g^*(\xi_n)-G^*_g(\xi)\to 0$
+\end{itemize}
+が言える。
+
+全て合わせて$nG_g-G^*_g(\xi)\to0$が証明できた。
+$G^*_g(\xi)$は$\xi$に依存した確率変数である。
+
+\newpage
+\section*{4章の復習}
+\subsection*{ゼータ関数}
+開集合$U\subset \R^d$上の非負解析的関数$K(w)$とコンパクト台$C^\infty$関数$\phi(w)$に対し、
+\[
+\zeta(z)=\int K(w)^z\phi(w)dw
+\]
+と定義する。
+これの極の位置とその位数はどのような情報を持つか？
+\newpage
+\subsection*{状態密度関数}
+$\zeta(z)$の逆Mellin変換は状態密度関数
+\[
+v(t)=\int\delta(t-K(w))\phi(w)dw
+\]
+である。Mellin変換の理論により、これの発散のオーダーが$\zeta(z)$の極の位置と対応。
+\newpage
+\subsection*{分配関数}
+状態密度関数$v(t)$のLaplace変換
+\[
+Z(n)=\int\exp(-nK(w))\phi(w)dw
+\]
+を分配関数という。
+これが6章前半で調べていたもの。
+\newpage
+\subsection*{特異学習理論}
+Remark 4.4にあるように
+\[
+Z=\int\exp(-n\beta K(w)+\beta\sqrt{nK(w)}\xi(w))\phi(w)dw
+\]
+の$n\to\infty$での挙動を調べたい。
+\newpage
+
+$K$についての特異点解消により、normal crossingの場合の積分$Z(n,\xi,\phi)$を用いて
+\[
+Z=\sum_\alpha Z(n,\xi\circ g_\alpha,\phi\circ g_\alpha\abs{g'_\alpha})
+\]
+と書けるので、$Z(n,\xi,\phi)$について調べるのが4.4の目標。
+
+\newpage
+\begin{align*}
+&Z^p(n,\xi,\phi)=\\
+&\int_{[0,b]^r}dx\int_{[0,b]^s}dyK(X,y)^px^hy^{h'}\phi(x,y)\\ &\exp(-n\beta K(x,y)^2+\sqrt{n}\beta K(x,y)\xi(x,y))
+\end{align*}
+と定義する。
+\newpage
+
+さらにこれで$\xi=0, \phi=1$と置いたものを
+\begin{align*}
+Z^p(n)=&\int_{[0,b]^r}dx\int_{[0,r]^s}dy\\&K(x,y)^px^h,y^{h'}\exp(-n\beta K(x,y)^2)
+\end{align*}
+と書くことにする。
+
+\newpage
+
+\begin{thm}[Theorem 4.7]
+\[
+\frac{h_i+1}{2k_i}=\lambda
+\]
+が一定で
+\[
+\frac{h_j'+1}{2k_j'}>\lambda
+\]
+とする。
+$K(x,y)=x^ky^{k'}$のときに、ある$a_1,a_2>0$が存在して任意の$n$に対して
+\[
+a_1\frac{(\log n)^{r-1}}{n^{\lambda+p}}\leq Z^p(n)\leq a_2\frac{(\log n)^{r-1}}{n^{\lambda+p}}
+\]
+\end{thm}
+
+平均誤差関数$K(w)$と事前分布$\phi(w)$に対してゼータ関数
+\[
+\zeta(z)=\int K(w)^z\phi(w)dw
+\]
+を定義する。これの極の情報から$K$の？特異点の実対数閾値がもとまる。
+これが自由エネルギーおよび汎化損失の理論値が明らかになる。
+
+\newpage
+
+\subsection{疑問点}
+正則な場合の計算をやる。特にこの時正則性をどこで使うか。
+正則な場合、サンプルが多いことが仮定される？
+\end{document}
