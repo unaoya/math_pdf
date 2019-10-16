@@ -1,0 +1,151 @@
+\documentclass[dvipdfmx]{beamer}
+\usetheme{metropolis}
+
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage{bxdpx-beamer}
+\title{関数等式と双対性}
+\author{梅崎直也@unaoya}
+\date{ロマンティックゼータナイト}
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}{Riemann $\zeta$}
+  Euler積表示
+  \begin{align*}
+    \zeta(s)=\sum^{\infty}_{n=1}n^{-s}=\prod_p(1-p^{-s})^{-1}
+  \end{align*}
+  関数等式
+  \begin{align*}
+    \pi^{-s/2}\Gamma(\frac{s}{2})\zeta(s)=\pi^{-(1-s)/2}\Gamma(\frac{1-s}{2})\zeta(1-s)
+  \end{align*}
+
+  関数等式の応用：  ゼロ点の情報
+\end{frame}
+
+\begin{frame}{Poisson和公式}
+  証明：Poisson和公式、$\theta$関数、Mellin変換
+\end{frame}
+
+\begin{frame}{Dirichlet $L$}
+  Dirhchlet指標$\chi:\Z\to\C$、$\chi(nm)=\chi(n)\chi(m), \exists N, (n,N)\neq1, \chi(n)=0$
+
+  eg:Legendre記号
+  
+  \begin{align*}
+    L(\chi,s)=\sum^{\infty}_{n=1}\chi(n)n^{-s}=\prod_p(1-\chi(p)p^{-s})^{-1}
+  \end{align*}
+
+  全ての$n$で$\chi(n)=1$とするとRiemann $\zeta$
+\end{frame}
+
+\begin{frame}{関数等式}
+  \begin{align*}
+    \Lambda(s,\chi)=(\frac{\pi}{m})^{-s/2}\Gamma(\frac{s+\delta}{2})L(s,\chi)
+  \end{align*}
+  として、
+  \begin{align*}
+    \Lambda(1-s,\overline{\chi})=\frac{i^\delta m^{1/2}}{\tau(\chi)}\Lambda(s,\chi)
+  \end{align*}
+  （補正項の存在、root number, $\varepsilon$因子）
+\end{frame}
+
+\begin{frame}{Dedekind $\zeta$}
+  代数体$K$
+  \begin{align*}
+    \zeta_K(s)=\sum_{\mathfrak{a}}(N\mathfrak{a})^{-s}
+    =\prod_{\mathfrak{p}}
+  \end{align*}
+
+  幾何的な解釈
+  $K=\Q[x]/f(x)$とした時の点の数
+
+  関数等式
+  \begin{align*}
+    \Lambda_K(s)=(\frac{\abs{d_K}}{4^{r_2}\pi^n})^{s/2}\Gamma^{r_1}(s/2)\Gamma^{r_2}(s)\zeta_K(x)
+  \end{align*}
+  とすると、
+  \begin{align*}
+    \Lambda_K(s)=\Lambda_K(1-s)
+  \end{align*}
+  
+  $K=\Q$がRiemann $\zeta$
+
+  Dirichlet $L$との関係
+\end{frame}
+
+\begin{frame}{Artin $L$}
+  Galois表現
+  $\sigma:\Gal(L/K) \to GL_n(\C)$
+
+  $n=1, \sigma=1$の時がDedekind $\zeta$
+  $n=1$のときDirichlet（類体論）
+\end{frame}
+
+\begin{frame}{Hecke $L$}
+  Hecke指標
+
+  位数が有限でないものも考える
+
+  係数は？$\C$ vs $\Q_\ell$
+
+  なぜ？
+\end{frame}
+
+\begin{frame}{合同$\zeta$関数}
+  有限体上の多様体$X/\F$
+
+  およそ多項式、
+  解の個数を数えることで、
+
+  \begin{align*}
+    Z=\exp(\sum\frac{\abs{X(\F_{q^m})t^m}}{m})
+  \end{align*}  
+
+  点ごとの寄与で表したものとの比較
+
+  曲線の場合、関数体と代数体の類似
+
+  関数等式
+\end{frame}
+
+\begin{frame}{コホモロジー}
+  跡公式によりコホモロジーで解釈できる。
+  コホモロジーの双対性が関数等式に
+\end{frame}
+
+\begin{frame}{Hasse-Weil $\zeta$関数}
+  代数体上の多様体
+
+  よい素点と悪い素点
+\end{frame}
+
+\begin{frame}{関数等式}
+  予想。
+
+  証明されたケース、$\Q$上の楕円曲線$E$の時。
+  保型形式$f_E$であって$L$関数が一致するものを作る（難しい。Wilesなど）
+  $f_E$の関数等式を証明する。
+\end{frame}
+
+\begin{frame}{保型形式}
+  保型形式の$L$関数
+\end{frame}
+
+\begin{frame}{Fourier変換}
+  関数等式、テータ、Tate論文
+\end{frame}
+
+\begin{frame}{Langlands対応}
+  保型表現
+\end{frame}
+
+\begin{frame}{気になること}
+  $\varepsilon$因子
+  Fesenko
+\end{frame}
+
+\end{document}
