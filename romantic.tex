@@ -8,7 +8,7 @@
 
 \title{関数等式と双対性}
 \author{梅崎直也@unaoya}
-\date{ロマンティックゼータナイト}
+\date{2019年10月20日ロマンティック数学ナイトプライム＠ゼータ}
 \begin{document}
 
 \begin{frame}
@@ -16,22 +16,26 @@
 \end{frame}
 
 \begin{frame}{Riemann $\zeta$}
-  Euler積表示
   \begin{align*}
     \zeta(s)=\sum^{\infty}_{n=1}n^{-s}=\prod_p(1-p^{-s})^{-1}
   \end{align*}
-  関数等式
+
   \begin{align*}
-    \pi^{-s/2}\Gamma(\frac{s}{2})\zeta(s)=\pi^{-(1-s)/2}\Gamma(\frac{1-s}{2})\zeta(1-s)
+    \hat{\zeta}(s)=\pi^{-s/2}\Gamma(\dfrac{s}{2})\zeta(s)
   \end{align*}
-  Poisson和公式を用いて示す。
+  とおくと、関数等式
+  \begin{align*}
+    \hat{\zeta}(s)=\hat{\zeta}(1-s)
+  \end{align*}
+  が成立。Fourier変換（Poisson和公式）を用いて示せる。
 \end{frame}
 
 \begin{frame}{Dirichlet $L$}
-  導手$N$のDirhchlet指標$\chi:\Z\to\C$
-  $\chi(nm)=\chi(n)\chi(m)$、$n$が$N$と互いに素なら$\chi(n)=0$
+  導手$f$のDirhchlet指標$\chi:\Z\to\C$
+  
+  $\chi(nm)=\chi(n)\chi(m)$、$n$が$f$と互いに素なら$\chi(n)=0$。
 
-  Legendre記号など。
+  Legendre記号などが例。
   
   \begin{align*}
     L(\chi,s)=\sum^{\infty}_{n=1}\chi(n)n^{-s}=\prod_p(1-\chi(p)p^{-s})^{-1}
@@ -44,48 +48,46 @@
 
 \begin{frame}{関数等式}
   \begin{align*}
-    \hat{L}(s,\chi)=N^{s/2}\Gamma(s,\chi)L(s,\chi)
+    \hat{L}(\chi,s)=f_\chi^{s/2}\Gamma(\chi,s)L(s,\chi)
   \end{align*}
-  として、
+  とする。$f_1=1, \Gamma(s,1)=\pi^{-s/2}\Gamma(s)$である。
   \begin{align*}
-    \hat{L}(1-s,\overline{\chi})=W(\chi)\hat{L}(s,\chi)
+    \hat{L}(\overline{\chi},1-s)=W(\chi)\hat{L}(\chi,s)
   \end{align*}
-  補正項$W(\chi)$が存在する。
-  Gauss和を用いて記述できる。
-
-  Fourier変換、Poisson和公式を用いて示す。
+  補正項$W(\chi)$が存在する。Fourier変換（Poisson和公式）を用いて示せる。
 \end{frame}
 
 \begin{frame}{Dedekind $\zeta$}
   代数体$K$に対して、
   \begin{align*}
-    \zeta_K(s)=\sum_{\mathfrak{a}}(N\mathfrak{a})^{-s}=\prod_\mathfrak{p}(1-(N\mathfrak{p})^{-s})^{-1}
+    \zeta_K(s)=\sum_{\mathfrak{a}}(N_{K/\Q}\mathfrak{a})^{-s}=\prod_\mathfrak{p}(1-(N_{K/\Q}\mathfrak{p})^{-s})^{-1}
   \end{align*}
 
   %幾何的な解釈
   %$K=\Q[x]/f(x)$とした時の点の数
 
-  $K=\Q$の時、$\zeta_K(s)=\zeta(s)$
+  $K=\Q$の時、$N_{\Q/\Q}(p)=p$なので$\zeta_K(s)=\zeta(s)$となる。
 \end{frame}
 
 \begin{frame}{関数等式}
-  $D_K$を$K$の判別式とする。$D_\Q=1$である。
   \begin{align*}
     \hat{\zeta}_K(s)=\abs{D_K}^{s/2}\Gamma_K(s)\zeta_K(x)
   \end{align*}
-  とすると、
+  とする。$D_K$は$K$の判別式で$D_\Q=1$。
+  $\Gamma_\Q(s)=\pi^{-s/2}\Gamma(\dfrac{s}{2})$である。
   \begin{align*}
     \hat{\zeta}_K(s)=\hat{\zeta}_K(1-s)
   \end{align*}
 \end{frame}
 
 \begin{frame}{Hecke $L$}
-  同種$f$のHecke指標$\chi:\A_K \to \C^\times$
+  導手$f$のHecke指標$\chi:\A_K \to \C^\times$。
+  これの特別な場合がDirichlet指標。
 
   \begin{align*}
-    L(s,\chi)=\prod_p(1-\chi(\pi_p)N(p)^{-s})^{-1}
+    L(\chi,s)=\prod_p(1-\chi(\pi_p)N(p)^{-s})^{-1}
   \end{align*}
-  （悪い素点では修正する。）
+      （悪い素点では修正する。）
 
   %位数が有限でないものも考える
   %係数は？$\C$ vs $\Q_\ell$
@@ -93,41 +95,27 @@
 
 \begin{frame}{関数等式}    
   \begin{align*}
-    \hat{L}=\abs{D_K}^{s/2}f_\chi^{s/2}\Gamma(s,\chi)L(s,\chi)
+    \hat{L}(\chi,s)=\abs{D_K}^{s/2}f_\chi^{s/2}\Gamma(\chi,s)L(\chi,s)
   \end{align*}
   とすると、関数等式
   \begin{align*}
-    \hat{L}(s,\chi)=W(\chi)\hat{L}(1-s,\overline{\chi})
+    \hat{L}(\chi,s)=W(\chi)\hat{L}(\overline{\chi},1-s)
   \end{align*}
-  を満たす。  アデールでの積分、Fourier変換を用いて示す。
+  を満たす。
+  アデール上のFourier変換を用いて示す。
 \end{frame}
 
-\begin{comment}
-  
-\begin{frame}{Artin $L$}
-  Galois表現$\sigma:\Gal(L/K) \to GL_n(\C)$に対し
-  \begin{align*}
-    L(s,\sigma)=\prod_p\det(1-N(p)^{-s}\sigma(\Frob_p))
-  \end{align*}
-  （悪い素点では修正する。）
-
-  $\sigma=1$の時が$K$のDedekind $\zeta$ $L(s,1)=\zeta_K(s)$である。
-  $n=1$のときDirichlet $L$（$K=\Q$なら円分体$\Gal(\Q(\zeta_m)/\Q)\cong(\Z/m\Z^\times$、類体論）
-\end{frame}
-
-\begin{frame}{関数等式}
-  未解決？
-\end{frame}
-
-\end{comment}
-
-\begin{frame}{合同$\zeta$関数}
+\begin{frame}{合同$\zeta$}
   有限体上の多様体$X/\F_q$はだいたい多項式$f=0$で定まる図形。
   これの解の個数$\abs{X(\F_{q^m})}$を数えることで、
   \begin{align*}
-    Z(X,t)=\exp\left(\sum_{m=1}^\infty\frac{\abs{X(\F_{q^m})t^m}}{m}\right)
+    Z(X,t)=\exp\left(\sum_{m=1}^\infty\frac{\abs{X(\F_{q^m})}t^m}{m}\right)
   \end{align*}
   を定める。
+  \begin{align*}
+    \frac{d}{dt}\log(Z(X,t))=\sum_m\abs{X(\F_{q^m})}t^m
+  \end{align*}
+  である。
   \begin{align*}
     \zeta_X(s)=\prod_{x\in X}(1-(Nx)^{-s})^{-1}=Z(X,q^{-s})
   \end{align*}
@@ -135,40 +123,37 @@
 \end{frame}
 
 \begin{frame}{関数等式}
-  $X$が$n$次元の時、整数係数の多項式$P_i(t)$が存在して
+  $X$のコホモロジー$H^i(X)$のLefschetz跡公式により、Frobenius作用の固有多項式を用いて$Z(X,t)$を記述できる。
   \begin{align*}
-    Z(t)=\frac{P_1(t)P_3(t)\cdots P_{2n-1}(t)}{P_0(t)P_2(t)\cdots P_{2n}(t)}
+    Z(X,t)=\frac{\det(1-\Frob t\mid H^1(X))\cdots \det(1-\Frob t\mid H^{2n-1}(X))}
+    {\det(1-\Frob t\mid H^0(X))\cdots \det(1-\Frob t\mid H^{2n}(X))}
   \end{align*}
-  となる。
   
   関数等式
   \begin{align*}
-    Z(\frac{1}{q^nt})=\pm q^{nE/2}t^EZ(t)
+    Z(X,\frac{1}{q^nt})=\pm q^{n\chi(X)/2}t^{\chi(X)}Z(X,t)\\
+    \zeta_X(n-s)=\pm q^{n\chi(X)/2-\chi(X)s}\zeta_X(s)
   \end{align*}
-  が成立。
-  
-  $X$のコホモロジー$H^i(X)$のLefschetz跡公式により、$Fr$の作用の固有多項式$P_i(t)$を用いて$Z(X,t)$を記述できる。
-  コホモロジーのPoincare双対性から関数等式を示す。
+  が成立。コホモロジーのPoincare双対性。
 \end{frame}
 
-\begin{frame}{Hasse-Weil $\zeta$関数}
-  代数体上の多様体$X$に対し、その$i$次部分$H^i(X)$に対して
-
+\begin{frame}{Hasse-Weil $\zeta$}
+  代数体$K$上の多様体$X$に対し、その$i$次部分$H^i(X)$に対して
   \begin{align*}
-    L(s,H^i(X))=\prod_pP_i(X_p,q^{-s})
+    L(H^i(X),s)=\prod_p\det(1-\Frob_pp^{-s}\mid H^i(X))^{-1}
   \end{align*}
   （悪い素点では修正する。）
 
+  \begin{align*}
+    \hat{L}(H^i(X),s)=N^{s/2}\Gamma(H^i(X),s)L(H^i(X),s)
+  \end{align*}
+ 
 \end{frame}
 
 \begin{frame}{関数等式}
-  \begin{align*}
-    \hat{L}(s,H^i(X))=N^{s/2}\Gamma(H^i(X),s)L(s,H^i(X))
-  \end{align*}
-  
   関数等式（予想）
   \begin{align*}
-    \hat{L}(s,H^i(X))=\pm\hat{L}(i+1-s,H^i(X))
+    \hat{L}(H^i(X),s)=\pm\hat{L}(H^i(X),i+1-s)
   \end{align*}
   
   $\Q$上の楕円曲線$E$ではWilesなどにより証明された。
@@ -177,21 +162,38 @@
   保型形式$f_E$の$L$関数の関数等式はHeckeなどによりFourier変換などを用いて証明されていた。
 \end{frame}
 
-\begin{frame}{$\varepsilon$因子}
-  関数等式に現れる補正項について。
-
+\begin{frame}{$\ell$進層の$L$}
   $X$が有限体上の多様体、$\mathcal{F}$を$\ell$進層とする。
+  \begin{align*}
+    &L(X,\mathcal{F},t)=\prod_x\det(1-t^{\deg(x)}F_x,\mathcal{F}_{\bar{x}})^{-1}\\
+    &=\frac{\det(1-\Frob t\mid H^1(X,\mathcal{F}))\cdots \det(1-\Frob t\mid H^{2n-1}(X,\mathcal{F}))}
+    {\det(1-\Frob t\mid H^0(X,\mathcal{F}))\cdots \det(1-\Frob t\mid H^{2n}(X,\mathcal{F}))}
+  \end{align*}
+
+  $\mathcal{F}$が定数層$\Lambda$のとき、合同ゼータ。
+
+  曲線$X$上の族$f:Y\to X$に対して、$\mathcal{F}=H^i(Y_x)$も$\ell$進層の例。
+
   関数等式
   \begin{align*}
     L(X,\mathcal{F},t)=\varepsilon(X,\mathcal{F})t^{-\chi(\overline{X},\mathcal{F})}L(X,D(\mathcal{F}),t^{-1})
   \end{align*}
-  の$\varepsilon(X,\mathcal{F})$を特性類を用いて幾何的に解釈
+\end{frame}
 
+
+\begin{frame}{分岐と$\varepsilon$因子}
+  悪い素点での様子、判別式、導手、関数等式に現れる補正項などの情報が重要。
+  （不変量としても強力。）
+
+  分岐の幾何的な不変量として特性サイクルというものがある。
+  特性サイクルは元々は微分方程式（$D$加群）の理論で考えられたもので、分岐の様子を記述する。
+
+  関数等式の$\varepsilon(X,\mathcal{F})$と特性サイクルの関係
   \begin{thm}[U.-Yang-Zhao]
     \begin{align*}
       \det\rho(-cc_X\mathcal{F})=\frac{\varepsilon(X,\mathcal{F}\otimes\rho)}{\varepsilon(X,\mathcal{F})^{\dim\rho}}
     \end{align*}    
-  \end{thm}  
+  \end{thm}
 \end{frame}
 
 \end{document}
