@@ -2,6 +2,10 @@
 
 これまでに公開した数学のノートをいくつかまとめました。
 
+### 有限体について [pdf](finite_field.pdf)
+有限体について簡単にまとめました。
+[三角和と重さ](https://youtu.be/bWdmCSTYEFo)の準備です。
+
 ### 結び目とエタールコホモロジー [pdf](https://github.com/unaoya/math_pdf/blob/master/knot_and_etale_cohomology.pdf)
 [佐野さん3年間お疲れさまセミナー](https://connpass.com/event/114523/)の準備のためのノートです。
 エタールコホモロジー、結び目の不変量、幾何学的表現論などについて勉強したことをまとめます。
