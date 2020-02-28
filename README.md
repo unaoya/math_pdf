@@ -3,8 +3,11 @@
 これまでに公開した数学のノートをいくつかまとめました。
 
 ### 有限体について [pdf](finite_field.pdf)
-有限体について簡単にまとめました。
-[三角和と重さ](https://youtu.be/bWdmCSTYEFo)の準備です。
+有限体について簡単にまとめました。2020/3/1に行う配信「三角和と重さ」
+- [1.ラマヌジャングラフと三角和](https://youtu.be/bWdmCSTYEFo)
+- [2.フェルマー多様体の合同ゼータと三角和](https://youtu.be/4nFk2tY5dME)
+- [3.三角和とエタールコホモロジー](https://youtu.be/IjwkXosdFLI)
+の準備です。
 
 ### 結び目とエタールコホモロジー [pdf](https://github.com/unaoya/math_pdf/blob/master/knot_and_etale_cohomology.pdf)
 [佐野さん3年間お疲れさまセミナー](https://connpass.com/event/114523/)の準備のためのノートです。
