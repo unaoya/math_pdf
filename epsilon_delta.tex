@@ -1,0 +1,302 @@
+\documentclass[uplatex]{jsarticle}
+\RequirePackage{amsmath,amssymb,amsthm, amscd, comment, multicol}
+\usepackage[all]{xy}
+\input{../tex/theorems}
+\input{../tex/symbols}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz, tikz-cd, tkz-euclide}
+\usetkzobj{all}
+\usetikzlibrary{intersections, calc}
+\usepackage[dvipdfmx]{hyperref}
+\title{$\epsilon\delta$論法と位相空間の連続写像}
+\author{梅崎直也@unaoya}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{はじめに}
+このレジュメはYoutubeにて公開した動画「イプシロンデルタ論法と位相空間の連続写像」の内容をまとめたものです。
+レジュメ単体で読むよりも動画と合わせてご覧になることをお勧めします。
+
+話の目標は二つの連続性の定義、つまり$\epsilon\delta$を用いた関数の連続性の定義と位相空間を用いた連続性の定義の関係を調べることです。
+位相空間や連続写像という概念についてはさほど丁寧に説明してはいませんので、その点については他の教科書などで補ってください。
+これを読む上で必要になる冪集合や逆像などの集合に関する基本的な言葉については最後にまとめたので、必要に応じて参照してください。
+
+\section{定義の同値性}
+まず$\epsilon\delta$を用いた関数の連続性の定義を復習する。
+
+\begin{dfn}[関数の連続性]
+  $f:\R \to \R$が$a\in\R$で連続であるとは、
+  任意の$\epsilon>0$に対してある$\delta>0$が存在して、
+  $\abs{x-a}<\delta$ならば$\abs{f(x)-f(a)}<\epsilon$が成立すること。
+\end{dfn}
+
+次に位相空間の定義と連続写像の定義を確認しよう。
+
+\begin{dfn}[位相空間]
+  集合$X$とその冪集合$P(X)$の部分集合$O\subset P(X)$の組$(X,O)$が位相空間であるとは、
+  \begin{enumerate}
+  \item $X\in O, \emptyset\in O$
+  \item 正の整数$n$に対して$U_1,\ldots,U_n\in O$ならば$\bigcap_{i=1}^n U_i\in O$
+  \item 任意の集合$\Lambda$と$\Lambda$で添え字付けられた$O$の要素の族$\{U_\lambda\}_{\lambda\in\Lambda}$\footnote{写像$U:\Lambda\to O; \lambda\mapsto U_\lambda$と考えればよい}に対して$\bigcup_{\lambda\in\Lambda}U_\lambda\in O$
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[位相空間の間の連続写像]
+  位相空間$(X_1,O_1), (X_2,O_2)$の間の連続写像$f:(X_1,O_1)\to(X_2,O_2)$とは、
+  写像$f:X_1\to X_2$であって、任意の$U\in O_2$に対して$U$の$f$による逆像$f^{-1}(U)\in O_1$であるものをいう。
+\end{dfn}
+
+上は一般の位相空間について述べた、今回は実数全体のなす集合$\R$に次のようにして位相を定める。
+この位相こそが、$\R$に定まる位相のうちで$\epsilon\delta$による関数の連続性と結びつくものである。
+
+\begin{dfn}[実数の位相]
+  $\R$の冪集合$P(\R)$の部分集合$O_\R\subset P(\R)$を次のように定める。
+  
+  $U\in O_\R$であることは任意の$x\in U$に対してある$\epsilon>0$が存在して、
+  $(x-\epsilon,x+\epsilon)\subset U$であること。
+\end{dfn}
+
+このようにして与えた$O_\R$と$\R$の組$(\R,O_\R)$が位相空間の定義を満たすかどうかは証明が必要であるが、その前に上の定義を確認するため開区間が$O_\R$に属することを確かめよう。
+
+\begin{eg}
+  開区間は$O_\R$に属する。
+  開区間$(a,b)=\{x\in\R\vert a<x<b\}\subset\R$を考える。
+  これが$O_\R$に属することをいうために、
+  任意の$x\in (a,b)$に対してある$\epsilon>0$が存在して、$(x-\epsilon,x+\epsilon)\subset(a,b)$であることをいう。
+  $x\in U$とする。
+  このとき$a<x<b$である。
+  $\epsilon=\min\{x-a,b-x\}$とすると$(x-\epsilon,x+\epsilon)\subset(a,b)$となる。
+  つまり、この$\epsilon$が上で存在を示すべき$\epsilon$である。
+\end{eg}
+
+さて、$(\R,O_\R)$が位相空間の$3$条件を満たすことを確かめる。
+
+\begin{prop}
+  上で定義した$O_\R$を用いると$(\R,O_\R)$が位相空間となる。
+\end{prop}
+
+\begin{proof}
+  \begin{enumerate}
+  \item $\R\in O_\R$であること。$\emptyset\in O_\R$であること。
+  \item $U_1,\ldots,U_n\in O_\R$とする。$\bigcap_{i=1}^nU_i\in O_\R$を示す。
+    $x\in\bigcap_{i=1}^nU_i$とする。
+    全ての$i=1,\ldots,n$に対し$x\in U_i$である。
+    $x\in U_i$であることから$\epsilon_i>0$が存在して$(x-\epsilon_i,x+\epsilon_i)\subset U_i$である。
+    $\epsilon=\min_{i=1,\ldots,n}\epsilon_i$とする。
+    全ての$i$に対して$(x-\epsilon,x+\epsilon)\subset(x-\epsilon_i,x+\epsilon_i)\subset U_i$となるので、$(x-\epsilon,x+\epsilon)\subset\bigcap_{i=1}^nU_i$となる。
+  \item
+    $U:\Lambda\to O$をとる。
+    $\bigcup_{\lambda\in\Lambda}U_\lambda\in O_\R$を示す。
+    $x\in\bigcup_{\lambda\in\Lambda}U_\lambda$とする。
+    ある$\lambda$が存在して$x\in U_\lambda$となる。
+    ある$\epsilon>0$が存在して$(x-\epsilon,x+\epsilon)\subset U_\lambda$となる。
+    $U_\lambda\subset\bigcup_{\lambda\in\Lambda}U_\lambda$より、
+    $(x-\epsilon,x+\epsilon)\subset\bigcup_{\lambda\in\Lambda}U_\lambda$となる。
+  \end{enumerate}  
+\end{proof}
+
+さて、上で紹介した連続性の二つの定義が等価であることをいおう。
+実際には上で述べた関数の連続性は点$a\in\R$における連続性なので、このままでは同値にならない。
+$f:\R\to\R$の$\R$全体での連続性を以下のように定義する。
+\footnote{位相空間でも点$a\in X$における連続性を定義できそちらを採用しても同値になることは証明できるが、今回は割愛する。}
+
+\begin{dfn}[関数の連続性]
+  $f:\R \to \R$が連続であるとは、
+  任意の$a\in\R$に対して、以下が成立すること。
+  任意の$\epsilon>0$に対してある$\delta>0$が存在して、
+  $\abs{x-a}<\delta$ならば$\abs{f(x)-f(a)}<\epsilon$が成立すること。
+\end{dfn}
+
+\begin{dfn}[位相空間の間の写像の連続性]
+  位相空間$(X_1,O_1), (X_2,O_2)$の間の連続写像$f:(X_1,O_1)\to(X_2,O_2)$とは、
+  写像$f:X_1\to X_2$であって、任意の$U\in O_2$に対して$f^{-1}(U)\in O_1$であるものをいう。
+\end{dfn}
+
+二つの定義の同値性を示すため、まずは関数の連続性の定義を集合の言葉を用いて書き換える。
+
+まず$\abs{x-a}<\delta$は$a-\delta<x<a+\delta$すなわち$x\in(a-\delta,a+\delta)$と同値で、
+$\abs{f(x)-f(a)}<\epsilon$は$f(x)\in(f(a)-\epsilon,f(a)+\epsilon)$と同値である。
+さらに後者は$x\in f^{-1}((f(a)-\epsilon,f(a)+\epsilon))$と同値でもある。
+
+つまり、$a\in\R$に対する条件は次のようになる。
+任意の$\epsilon>0$に対してある$\delta>0$が存在して、
+\begin{align*}
+  x\in(a-\delta,a+\delta)\mbox{ならば}x\in f^{-1}((f(a)-\epsilon,f(a)+\epsilon))
+\end{align*}
+が成立する。
+
+さらにこの$x$についての条件は集合の包含関係
+\begin{align*}
+  (a-\delta,a+\delta)\subset(f(a)-\epsilon,f(a)+\epsilon)
+\end{align*}
+と同値である。
+したがって、集合の言葉を使って$\epsilon\delta$を書き直すと次のようになる。
+
+\begin{dfn}[関数の連続性]
+  $f:\R\to\R$が連続であるとは、
+  任意の$a\in\R$に対して、以下が成立すること。
+  任意の$\epsilon>0$に対してある$\delta>0$が存在して、
+  \begin{align*}
+    (a-\delta,a+\delta)\subset f^{-1}((f(a)-\epsilon,f(a)+\epsilon))
+  \end{align*}
+  が成立する。
+\end{dfn}
+
+この書き換えでは、位相空間の言葉は使っておらず、単に集合の記号を用いて$\epsilon\delta$を書き換えただけなことを再度注意しておく。
+
+さて、この書き換えた定義が位相空間を用いた定義と同値なことを確かめよう。
+まずは$f:(\R,O_\R)\to(\R,O_\R)$が位相空間の間の連続写像であるとき、関数の連続性を満たすことを確かめる。
+
+\begin{proof}
+  $a\in\R$を取る。
+  $\epsilon>0$を取る。
+  
+  位相空間$(\R,O_\R)$の定義より
+  \begin{align*}
+    (f(a)-\epsilon,f(a)+\epsilon)\in O_\R
+  \end{align*}
+  である。
+  
+  $f$が位相空間の間の連続写像なので、上の開区間$(f(a)-\epsilon,f(a)+\epsilon)$の$f$ニよる逆像は
+  \begin{align*}
+    f^{-1}((f(a)-\epsilon,f(a)+\epsilon))\in O_\R
+  \end{align*}
+  を満たす。
+  
+  $f(a)\in(f(a)-\epsilon,f(a)+\epsilon)$なので、逆像の定義から
+  \begin{align*}
+    a\in f^{-1}((f(a)-\epsilon,f(a)+\epsilon))
+  \end{align*}
+  である。
+  
+  $f^{-1}((f(a)-\epsilon,f(a)+\epsilon))\in O_\R$であり$a\in f^{-1}((f(a)-\epsilon,f(a)+\epsilon))$なので、$O_\R$の定義からある$\epsilon'>0$が存在して、
+  \begin{align*}
+    (a-\epsilon',a+\epsilon')\subset f^{-1}((f(a)-\epsilon,f(a)+\epsilon))
+  \end{align*}
+  である。
+
+  この$\epsilon'$を$\delta$とすれば示すべき条件が満たされる。
+\end{proof}
+
+逆に、$f:\R\to\R$が連続写像であるとき、位相空間の間の連続写像$f:(\R,O_\R)\to(\R,O_\R)$を定めることを示そう。
+
+\begin{proof}
+  $V\in O_\R$をとる。
+  これに対して$f^{-1}(V)\in O_\R$を示す。
+  
+  $O_\R$の定義から、任意の$a\in f^{-1}(V)$に対してある$\epsilon>0$が存在して$(a-\epsilon,a+\epsilon)\subset f^{-1}(V)$となることを言えばよい。
+  
+  $a\in f^{-1}(V)$を取る。
+  逆像の定義から$f(a)\in V$である。
+  
+  $V\in O_\R$であるから、この$a\in V$に対してある$\epsilon>0$が存在して
+  \begin{align*}
+    (f(a)-\epsilon,f(a)+\epsilon)\subset V
+  \end{align*}
+  である。
+  
+  $f$が連続なので、この$a$と$\epsilon$に対して$\delta>0$が存在して、
+  \begin{align*}
+    (a-\delta,a+\delta)\subset f^{-1}((f(a)-\epsilon,f(a)+\epsilon))
+  \end{align*}
+  が成り立つ。
+
+  $(f(a)-\epsilon,f(a)+\epsilon)\subset V$であるから、逆像の性質より
+  \begin{align*}
+    f^{-1}((f(a)-\epsilon,f(a)+\epsilon))\subset f^{-1}(V)
+  \end{align*}
+  である。
+  
+  上の包含を二つ合わせて
+  \begin{align*}
+    (a-\delta,a+\delta)\subset f^{-1}(V)
+  \end{align*}
+  となる。
+  この$\delta$を$\epsilon$とすればよい。
+\end{proof}
+
+改めて振り返ると、$O_\R$の定義は天下りに与えられたがこれこそが$\epsilon\delta$による連続性の定義と連続写像の概念が同値になるような$\R$の位相であるということができる。
+
+実際には$O_\R$は開区間全体を含む最小の位相であるという言い方もできる。
+$I\subset P(\R)$を開区間全体で定まる集合とする。
+ただし端点は$-\infty, +\infty$も許すことにする。
+つまり、$U\in I$であることは$a,b\in\R\cup\{\pm\infty\}$が存在して$U=\{x\in\R\vert a<x<b\}$とかけることで定める。
+この$I$を用いて$(\R,I)$を考えると、これは位相空間の定義を満たさない。
+例えば$U_1=(0,1), U_2=(1,2)\in I$だが$U_1\cup U_2=(0,1)\cup(1,2)\notin I$である。
+そこで、定義を満たすように$I$に上のような集合を追加していく。
+そのようにしてできた$P(X)$の部分集合で定義を満たしかつ最小なものが$O_\R$である。
+
+\section{集合の言葉}
+
+\subsection{開区間}
+\begin{dfn}
+  $a,b\in\R\cup\{\pm\infty\}$とする。
+  開区間$(a,b)\subset\R$とは
+  \begin{align*}
+    (a,b)=\{x\in\R\vert a<x<b\}
+  \end{align*}
+  のこと。
+\end{dfn}
+
+$x\in(a-\epsilon,a+\epsilon)$と$\abs{x-a}<\epsilon$は同値であることを確認しよう。
+$\abs{x-a}<\epsilon$は絶対値を外すと
+\begin{align*}
+  -\epsilon<x-a<\epsilon\\
+\end{align*}
+となり、この各辺に$a$を足すと
+\begin{align*}
+  a-\epsilon<x<a+\epsilon
+\end{align*}
+となる。
+これは
+\begin{align*}
+  x\in(a-\epsilon,a+\epsilon)
+\end{align*}
+と同値。
+
+\subsection{冪集合}
+まず冪集合の定義を述べる。
+\begin{dfn}[冪集合]
+  集合$X$に対して、$X$の冪集合$P(X)$とは$X$の部分集合全体のなす集合のこと。
+  つまり
+  \begin{align*}
+    P(X)=\{U\vert U\subset X\}
+  \end{align*}
+\end{dfn}
+
+冪集合の部分集合$Q\subset P(X)$を与えることは、$X$の部分集合$U\subset X$に対する条件$q$を定めることと同じ。
+
+\begin{eg}
+  $X=\R$とする。
+  $A\subset P(X)$に対応する条件として、$U\subset X$が$0\in U$を満たすこととする。
+  つまり、$0$を要素にもつ部分集合全体を集めてその集合\footnote{つまり集合の集合であるが、あまりそういうことは気にしない方がよい}を$A$と名付けたということ。
+
+  例えば$(-1,1)\in A, (-3,5)\in A, \R\in A$であるが、$(1,3)\notin A, (-\infty,0)\notin A$である。
+\end{eg}
+
+\subsection{逆像}
+
+逆像の定義を述べる。
+\begin{dfn}[写像による部分集合の逆像]
+  $X_1, X_2$を集合とし、$f$をその間の写像$f:X_1 \to X_2$とする。
+  $U\subset X_2$に対して
+  \begin{align*}
+    f^{-1}(U)=\{x\in X_1\vert f(x)\in U\}
+  \end{align*}
+  と定める。
+  これは$X_2$の部分集合である。
+\end{dfn}
+ 
+これは$f$という写像の逆写像ではないことに注意しよう。
+実際には上の$f^{-1}$という操作により冪集合の間の写像$P(X_2)\to P(X_1)$が定まる。
+
+%これを集合の
+
+%距離空間に拡張。
+
+%$\R^2$の場合。
+
+%連続写像の和と積。
+
+\end{document}
