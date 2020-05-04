@@ -1,0 +1,22 @@
+main = main
+current = quotient
+
+all:
+	platex $(main).tex
+	dvipdfmx $(main).dvi
+	open $(main).pdf
+
+e:
+	$(EDITOR) $(current).tex
+
+show:
+	open $(main).pdf
+
+main:
+	$(EDITOR) $(main).tex
+
+bk:
+	# (pushd ..; zip -r PROJECT-BACKUP.zip PROJECT-DIRNAME; popd)
+	@echo You are executing \'bk\' command.  Please edit your \'makefile\'.
+
+# vim: set filetype=make:
