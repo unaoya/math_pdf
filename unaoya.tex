@@ -5,15 +5,16 @@
 \input{../tex/symbols}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{tikz, tikz-cd, tkz-euclide}
-\usetkzobj{all}
-\usetikzlibrary{intersections, calc}
-\title{Weil予想とエタールコホモロジー}
+\usepackage[dvipdfmx]{hyperref}
+%\usetkzobj{all}
+%\usetikzlibrary{intersections, calc}
+\title{ヴェイユ予想と$\ell$進層のフーリエ変換}
 \author{梅崎直也@unaoya}
 \date{\today}
 \begin{document}
 \maketitle
 
-Weil予想とは有限体$\F_q$上定義された代数多様体$X$の合同ゼータ関数$Z(X/\F_q,T)$が持ついくつかの性質についての予想です。
+ヴェイユ予想とは有限体$\F_q$上定義された代数多様体$X$の合同ゼータ関数$Z(X/\F_q,T)$が持ついくつかの性質についての予想です。
 合同ゼータ関数は、方程式の解の個数についての母関数として
 \begin{align*}
   Z(X/\F_q,T)=\exp(\sum_{n=1}^\infty\abs{X(\F_{q^n})}\frac{T^n}{n})
@@ -22,16 +23,19 @@ Weil予想とは有限体$\F_q$上定義された代数多様体$X$の合同ゼ�
 \begin{enumerate}
 \item 有理性
 \item 関数等式
-\item Betti数との関係
-\item Riemann予想の類似
+\item ベッチ数との関係
+\item リーマン予想の類似
 \end{enumerate}
 からなります。
+この予想は、最終的にドリーニュ[1, 2]によりリーマン予想の類似が証明されたことで完全に解決しました。
 
-この予想は、Weil自身による曲線の場合の解決、
-Dworkによる一般次元の場合における有理性の証明ののち、
-Grothendieckらによって整備されたエタールコホモロジーの理論により関数等式やBetti数との関係が証明され、
-最終的にはDeligneによってRiemann予想の類似が証明されたことで完全に解決しました。
+リーマン予想の類似については上のドリーニュによる証明ののち、$\ell$進層のフーリエ変換を用いた別証明がローモン[3]により与えられました。
+この講演ではヴェイユ予想及び$\ell$進層のフーリエ変換について簡単に説明した上で、フーリエ変換を用いたリーマン予想の類似の証明の概略を紹介します。
 
-GrothendieckやDeligneによる証明においてはエタールコホモロジーや$\ell$進層の理論が大きな役割を果たします。
-講演では、これらの理論がWeil予想の解決にどのように用いられたか、可能な限り証明の内容に踏み込んでお話ししたいと思います。
+\begin{thebibliography}{99}
+\item Pierre Deligne, La conjecture de Weil : I, Publ. Math. IHES, 43 (1974), 273-307, \url{http://www.numdam.org/item/PMIHES_1974__43__273_0/}.
+\item Pierre Deligne, La conjecture de Weil : II, Publ. Math. IHES, 52 (1980), 137-252, \url{http://www.numdam.org/item/PMIHES_1980__52__137_0/}.
+\item G\'erard Laumon, Transformation de Fourier, constantes d'\'equations fonctionnelles et conjecture de Weil, Publ. Math. IHES, 65 (1987), 131-210, \url{http://www.numdam.org/item/PMIHES_1987__65__131_0/}.
+\end{thebibliography}
+
 \end{document}
